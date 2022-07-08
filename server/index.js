@@ -7,5 +7,6 @@ app.use(express.static(path.join(__dirname, "../client/dist")));
 
 var port = process.env.PORT || 3000;
 
-app.listen(port);
-console.log(`Listening at http://localhost:${port}`);
+app.listen(port, () => {
+  console.log(`Listening at http://localhost:${port}`);
+});
