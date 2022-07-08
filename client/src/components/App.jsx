@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 class App extends React.Component {
   constructor(props) {
@@ -7,16 +7,12 @@ class App extends React.Component {
 
     };
   }
- componentDidMount() {
-   //
- }
 
   render() {
-    return(
+    return (
       <div>Hello World</div>
-    )
+    );
   }
-};
+}
 
 export default App;
-
