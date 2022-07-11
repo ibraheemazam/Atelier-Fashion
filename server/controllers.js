@@ -4,7 +4,7 @@ const getProducts = function(req, res) {
   // add in code for get request
   axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products', {
     headers: {
-      "Authorization": `add PAT here`
+      "Authorization": `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`
     }
   })
     .then((result) => {
