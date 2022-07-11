@@ -1,17 +1,19 @@
-/* eslint-disable import/extensions */
 import React from 'react';
-import ProductDetail from './ProductDetail/ProductDetail.jsx';
-import RelatedItems from './RelatedItems/RelatedItems.jsx';
-import RatingsAndReviews from './RatingsAndReviews/RatingsAndReviews.jsx';
-import QuestionsAndAnswers from './QuestionsAndAnswers/QuestionsAndAnswers.jsx';
+import ProductDetail from './ProductDetail/ProductDetail';
+import RelatedItems from './RelatedItems/RelatedItems';
+import RatingsAndReviews from './RatingsAndReviews/RatingsAndReviews';
+import QuestionsAndAnswers from './QuestionsAndAnswers/QuestionsAndAnswers';
+import { GlobalContextProvider } from '../contexts/GlobalStore';
 
 function App() {
   return (
     <div>
-      <ProductDetail />
-      <RelatedItems />
-      <RatingsAndReviews />
-      <QuestionsAndAnswers />
+      <GlobalContextProvider>
+        <ProductDetail />
+        <RelatedItems />
+        <RatingsAndReviews />
+        <QuestionsAndAnswers />
+      </GlobalContextProvider>
     </div>
   );
 }
