@@ -4,7 +4,7 @@ const getProducts = function(req, res) {
   // add in code for get request
   axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products', {
     headers: {
-      "Authorization": `add PAT here`
+      "Authorization": `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`
     }
   })
     .then((result) => {
@@ -18,9 +18,28 @@ const getProducts = function(req, res) {
   // res.sendStatus(211);
 };
 
+const getRelated = function(req, res) {
+  // add in code for get request
+  axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/40344/related', {
+    headers: {
+      "Authorization": `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`
+    }
+  })
+    .then((result) => {
+      // console.log(result);
+      res.send(result.data);
+    })
+    .catch((err) => {
+      // console.log(err);
+      res.sendStatus(400);
+    });
+  // res.sendStatus(211);
+};
+
 const getReviews = function(req, res) {
   //add code
 };
 
 exports.getProducts = getProducts;
+exports.getRelated = getRelated;
 exports.getReviews = getReviews;
