@@ -7,6 +7,9 @@ module.exports = {
     filename: 'bundle.js',
     path: path.join(__dirname, '/client/dist'),
   },
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
   devtool: 'source-map',
   module: {
     rules: [
