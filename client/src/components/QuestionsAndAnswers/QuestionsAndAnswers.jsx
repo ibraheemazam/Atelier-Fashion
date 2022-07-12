@@ -7,6 +7,7 @@ import QuestionSearch from './QuestionSearch/QuestionSearch';
 import ExtraButtons from './ExtraButtons';
 
 function QuestionAndAnswers() {
+  // TODO: NEED TO SORT QUESTIONS IN ORDER OF HELPFULNESS
   const {
     questions, setQuestions, numQuestions, productID,
   } = useGlobalContext();

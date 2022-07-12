@@ -1,26 +1,45 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import AnswerEntry from './AnswerEntry';
+import AddAnswerModal from './AddAnswerModal';
+import { useGlobalContext } from '../../../contexts/GlobalStore';
 
 function QuestionEntry({ question }) {
+  // TODO: NEED TO SORT ANSWERS BY HELPFULNESS
+  const { productID, setQuestions } = useGlobalContext();
+  const [numAnswers, setNumAnswers] = useState(2);
+  const [showModal, setShowModal] = useState(false);
   const { answers } = question;
   const allAnswers = Object.values(answers);
-  const topAnswers = Object.values(answers).slice(0, 2);
+  const topAnswers = Object.values(answers).slice(0, numAnswers);
 
   function helpfulQuestion() {
-    console.log(`Mark question with id ${question.question_id} as helpful`);
+    // TODO: MAKE UPDATE ONLY SPECIFIC QUESTION
+    axios
+      .put('/questions/helpful', { question_id: question.question_id })
+      .then(() => {
+        axios
+          .get('/questions', { params: { product_id: productID } })
+          .then((results) => {
+            setQuestions(results.data.results);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
   }
   function answerQuestion() {
+    // TODO: MAKE UPDATE ONLY SPECIFIC QUESTION
     console.log(`Answering question with id ${question.question_id}`);
+    setShowModal(true);
   }
 
-  function moreAnswers() {
-    if (topAnswers.length < allAnswers.length) {
-      return <MoreAnswers>LOAD MORE ANSWERS</MoreAnswers>;
-    }
-    return null;
+  function increaseNumAnswers() {
+    setNumAnswers(numAnswers + 2);
   }
+
   return (
     <Entry>
       <Question>Q.</Question>
@@ -46,7 +65,10 @@ function QuestionEntry({ question }) {
           This question has not been answered yet!
         </AnswerNone>
       )}
-      {moreAnswers()}
+      {topAnswers.length < allAnswers.length ? (
+        <MoreAnswers onClick={() => increaseNumAnswers()}>LOAD MORE ANSWERS</MoreAnswers>
+      ) : null}
+      {showModal ? <AddAnswerModal setShowModal={setShowModal} question={question} /> : null}
     </Entry>
   );
 }

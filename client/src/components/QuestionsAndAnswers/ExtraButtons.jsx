@@ -1,21 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { GlobalContext } from '../../contexts/GlobalStore';
+import AddQuestionModal from './AddQuestionModal';
+import { useGlobalContext } from '../../contexts/GlobalStore';
 
 export default function ExtraButtons() {
-  const global = React.useContext(GlobalContext);
-  function onClick() {
-    global.setNumQuestions(global.numQuestions + 2);
+  const [showModal, setShowModal] = useState(false);
+  const { questions, numQuestions, setNumQuestions } = useGlobalContext();
+
+  function increaseQuestions() {
+    setNumQuestions(numQuestions + 2);
   }
 
   return (
     <div>
-      <Button type="submit">ADD A QUESTION</Button>
-      {global.numQuestions < global.questions.length ? (
-        <Button type="submit" onClick={() => onClick()}>
+      <Button type="submit" onClick={() => setShowModal(true)}>ASK A QUESTION</Button>
+      {numQuestions < questions.length ? (
+        <Button type="submit" onClick={() => increaseQuestions()}>
           MORE ANSWERED QUESTIONS
         </Button>
       ) : null}
+      {showModal ? <AddQuestionModal setShowModal={setShowModal} /> : null}
     </div>
   );
 }
