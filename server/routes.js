@@ -14,6 +14,6 @@ router.post('/questions', controllers.postQuestion);
 // router.put('/answer/helpful', controllers.helpfulAnswer);
 // router.put('/answer/report', controllers.reportAnswer);
 
-router.post('/', controllers.getReviews);
+router.get('/reviews', controllers.getReviews);
 
 module.exports = router;

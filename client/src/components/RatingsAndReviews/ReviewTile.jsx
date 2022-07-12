@@ -1,11 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-function ReviewTile() {
+function ReviewTile({ review }) {
   return (
     <div>
-      ADD RATING AND REVIEWS COMPONENTS HERE
+      <div>
+        {review.rating}
+      </div>
     </div>
   );
 }
+
+ReviewTile.propTypes = {
+  review: PropTypes.object.isRequired,
+};
 
 export default ReviewTile;

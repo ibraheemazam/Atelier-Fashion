@@ -43,7 +43,19 @@ const postQuestion = (req, res) => {
 };
 
 const getReviews = (req, res) => {
-
+  axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews', {
+    headers: {
+      Authorization: process.env.AUTH_TOKEN,
+    },
+    params: req.query,
+  })
+    .then((result) => {
+      res.send(result.data);
+    })
+    .catch((err) => {
+      console.error('There was an error in the getReviews controller function:\n', err);
+      res.status(400).send(err);
+    });
 };
 
 exports.getProducts = getProducts;
