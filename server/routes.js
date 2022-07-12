@@ -4,6 +4,7 @@ const controllers = require('./controllers');
 const router = express.Router();
 
 router.get('/products', controllers.getProducts);
+router.get('/products/', controllers.getProduct);
 
 router.get('/questions', controllers.getQuestions);
 router.post('/questions', controllers.postQuestion);
