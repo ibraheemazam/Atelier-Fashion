@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
 import { useGlobalContext } from '../../contexts/GlobalStore';
 import ReviewTile from './ReviewTile';
 
@@ -25,17 +26,25 @@ function RatingsAndReviews() {
   }, [productID, setReviews]);
 
   return (
-    <div className="outerContainer">
-      <div>ADD RATING AND REVIEWS COMPONENTS HERE</div>
-      <div className="reviewContainer">
+    <OuterContainer>
+      <div>Rating and reviews</div>
+      <ReviewContainer>
         {reviews.map((review) => (
           <ReviewTile key={review.review_id} review={review} />
         ))}
-      </div>
-    </div>
+      </ReviewContainer>
+    </OuterContainer>
   );
 }
 
 export default RatingsAndReviews;
 
+const OuterContainer = styled.div`
+  padding: 1em;
+  background: papayawhip;
+`;
 
+const ReviewContainer = styled.div`
+  padding: 1em;
+  background: pink;
+`;
