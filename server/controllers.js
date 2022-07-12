@@ -15,30 +15,40 @@ const getProducts = (req, res) => {
     });
 };
 
-const getRelated = function(req, res) {
-  // add in code for get request
-  axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/40344/related', {
+const getRelated = (req, res) => {
+  // console.log(req.query);
+  axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${req.query.productID}/related`, {
     headers: {
-      "Authorization": `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`
-    }
+      Authorization: process.env.AUTH_TOKEN,
+    },
   })
     .then((result) => {
       // console.log(result);
       res.send(result.data);
     })
     .catch((err) => {
-      // console.log(err);
+      console.log(err);
       res.sendStatus(400);
     });
-  // res.sendStatus(211);
 };
 
-const getReviews = function(req, res) {
-  //add code
+const getRelatedItem = (req, res) => {
+  console.log(req.query);
+  axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${req.query.productID}`, {
+    headers: {
+      Authorization: process.env.AUTH_TOKEN,
+    },
+  })
+    .then((result) => {
+      // console.log(result);
+      res.send(result.data);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(400);
+    });
 };
 
-exports.getProducts = getProducts;
-exports.getRelated = getRelated;
 const getQuestions = (req, res) => {
   axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions', {
     params: {
@@ -71,6 +81,8 @@ const getReviews = (req, res) => {
 };
 
 exports.getProducts = getProducts;
+exports.getRelated = getRelated;
+exports.getRelatedItem = getRelatedItem;
 exports.getQuestions = getQuestions;
 exports.postQuestion = postQuestion;
 exports.getReviews = getReviews;
