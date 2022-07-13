@@ -2,22 +2,10 @@ const axios = require('axios');
 require('dotenv').config();
 
 const getProducts = (req, res) => {
-  axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products', {
-    headers: {
-      Authorization: process.env.AUTH_TOKEN,
-    },
-  })
-    .then((result) => {
-      res.send(result.data);
-    })
-    .catch((err) => {
-      res.status(400).send(err);
-    });
-};
-
-const getProduct = (req, res) => {
-  const productId = req.query;
-  axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${productId}`, {
+  const productId = req.query || null;
+  axios({
+    method: 'get',
+    url: productId ? `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${productId}` : 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products',
     headers: {
       Authorization: process.env.AUTH_TOKEN,
     },
