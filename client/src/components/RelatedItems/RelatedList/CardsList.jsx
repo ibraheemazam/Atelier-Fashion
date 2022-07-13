@@ -9,11 +9,11 @@ function CardsList({ productID }) {
     axios.get('/related', { params: { productID: productID } })
       .then((data) => {
         setInitial(data.data);
-        console.log('Initial:', initial);
-        console.log('SetInitial:', data.data);
+        // console.log('Initial:', initial);
+        // console.log('SetInitial:', data.data);
       })
       .catch((error) => console.log('Error here:', error));
-  }, []);
+  }, [productID]);
   // const [initial, setInitial] = useState(temp);
   return (
     <StyleCardList>
@@ -25,6 +25,7 @@ function CardsList({ productID }) {
 const StyleCardList = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  background: #0ABAB5;
 `;
 
 export default CardsList;

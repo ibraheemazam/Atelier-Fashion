@@ -1,6 +1,6 @@
 import React from 'react';
 import { useGlobalContext } from '../../contexts/GlobalStore';
-import CardsList from './CardsList.jsx';
+import CardsList from './RelatedList/CardsList.jsx';
 
 function RelatedItems() {
   const {
