@@ -23,6 +23,7 @@ const getQuestions = (req, res) => {
       {
         params: {
           product_id: req.query.product_id,
+          count: req.query.count || 5,
         },
       },
     )
@@ -35,6 +36,7 @@ const getQuestions = (req, res) => {
 };
 
 const postQuestion = (req, res) => {
+  console.log(req.body);
   const postBody = {
     body: req.body.body,
     name: req.body.name,
@@ -57,7 +59,7 @@ const postQuestion = (req, res) => {
 
 const postAnswer = (req, res) => {
   // send all information in body
-  const { questionID } = req.body;
+  const questionID = req.body.question_ID;
   const postBody = {
     body: req.body.body,
     name: req.body.name,

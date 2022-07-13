@@ -1,14 +1,46 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react/button-has-type */
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
+import { useGlobalContext } from '../../../contexts/GlobalStore';
 
 function AddAnswerModal({ setShowModal, question }) {
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [answer, setAnswer] = useState('');
+  const [photo, setPhoto] = useState();
+
+  const { productID, productInfo, setQuestions } = useGlobalContext();
+
   function askQuestion() {
-    console.log('SENDING QUESTION TO SERVER');
-    console.log(question);
+    const postBody = {
+      body: answer,
+      name: username,
+      email,
+      question_ID: question.question_id,
+    };
+    axios
+      .post('/answers', postBody)
+      .then(() => {
+        // axios
+        //   .get('/questions', { params: { product_id: productID } })
+        //   .then((results) => {
+        //     setQuestions(results.data.results);
+        //   });
+        setShowModal(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  function handlePhotos(event) {
+    console.log(event.target.files);
   }
 
   return (
@@ -20,13 +52,27 @@ function AddAnswerModal({ setShowModal, question }) {
         <Title>
           <h1>Submit your answer</h1>
         </Title>
-        <div className="body">
-          <p>{question.question_body}</p>
-        </div>
-        <Footer>
-          <FooterButton onClick={() => askQuestion()}>Confirm</FooterButton>
-          <FooterButton onClick={() => setShowModal(false)}>Cancel</FooterButton>
-        </Footer>
+        <QuestionBody>
+          <h3>
+            {productInfo.name}
+            {': '}
+            {question.question_body}
+          </h3>
+        </QuestionBody>
+        <Form>
+          <label htmlFor="username">Username</label>
+          <input onChange={(event) => setUsername(event.target.value)} maxLength="60" type="text" id="username" name="username" placeholder="Example: jackson11!" />
+          <label htmlFor="email">Email</label>
+          <input onChange={(event) => setEmail(event.target.value)} maxLength="60" type="text" id="email" placeholder="jack@email.com"></input>
+          <label htmlFor="answer">Answer</label>
+          <InputAnswer onChange={(event) => setAnswer(event.target.value)} maxLength="1000"></InputAnswer>
+          <label htmlFor="photos">Photos</label>
+          <input onChange={(event) => handlePhotos(event)} type="file" id="photos" accept="image/png, image/jpeg" multiple />
+          <Footer id="footer">
+            <FooterButton onClick={() => askQuestion()}>Confirm</FooterButton>
+            <FooterButton onClick={() => setShowModal(false)}>Cancel</FooterButton>
+          </Footer>
+        </Form>
       </ModalContainer>
     </ModalBackground>
   );
@@ -45,8 +91,8 @@ const ModalBackground = styled.div`
 `;
 
 const ModalContainer = styled.div`
-  width: 500px;
-  height: 500px;
+  width: 50%;
+  height: 75%;
   border-radius: 12px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -69,15 +115,32 @@ const CloseButtonButton = styled.button`
 const Title = styled.div`
 
 `;
+
+const QuestionBody = styled.div`
+`;
+
+const Form = styled.div`
+  display: grid;
+  grid-template-columns: 15% 75%;
+  gap: 5%;
+`;
+
+const InputAnswer = styled.textarea`
+  resize: none;
+  height: 100px;
+`;
+
 const Footer = styled.div`
-  flex: 10%;
   display: flex;
+  flex: auto;
   justify-content: center;
   align-items: center;
+  grid-column: 1 / 3;
+  padding-top: 10%;
 `;
 
 const FooterButton = styled.button`
-  width: 150px;
+  width: 100px;
   height: 45px;
   margin: 10px;
   border: none;

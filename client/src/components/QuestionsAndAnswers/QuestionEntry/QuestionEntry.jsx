@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import styled from 'styled-components';
@@ -7,32 +8,29 @@ import AddAnswerModal from './AddAnswerModal';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
 function QuestionEntry({ question }) {
-  // TODO: NEED TO SORT ANSWERS BY HELPFULNESS
   const { productID, setQuestions } = useGlobalContext();
+
   const [numAnswers, setNumAnswers] = useState(2);
   const [showModal, setShowModal] = useState(false);
+  const [helpfulness, setHelpfulness] = useState(question.question_helpfulness);
+
   const { answers } = question;
   const allAnswers = Object.values(answers);
-  const topAnswers = Object.values(answers).slice(0, numAnswers);
+  allAnswers.sort((a, b) => b.helpfulness - a.helpfulness);
+  const topAnswers = Object.values(allAnswers).slice(0, numAnswers);
 
   function helpfulQuestion() {
-    // TODO: MAKE UPDATE ONLY SPECIFIC QUESTION
     axios
       .put('/questions/helpful', { question_id: question.question_id })
       .then(() => {
-        axios
-          .get('/questions', { params: { product_id: productID } })
-          .then((results) => {
-            setQuestions(results.data.results);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        setHelpfulness(helpfulness + 1);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }
+
   function answerQuestion() {
-    // TODO: MAKE UPDATE ONLY SPECIFIC QUESTION
-    console.log(`Answering question with id ${question.question_id}`);
     setShowModal(true);
   }
 
@@ -49,7 +47,7 @@ function QuestionEntry({ question }) {
         {' '}
         <Clickable onClick={() => helpfulQuestion()}>Yes</Clickable>
         (
-        {question.question_helpfulness}
+        {helpfulness}
         )
       </QuestionHelpful>
       <AddAnswer>
@@ -75,8 +73,10 @@ function QuestionEntry({ question }) {
 
 const Entry = styled.div`
   display: grid;
-  border: 1px solid;
   grid-template-columns: 5% 70% 15% 10%;
+  padding-bottom: 5%;
+  width: 100%;
+  justify-content: center;
 `;
 
 const Question = styled.div`

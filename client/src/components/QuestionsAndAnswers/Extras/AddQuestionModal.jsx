@@ -5,37 +5,61 @@
 /* eslint-disable react/button-has-type */
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
+import { useGlobalContext } from '../../../contexts/GlobalStore';
 
 function AddQuestionModal({ setShowModal }) {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [question, setQuestion] = useState('');
+  const { productID, productInfo } = useGlobalContext();
 
   function askQuestion() {
-    console.log("SENDING QUESTION TO SERVER");
+    const postBody = {
+      body: question,
+      name: username,
+      email,
+      product_id: productID,
+    };
+    axios
+      .post('/questions', postBody)
+      .then((results) => {
+        setShowModal(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  function closeModal(event) {
+    if (event.target.id === 'background') {
+      setShowModal(false);
+    }
   }
 
   return (
-    <ModalBackground>
+    <ModalBackground id="background" onClick={(event) => closeModal(event)}>
       <ModalContainer>
         <CloseButtonDiv>
           <CloseButtonButton onClick={() => setShowModal(false)}>&#10006;</CloseButtonButton>
         </CloseButtonDiv>
-        <Title>
-          <h1>About the (PRODUCT NAME HERE)</h1>
-        </Title>
-        <Body>
+        <h1>
+          About the
+          {' '}
+          {productInfo.name}
+        </h1>
+        <Form>
           <label htmlFor="username">Username</label>
           <input onChange={(event) => setUsername(event.target.value)} maxLength="60" type="text" id="username" name="username" placeholder="Example: jackson11!" />
           <label htmlFor="email">Email</label>
           <input onChange={(event) => setEmail(event.target.value)} maxLength="60" type="text" id="email" placeholder="Why did you like the product or not?"></input>
           <label htmlFor="question">Question</label>
           <InputQuestion onChange={(event) => setQuestion(event.target.value)} maxLength="1000"></InputQuestion>
-        </Body>
-        <Footer>
-          <FooterButton onClick={() => askQuestion()}>Confirm</FooterButton>
-          <FooterButton onClick={() => setShowModal(false)}>Cancel</FooterButton>
-        </Footer>
+          <Footer>
+            <FooterButton onClick={() => askQuestion()}>Confirm</FooterButton>
+            <FooterButton onClick={() => setShowModal(false)}>Cancel</FooterButton>
+          </Footer>
+        </Form>
       </ModalContainer>
     </ModalBackground>
   );
@@ -75,11 +99,7 @@ const CloseButtonButton = styled.button`
   cursor: pointer;
 `;
 
-const Title = styled.div`
-
-`;
-
-const Body = styled.div`
+const Form = styled.div`
   display: grid;
   grid-template-columns: 15% 75%;
   gap: 5%;
@@ -95,6 +115,8 @@ const Footer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  grid-column: 1 / 3;
+  padding-top: 5%;
 `;
 
 const FooterButton = styled.button`

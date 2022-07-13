@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import AddQuestionModal from './AddQuestionModal';
-import { useGlobalContext } from '../../contexts/GlobalStore';
+import { useGlobalContext } from '../../../contexts/GlobalStore';
 
 export default function ExtraButtons() {
   const [showModal, setShowModal] = useState(false);
