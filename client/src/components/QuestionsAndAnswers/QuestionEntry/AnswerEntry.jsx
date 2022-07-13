@@ -1,14 +1,41 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import { format, parseISO } from 'date-fns';
+import { useGlobalContext } from '../../../contexts/GlobalStore';
 
 function AnswerEntry({ answer }) {
+  const { productID } = useGlobalContext();
+  const [helpfulness, setHelpfulness] = useState(answer.helpfulness);
+
   function helpfulAnswer() {
-    console.log(`Mark answer with id ${answer.id} as helpful`);
+    // TODO: MAKE UPDATE ONLY SPECIFIC ANSWER
+    axios
+      .put('/answers/helpful', { answer_id: answer.id })
+      .then(() => {
+        setHelpfulness(helpfulness + 1);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
   function reportAnswer() {
-    console.log(`Report answer with id ${answer.id} I am offended`);
+    // TODO: MAKE UPDATE ONLY SPECIFIC ANSWER
+    axios
+      .put('/answers/report', { answer_id: answer.id })
+      .then(() => {
+        axios
+          .get('/questions', { params: { product_id: productID } })
+          .then(() => {
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   return (
@@ -17,19 +44,19 @@ function AnswerEntry({ answer }) {
         {answer.body}
       </AnswerBody>
       <AnswerFooter>
-        <div>
+        <AnswerDate>
           by
           {' '}
           {answer.answerer_name}
           {' on '}
           {format(parseISO(answer.date), 'MMM dd, yyyy')}
-        </div>
+        </AnswerDate>
         <div>
           Helpful?
           {' '}
           <Clickable onClick={() => helpfulAnswer()}>Yes</Clickable>
           (
-          {answer.helpfulness}
+          {helpfulness}
           )
         </div>
         <Clickable onClick={() => reportAnswer()}>Report</Clickable>
@@ -40,11 +67,17 @@ function AnswerEntry({ answer }) {
 
 const Answer = styled.div`
   grid-column: 2 / 3;
+  padding-bottom: 1%;
 `;
 
 const AnswerFooter = styled.div`
   display: grid;
   grid-template-columns: 50% 25% 25%;
+  font-size: 12px;
+`;
+
+const AnswerDate = styled.div`
+
 `;
 
 const AnswerBody = styled.div`
