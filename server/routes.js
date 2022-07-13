@@ -1,34 +1,34 @@
 const express = require('express');
-const controllers = require('./controllers');
+const Products = require('./controllers/Products');
+const Answers = require('./controllers/Answers');
+const Questions = require('./controllers/Questions');
+const Related = require('./controllers/Related');
+const Reviews = require('./controllers/Reviews');
 
 const router = express.Router();
 
-router.get('/products', controllers.getProducts);
-router.get('/products/styles', controllers.getStyles);
+router.get('/products', Products.getProducts);
+router.get('/products/styles', Products.getStyles);
 
-router.get('/questions', controllers.getQuestions);
-router.post('/questions', controllers.postQuestion);
-router.put('/questions/helpful', controllers.helpfulQuestion);
-router.put('/questions/report', controllers.reportQuestion);
+router.get('/related', Related.getRelated);
+router.get('/relatedItem', Related.getRelatedItem);
+router.get('/relatedImage', Related.getRelatedImage);
+router.get('/relatedStars', Related.getRelatedStars);
 
-router.post('/answers', controllers.postAnswer);
-router.put('/answers/helpful', controllers.helpfulAnswer);
-router.put('/answers/report', controllers.reportAnswer);
+router.get('/questions', Questions.getQuestions);
+router.post('/questions', Questions.postQuestion);
+router.put('/questions/helpful', Questions.helpfulQuestion);
+router.put('/questions/report', Questions.reportQuestion);
+
+router.post('/answers', Answers.postAnswer);
+router.put('/answers/helpful', Answers.helpfulAnswer);
+router.put('/answers/report', Answers.reportAnswer);
 
 // REVIEW ROUTES:
-router.get('/reviews', controllers.getReviews);
-router.get('/reviews/meta', controllers.getReviewsMeta);
-router.post('/reviews', controllers.postReview);
-router.put('/reviews/:review_id/helpful', controllers.putReviewHelpful);
-router.put('/reviews/:review_id/report', controllers.putReviewReport);
+router.get('/reviews', Reviews.getReviews);
+router.get('/reviews/meta', Reviews.getReviewsMeta);
+router.post('/reviews', Reviews.postReview);
+router.put('/reviews/:review_id/helpful', Reviews.putReviewHelpful);
+router.put('/reviews/:review_id/report', Reviews.putReviewReport);
 
 module.exports = router;
-
-// getQuestion works
-// postQuestion works
-// helpfulQuestion works
-// reportQuestion works
-
-// postAnswer works
-// helpfulAnswer
-// reportAnswer
