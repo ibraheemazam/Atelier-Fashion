@@ -74,6 +74,77 @@ const getReviews = (req, res) => {
     });
 };
 
+const getRelated = (req, res) => {
+  // console.log(req.query);
+  axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${req.query.productID}/related`, {
+    headers: {
+      Authorization: process.env.AUTH_TOKEN,
+    },
+  })
+    .then((result) => {
+      // console.log(result);
+      res.send(result.data);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(400);
+    });
+};
+
+const getRelatedItem = (req, res) => {
+  axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${req.query.productID}`, {
+    headers: {
+      Authorization: process.env.AUTH_TOKEN,
+    },
+  })
+    .then((result) => {
+      // console.log(result);
+      res.send(result.data);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(400);
+    });
+};
+
+const getRelatedImage = (req, res) => {
+  // console.log('Get Image:', req.query);
+  if (req.query.productID) {
+    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${req.query.productID}/styles`, {
+      headers: {
+        Authorization: process.env.AUTH_TOKEN,
+      },
+    })
+      .then((result) => {
+        // console.log('Related Image:', result);
+        res.send(result.data);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.sendStatus(400);
+      });
+  }
+};
+
+const getRelatedStars = (req, res) => {
+  // console.log('Get Image:', req.query);
+  if (req.query.reviewID) {
+    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/?product_id=${req.query.reviewID}`, {
+      headers: {
+        Authorization: process.env.AUTH_TOKEN,
+      },
+    })
+      .then((result) => {
+        // console.log('Related Image:', result);
+        res.send(result.data);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.sendStatus(400);
+      });
+  }
+};
+
 const getReviewsMeta = (req, res) => {
   axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/meta', {
     headers: {
@@ -113,7 +184,7 @@ const putReviewHelpful = (req, res) => {
 const putReviewReport = (req, res) => {
   console.log(req.params);
   res.sendStatus(501);
-}
+};
 
 const postAnswer = (req, res) => {
   // send all information in body
@@ -200,6 +271,10 @@ const reportAnswer = (req, res) => {
 };
 
 exports.getProducts = getProducts;
+exports.getRelated = getRelated;
+exports.getRelatedItem = getRelatedItem;
+exports.getRelatedImage = getRelatedImage;
+exports.getRelatedStars = getRelatedStars;
 exports.getQuestions = getQuestions;
 exports.postQuestion = postQuestion;
 exports.helpfulQuestion = helpfulQuestion;
