@@ -10,6 +10,7 @@ export function useGlobalContext() {
 export function GlobalContextProvider({ children }) {
   // will use API later to get information
   const [productID, setProductID] = useState(40348);
+  const [productStyles, setProductStyles] = useState({}); // need to assign a default
   const [questions, setQuestions] = useState([]);
   const [numQuestions, setNumQuestions] = useState(4);
 
@@ -17,6 +18,8 @@ export function GlobalContextProvider({ children }) {
   const value = {
     productID,
     setProductID,
+    productStyles,
+    setProductStyles,
     questions,
     setQuestions,
     numQuestions,
