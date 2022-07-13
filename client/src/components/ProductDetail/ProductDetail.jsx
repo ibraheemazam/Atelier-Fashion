@@ -17,14 +17,14 @@ function ProductDetail() {
 
     function getStyles() {
       axios
-        .get('/products/styles', { params: { ID: `${productID}` } })
+        .get('/products/styles', { params: { ID: productID } })
         .then((stylesResult) => { setProductStyles(stylesResult.data); })
         .catch((err) => { console.log('error getting product styles', err); });
     }
 
     function getProductData() {
       axios
-        .get('/products', { params: { ID: `${productID}` } })
+        .get('/products', { params: { ID: productID } })
         .then((productResult) => { setProductInfo(productResult.data); })
         .catch((err) => { console.log('error getting product information', err); });
     }

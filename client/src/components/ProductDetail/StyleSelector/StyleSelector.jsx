@@ -20,7 +20,7 @@ function StyleSelector() {
 
     function getStyles() {
       axios
-        .get('/products/styles', { params: { ID: `${productID}` } })
+        .get('/products/styles', { params: { ID: productID } })
         .then((stylesResult) => getAvailableSizes(stylesResult))
         .catch((err) => { console.log('error getting available sizes', err) })
     };

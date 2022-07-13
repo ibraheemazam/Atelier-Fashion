@@ -4,7 +4,7 @@ require('dotenv').config();
 axios.defaults.headers.common.Authorization = process.env.AUTH_TOKEN;
 
 const getProducts = (req, res) => {
-  const productId = req.query || null;
+  const productId = req.query.ID || null;
   axios({
     method: 'get',
     url: productId ? `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${productId}` : 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products',
@@ -13,12 +13,13 @@ const getProducts = (req, res) => {
       res.send(result.data);
     })
     .catch((err) => {
+      console.log(err);
       res.status(400).send(err);
-    })
+    });
 };
 
-const getStyles= (req, res) => {
-  const productId = req.query || null;
+const getStyles = (req, res) => {
+  const productId = req.query.ID || null;
   axios({
     method: 'get',
     url: productId ? `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${productId}/styles` : 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products',
@@ -28,7 +29,7 @@ const getStyles= (req, res) => {
     })
     .catch((err) => {
       res.status(400).send(err);
-    })
+    });
 };
 
 const getQuestions = (req, res) => {
