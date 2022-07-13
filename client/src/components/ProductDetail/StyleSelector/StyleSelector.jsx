@@ -12,19 +12,15 @@ import { useGlobalContext } from '../../../contexts/GlobalStore';
 
 function StyleSelector() {
 
-  const { productID, setProductID } = useGlobalContext();
-
-  const productId = window.location.pathname;
-  console.log(productId);
-  setProductID(productId);
-
-  const [stylesData, setStylesData] = useState({});
+  const { productID, setProductID, productInfo, setProductInfo,
+    productStyles, setProductStyles } = useGlobalContext();
+  setProductID(window.location.pathname);
 
   useEffect(() => {
 
     function getStyles() {
       axios
-        .get('http:localhost:3000/products/styles', { params: { ID: `${productID}` } })
+        .get('/products/styles', { params: { ID: `${productID}` } })
         .then((stylesResult) => getAvailableSizes(stylesResult))
         .catch((err) => { console.log('error getting available sizes', err) })
     };

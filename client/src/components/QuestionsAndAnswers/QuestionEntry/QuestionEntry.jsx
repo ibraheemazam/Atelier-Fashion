@@ -1,26 +1,43 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import AnswerEntry from './AnswerEntry';
+import AddAnswerModal from './AddAnswerModal';
+import { useGlobalContext } from '../../../contexts/GlobalStore';
 
 function QuestionEntry({ question }) {
+  const { productID, setQuestions } = useGlobalContext();
+
+  const [numAnswers, setNumAnswers] = useState(2);
+  const [showModal, setShowModal] = useState(false);
+  const [helpfulness, setHelpfulness] = useState(question.question_helpfulness);
+
   const { answers } = question;
   const allAnswers = Object.values(answers);
-  const topAnswers = Object.values(answers).slice(0, 2);
+  allAnswers.sort((a, b) => b.helpfulness - a.helpfulness);
+  const topAnswers = Object.values(allAnswers).slice(0, numAnswers);
 
   function helpfulQuestion() {
-    console.log(`Mark question with id ${question.question_id} as helpful`);
-  }
-  function answerQuestion() {
-    console.log(`Answering question with id ${question.question_id}`);
+    axios
+      .put('/questions/helpful', { question_id: question.question_id })
+      .then(() => {
+        setHelpfulness(helpfulness + 1);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
-  function moreAnswers() {
-    if (topAnswers.length < allAnswers.length) {
-      return <MoreAnswers>LOAD MORE ANSWERS</MoreAnswers>;
-    }
-    return null;
+  function answerQuestion() {
+    setShowModal(true);
   }
+
+  function increaseNumAnswers() {
+    setNumAnswers(numAnswers + 2);
+  }
+
   return (
     <Entry>
       <Question>Q.</Question>
@@ -30,7 +47,7 @@ function QuestionEntry({ question }) {
         {' '}
         <Clickable onClick={() => helpfulQuestion()}>Yes</Clickable>
         (
-        {question.question_helpfulness}
+        {helpfulness}
         )
       </QuestionHelpful>
       <AddAnswer>
@@ -46,15 +63,20 @@ function QuestionEntry({ question }) {
           This question has not been answered yet!
         </AnswerNone>
       )}
-      {moreAnswers()}
+      {topAnswers.length < allAnswers.length ? (
+        <MoreAnswers onClick={() => increaseNumAnswers()}>LOAD MORE ANSWERS</MoreAnswers>
+      ) : null}
+      {showModal ? <AddAnswerModal setShowModal={setShowModal} question={question} /> : null}
     </Entry>
   );
 }
 
 const Entry = styled.div`
   display: grid;
-  border: 1px solid;
   grid-template-columns: 5% 70% 15% 10%;
+  padding-bottom: 5%;
+  width: 100%;
+  justify-content: center;
 `;
 
 const Question = styled.div`

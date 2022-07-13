@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
 import ProductDetail from './ProductDetail/ProductDetail';
-// import RelatedItems from './RelatedItems/RelatedItems';
-// import RatingsAndReviews from './RatingsAndReviews/RatingsAndReviews';
-// import QuestionsAndAnswers from './QuestionsAndAnswers/QuestionsAndAnswers';
+import RelatedItems from './RelatedItems/RelatedItems';
+import RatingsAndReviews from './RatingsAndReviews/RatingsAndReviews';
+import QuestionsAndAnswers from './QuestionsAndAnswers/QuestionsAndAnswers';
 import { GlobalContextProvider } from '../contexts/GlobalStore';
 
 function App() {
@@ -11,9 +11,9 @@ function App() {
     <div>
       <GlobalContextProvider>
         <ProductDetail />
-        {/* <RelatedItems />
+        <RelatedItems />
         <RatingsAndReviews />
-        <QuestionsAndAnswers /> */}
+        <QuestionsAndAnswers />
       </GlobalContextProvider>
     </div>
   );

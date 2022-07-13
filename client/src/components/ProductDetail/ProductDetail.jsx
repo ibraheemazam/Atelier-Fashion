@@ -9,42 +9,40 @@ import { useGlobalContext } from '../../contexts/GlobalStore';
 
 function ProductDetail() {
 
-  const { productID, setProductID } = useGlobalContext();
+  const { productID, setProductID, productInfo, setProductInfo,
+    productStyles, setProductStyles } = useGlobalContext();
   setProductID(window.location.pathname);
-
-  const [stylesData, setStylesData] = useState(defaultStyle);
-  const [productData, setProductData] = useState(product);
 
   useEffect(() => {
 
     function getStyles() {
       axios
-        .get(`/products/styles?ID=${productID}`)
-        .then((stylesResult) => { setStylesData(stylesResult.data); })
-        .catch((err) => { console.log('error getting available sizes', err); });
+        .get('/products/styles', { params: { ID: `${productID}` } })
+        .then((stylesResult) => { setProductStyles(stylesResult.data); })
+        .catch((err) => { console.log('error getting product styles', err); });
     }
 
     function getProductData() {
       axios
-        .get(`/products?ID=${productID}`)
-        .then((result) => { setProductData(result.data); })
-        .catch((err) => { console.log('error getting available sizes', err); });
+        .get('/products', { params: { ID: `${productID}` } })
+        .then((productResult) => { setProductInfo(productResult.data); })
+        .catch((err) => { console.log('error getting product information', err); });
     }
 
     getStyles();
     getProductData();
-  }, [productID]);
+  }, [productID, setProductInfo, setProductStyles]);
 
   return (
     <div>
       <div>
         <ImageGallery />
         <ProductOverview />
-        <StyleSelector/>
+        <StyleSelector />
         <AddToCart />
       </div>
     </div>
   );
-};
+}
 
 export default ProductDetail;
