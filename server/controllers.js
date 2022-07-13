@@ -14,6 +14,19 @@ const getProducts = (req, res) => {
     .catch((err) => (res.status(400).send(err)));
 };
 
+const getStyles = (req, res) => {
+  const productId = req.query || null;
+  axios({
+    method: 'get',
+    url: productId ? `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${productId}/styles` : 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products',
+    headers: {
+      Authorization: process.env.AUTH_TOKEN,
+    },
+  })
+    .then((result) => (res.send(result.data)))
+    .catch((err) => (res.status(400).send(err)));
+};
+
 const getQuestions = (req, res) => {
   axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions', {
     params: {
@@ -48,6 +61,7 @@ const getReviews = (req, res) => {
 
 
 exports.getProducts = getProducts;
+exports.getStyles = getStyles;
 exports.getQuestions = getQuestions;
 exports.postQuestion = postQuestion;
 exports.getReviews = getReviews;

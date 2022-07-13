@@ -1,57 +1,50 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-import ProductOverview from './ProductOverview/ProductOverview.jsx';
-import StyleSelector from './StyleSelector/StyleSelector.jsx';
-import ImageGallery from './ImageGallery/ImageGallery.jsx';
-import AddToCart from './AddToCart/AddToCart.jsx';
-import getAvailableSizes from './AddToCart/selectSize.jsx';
-import selectSize from './AddToCart/selectSize.jsx';
-import selectQuantity from './AddToCart/selectQuantity.jsx'
+import ProductOverview from './ProductOverview/ProductOverview';
+import StyleSelector from './StyleSelector/StyleSelector';
+import ImageGallery from './ImageGallery/ImageGallery';
+import AddToCart from './AddToCart/AddToCart';
 import { useGlobalContext } from '../../contexts/GlobalStore';
 
 function ProductDetail() {
 
-  const {
-    productID, setProductId
-  } = useGlobalContext();
-
-
-  const productId = window.location.pathname;
-  console.log(productId);
-  setProductID(productId); // need help setting parent state
-
-  setProductId(window.location.pathname);
+  const { productID, setProductID } = useGlobalContext();
+  setProductID(window.location.pathname);
 
   const [stylesData, setStylesData] = useState(defaultStyle);
+  const [productData, setProductData] = useState(product);
 
   useEffect(() => {
 
     function getStyles() {
       axios
-        .get(`http:localhost:3000/products/${productID}/styles`)
-        .then((stylesResult) => getAvailableSizes(stylesResult))
-        .catch((err) => { console.log('error getting available sizes', err) })
-    };
-    // function getProductData() {
-    //   axios
-    //     .get(`http:localhost:3000/products/${productID}/styles`)
-    //     .then((stylesResult) => getAvailableSizes(stylesResult))
-    //     .catch((err) => { console.log('error getting available sizes', err) })
-    // };
+        .get(`/products/styles?ID=${productID}`)
+        .then((stylesResult) => { setStylesData(stylesResult.data); })
+        .catch((err) => { console.log('error getting available sizes', err); });
+    }
+
+    function getProductData() {
+      axios
+        .get(`/products?ID=${productID}`)
+        .then((result) => { setProductData(result.data); })
+        .catch((err) => { console.log('error getting available sizes', err); });
+    }
+
     getStyles();
-  }, []);
+    getProductData();
+  }, [productID]);
 
   return (
     <div>
       <div>
         <ImageGallery />
         <ProductOverview />
-        <StyleSelector styles={styleData}/>
+        <StyleSelector/>
         <AddToCart />
       </div>
     </div>
   );
-}
+};
 
 export default ProductDetail;

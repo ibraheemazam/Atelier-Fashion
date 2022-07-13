@@ -1,4 +1,4 @@
-import react, { useState } from 'react';
+import React, { useState } from 'react';
 
 import selectSize from './selectSize.jsx';
 import selectQuantity from './selectQuantity.jsx';
