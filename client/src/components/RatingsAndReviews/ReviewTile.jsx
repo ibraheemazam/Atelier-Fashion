@@ -18,12 +18,7 @@ function ReviewTile({ review }) {
     // need to have a put request which increments or decrements helpfulness by 1
     const val_Y_N = event.target.value;
     const reviewID = review.review_id;
-    axios.put(`/reviews/${reviewID}/helpful`, {
-      params: {
-        product_id: 40367,
-        review_id: reviewID,
-      },
-    })
+    axios.put(`/reviews/${reviewID}/helpful`)
       .then((result) => {
         console.log(`put to change helpful of review ${reviewID} was sent:\n`, result);
       })

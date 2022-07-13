@@ -81,11 +81,10 @@ const postReview = (req, res) => {
 
 const putReviewHelpful = (req, res) => {
   console.log(req.params);
-  axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/${req.params.review_id}/helpful`, {
+  axios.put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/${req.params.review_id}/helpful`, {}, {
     headers: {
       Authorization: process.env.AUTH_TOKEN,
     },
-    params: req.query,
   })
     .then((result) => {
       res.send(result.data);
