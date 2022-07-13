@@ -14,6 +14,11 @@ router.post('/questions', controllers.postQuestion);
 // router.put('/answer/helpful', controllers.helpfulAnswer);
 // router.put('/answer/report', controllers.reportAnswer);
 
+// REVIEW ROUTES:
 router.get('/reviews', controllers.getReviews);
+router.get('/reviews/meta', controllers.getReviewsMeta);
+router.post('/reviews', controllers.postReview);
+router.put('/reviews/:review_id/helpful', controllers.putReviewHelpful);
+router.put('/reviews/:review_id/report', controllers.putReviewReport);
 
 module.exports = router;

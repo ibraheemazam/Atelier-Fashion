@@ -1,12 +1,97 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { format, parseISO } from 'date-fns';
+import axios from 'axios';
 
 function ReviewTile({ review }) {
+  const starCount = [];
+
+  for (let i = 0; i < review.rating; i += 1) {
+    starCount.push(i);
+  }
+
+  let helpfulClicked = false;
+
+  const handleHelpfulClick = function handleHelpfulClick(event) {
+    console.log(event.target.value);
+    // need to have a put request which increments or decrements helpfulness by 1
+    const val_Y_N = event.target.value;
+    const reviewID = review.review_id;
+    axios.put(`/reviews/${reviewID}/helpful`, {
+      params: {
+        product_id: 40367,
+        review_id: reviewID,
+      },
+    })
+      .then((result) => {
+        console.log(`put to change helpful of review ${reviewID} was sent:\n`, result);
+      })
+      .catch((err) => {
+        console.log(`error for put to change helpful of review ${reviewID}:\n`, err);
+      });
+    helpfulClicked = true;
+  };
+
   return (
-    <RevDiv>
-      {review.rating}
-    </RevDiv>
+    <Container>
+      <br />
+      <StarsDateName>
+        <div>
+          Star count:
+          {review.rating}
+        </div>
+        {/* {starCount.map((star) => (
+          <RevDiv key={star} />
+        ))}
+        <br /> */}
+        <DateName>
+          <div>
+            {`${review.reviewer_name},`}
+            &nbsp;
+          </div>
+          <div>
+            {format(parseISO(review.date), 'MMMM dd, yyyy')}
+          </div>
+        </DateName>
+      </StarsDateName>
+      <Summary>{review.summary}</Summary>
+      {/* need to add word break truncation to summary */}
+      <div>
+        {review.body}
+        {/* need to add conditional formatting for past 250 words */}
+      </div>
+      <br />
+      {review.recommend
+      && <div> &#10003; I recommend this product</div>}
+      <br />
+      {
+        true
+        && (
+        <Response>
+          <h4>Response:</h4>
+          <br />
+          <div>I wish this was a real repsonse. Thanks for reviewing, but no thanks</div>
+        </Response>
+        )
+      }
+      <br />
+      <Helpfulness>
+        <h5>Was this review helpful?</h5>
+        <button type="button" onClick={handleHelpfulClick} value="yes">
+          &nbsp;Yes&nbsp;
+          {`(${review.helpfulness})`}
+          &nbsp;
+        </button>
+        <button type="button" onClick={handleHelpfulClick} value="no">
+          No
+        </button>
+        {/* add yes no buttons
+        yes will have a click handler to increment
+        no will have a click handler to decrement
+        they will both turn helpfulButton to true */}
+      </Helpfulness>
+    </Container>
   );
 }
 
@@ -15,6 +100,36 @@ ReviewTile.propTypes = {
 };
 
 export default ReviewTile;
+
+const Container = styled.div`
+  border-bottom: 1px solid;
+`;
+
+const StarsDateName = styled.div`
+  display: flex;
+  justify-content: space-between;
+  background: ;
+`;
+
+const DateName = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  background: ;
+`;
+
+const Response = styled.div`
+  padding: 1em;
+  background: lightgrey;
+`
+
+const Summary = styled.h3`
+  display: flex;
+  background: ;
+`;
+
+const Helpfulness = styled.div`
+  display: flex;
+`;
 
 const RevDiv = styled.div`
   margin: 50px 0;
@@ -53,5 +168,5 @@ const RevDiv = styled.div`
     border-left: 100px solid transparent;
     transform: rotate(-70deg);
     content: '';
-  }
+  };
 `;

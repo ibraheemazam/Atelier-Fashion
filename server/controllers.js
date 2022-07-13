@@ -42,6 +42,7 @@ const postQuestion = (req, res) => {
   res.sendStatus(501);
 };
 
+// REVIEW CONTROLLERS
 const getReviews = (req, res) => {
   axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews', {
     headers: {
@@ -54,11 +55,57 @@ const getReviews = (req, res) => {
     })
     .catch((err) => {
       console.error('There was an error in the getReviews controller function:\n', err);
-      res.status(400).send(err);
+      res.sendStatus(400);
     });
+};
+
+const getReviewsMeta = (req, res) => {
+  axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/meta', {
+    headers: {
+      Authorization: process.env.AUTH_TOKEN,
+    },
+    params: req.query,
+  })
+    .then((result) => {
+      res.send(result.data);
+    })
+    .catch((err) => {
+      console.error('There was an error in the getReviewsMeta controller function:\n', err);
+      res.sendStatus(400);
+    });
+};
+
+const postReview = (req, res) => {
+  res.sendStatus(501);
+};
+
+const putReviewHelpful = (req, res) => {
+  console.log(req.params);
+  axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/${req.params.review_id}/helpful`, {
+    headers: {
+      Authorization: process.env.AUTH_TOKEN,
+    },
+    params: req.query,
+  })
+    .then((result) => {
+      res.send(result.data);
+    })
+    .catch((err) => {
+      console.error('There was an error in the putReviewHelpful controller function:\n', err);
+      res.sendStatus(400);
+    });
+};
+
+const putReviewReport = (req, res) => {
+  console.log(req.params);
+  res.sendStatus(501);
 };
 
 exports.getProducts = getProducts;
 exports.getQuestions = getQuestions;
 exports.postQuestion = postQuestion;
 exports.getReviews = getReviews;
+exports.getReviewsMeta = getReviewsMeta;
+exports.postReview = postReview;
+exports.putReviewHelpful = putReviewHelpful;
+exports.putReviewReport = putReviewReport;

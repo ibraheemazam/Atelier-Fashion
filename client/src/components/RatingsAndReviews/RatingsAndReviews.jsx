@@ -12,7 +12,9 @@ function RatingsAndReviews() {
   useEffect(() => {
     axios.get('/reviews', {
       params: {
-        product_id: productID,
+        product_id: 40367,
+        count: 50,
+        sort: null,
       },
     })
       .then((result) => {
@@ -26,25 +28,30 @@ function RatingsAndReviews() {
   }, [productID, setReviews]);
 
   return (
-    <OuterContainer>
-      <div>Rating and reviews</div>
+    <Container>
+      <h4>
+        &nbsp;
+        {reviews.length}
+        &nbsp;
+        reviews, sorted by ~sort placeholder~`
+      </h4>
       <ReviewContainer>
         {reviews.map((review) => (
           <ReviewTile key={review.review_id} review={review} />
         ))}
       </ReviewContainer>
-    </OuterContainer>
+    </Container>
   );
 }
 
 export default RatingsAndReviews;
 
-const OuterContainer = styled.div`
+const Container = styled.div`
   padding: 1em;
-  background: papayawhip;
+  background: ;
 `;
 
 const ReviewContainer = styled.div`
   padding: 1em;
-  background: pink;
+  background: ;
 `;
