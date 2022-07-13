@@ -113,6 +113,8 @@ const putReviewHelpful = (req, res) => {
 const putReviewReport = (req, res) => {
   console.log(req.params);
   res.sendStatus(501);
+}
+
 const postAnswer = (req, res) => {
   // send all information in body
   const questionID = req.body.question_ID;
@@ -196,8 +198,6 @@ const reportAnswer = (req, res) => {
       res.status(400).send(err);
     });
 };
-
-const getReviews = (req, res) => {};
 
 exports.getProducts = getProducts;
 exports.getQuestions = getQuestions;
