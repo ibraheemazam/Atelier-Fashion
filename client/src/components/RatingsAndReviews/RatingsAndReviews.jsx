@@ -12,8 +12,8 @@ function RatingsAndReviews() {
   useEffect(() => {
     axios.get('/reviews', {
       params: {
-        product_id: 40367,
-        count: 50,
+        product_id: productID,
+        count: 5,
         sort: null,
       },
     })
@@ -29,12 +29,12 @@ function RatingsAndReviews() {
 
   return (
     <Container>
-      <h4>
+      <h3>
         &nbsp;
         {reviews.length}
         &nbsp;
         reviews, sorted by ~sort placeholder~`
-      </h4>
+      </h3>
       <ReviewContainer>
         {reviews.map((review) => (
           <ReviewTile key={review.review_id} review={review} />

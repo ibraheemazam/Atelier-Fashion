@@ -16,16 +16,18 @@ function ReviewTile({ review }) {
   const handleHelpfulClick = function handleHelpfulClick(event) {
     console.log(event.target.value);
     // need to have a put request which increments or decrements helpfulness by 1
-    const val_Y_N = event.target.value;
     const reviewID = review.review_id;
-    axios.put(`/reviews/${reviewID}/helpful`)
-      .then((result) => {
-        console.log(`put to change helpful of review ${reviewID} was sent:\n`, result);
-      })
-      .catch((err) => {
-        console.log(`error for put to change helpful of review ${reviewID}:\n`, err);
-      });
-    helpfulClicked = true;
+    if (!helpfulClicked) {
+      axios.put(`/reviews/${reviewID}/helpful`)
+        .then((result) => {
+          console.log(`put to change helpful of review ${reviewID} was sent:\n`, result);
+          helpfulClicked = true;
+          // need to add a then statement to reload state after put request is sent
+        })
+        .catch((err) => {
+          console.log(`error for put to change helpful of review ${reviewID}:\n`, err);
+        });
+    }
   };
 
   return (
@@ -81,10 +83,6 @@ function ReviewTile({ review }) {
         <button type="button" onClick={handleHelpfulClick} value="no">
           No
         </button>
-        {/* add yes no buttons
-        yes will have a click handler to increment
-        no will have a click handler to decrement
-        they will both turn helpfulButton to true */}
       </Helpfulness>
     </Container>
   );
