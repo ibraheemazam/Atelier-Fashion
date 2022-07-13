@@ -4,10 +4,10 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 import ProductDetail from '../ProductDetail.jsx';
-import StyleSelector from './StyleSelector/StyleSelector.jsx';
-import ImageGallery from './ImageGallery/ImageGallery.jsx';
-import AddToCart from './AddToCart';
-import getAvailableSizes from './AddToCart/selectSize.jsx';
+import StyleSelector from '../StyleSelector/StyleSelector.jsx';
+import ImageGallery from '../ImageGallery/ImageGallery.jsx';
+import AddToCart from '../AddToCart/AddToCart.jsx';
+import getAvailableSizes from '../AddToCart/selectSize.jsx';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
 function ProductOverview() {

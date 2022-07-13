@@ -48,7 +48,6 @@ const getReviews = (req, res) => {
 
 
 exports.getProducts = getProducts;
-exports.getProduct = getProduct;
 exports.getQuestions = getQuestions;
 exports.postQuestion = postQuestion;
 exports.getReviews = getReviews;

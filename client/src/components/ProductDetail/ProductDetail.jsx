@@ -4,9 +4,11 @@ import axios from 'axios';
 import ProductOverview from './ProductOverview/ProductOverview.jsx';
 import StyleSelector from './StyleSelector/StyleSelector.jsx';
 import ImageGallery from './ImageGallery/ImageGallery.jsx';
-import AddToCart from './AddToCart';
+import AddToCart from './AddToCart/AddToCart.jsx';
 import getAvailableSizes from './AddToCart/selectSize.jsx';
-import { useGlobalContext } from '../../../contexts/GlobalStore';
+import selectSize from './AddToCart/selectSize.jsx';
+import selectQuantity from './AddToCart/selectQuantity.jsx'
+import { useGlobalContext } from '../../contexts/GlobalStore';
 
 function ProductDetail() {
 
@@ -23,7 +25,7 @@ function ProductDetail() {
 
   const [stylesData, setStylesData] = useState(defaultStyle);
 
-  useEffect() {
+  useEffect(() => {
 
     function getStyles() {
       axios
@@ -38,7 +40,7 @@ function ProductDetail() {
     //     .catch((err) => { console.log('error getting available sizes', err) })
     // };
     getStyles();
-  };
+  }, []);
 
   return (
     <div>
@@ -46,7 +48,7 @@ function ProductDetail() {
         <ImageGallery />
         <ProductOverview />
         <StyleSelector styles={styleData}/>
-        <AddToCart></AddToCart>
+        <AddToCart />
       </div>
     </div>
   );

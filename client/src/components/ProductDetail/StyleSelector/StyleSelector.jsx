@@ -4,11 +4,10 @@ import React from 'react';
 import axios from 'axios';
 
 import ProductDetail from '../ProductDetail.jsx';
-import ProductOverview from './ProductOverview/ProductOverview.jsx';
-import StyleSelector from './StyleSelector/StyleSelector.jsx';
-import ImageGallery from './ImageGallery/ImageGallery.jsx';
-import AddToCart from './AddToCart';
-import getAvailableSizes from './AddToCart/selectSize.jsx';
+import ProductOverview from '../ProductOverview/ProductOverview.jsx';
+import ImageGallery from '../ImageGallery/ImageGallery.jsx';
+import AddToCart from '../AddToCart/AddToCart.jsx';
+import getAvailableSizes from '../AddToCart/selectSize.jsx';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
 function StyleSelector() {
@@ -23,7 +22,7 @@ function StyleSelector() {
 
   const [stylesData, setStylesData] = useState(defaultStyle);
 
-  useEffect() {
+  useEffect(() => {
 
     function getStyles() {
       axios
@@ -32,10 +31,10 @@ function StyleSelector() {
         .catch((err) => { console.log('error getting available sizes', err) })
     };
     getStyles();
-  };
+  }, []);
 
   return(
-    null
+    <div>Style Selector Here</div>
   );
 };
 

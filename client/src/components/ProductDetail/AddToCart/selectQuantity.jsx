@@ -43,4 +43,6 @@ function selectQuantity() {
         </option>
     </select>
   );
-}
+};
+
+export default selectQuantity;
