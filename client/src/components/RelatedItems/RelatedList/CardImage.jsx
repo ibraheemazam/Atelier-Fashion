@@ -18,14 +18,24 @@ function CardImage(card) {
       });
   }, [card]);
   return (
-    <ImageCard src={image} alt="RelatedProductImage" />
+    <div>
+      <ImageCard src={image} alt="RelatedProductImage" />
+      <Button>X</Button>
+    </div>
   );
 }
 
 const ImageCard = styled.img`
   display: block;
+  position: relative;
   margin-left: auto;
   margin-right: auto;
+`;
+
+const Button = styled.button`
+  position: absolute;
+  top: 20%;
+  z-index: 1;
 `;
 
 export default CardImage;

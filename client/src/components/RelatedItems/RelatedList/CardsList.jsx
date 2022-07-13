@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import Card from './Card.jsx';
 
-function CardsList({ productID }) {
+function CardsList({ productID, setProductID }) {
   const [initial, setInitial] = useState([]);
   useEffect(() => {
     axios.get('/related', { params: { productID: productID } })

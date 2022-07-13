@@ -1,23 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import { useGlobalContext } from '../../../contexts/GlobalStore';
 import CardImage from './CardImage.jsx';
 import CardStars from './CardStars.jsx';
 
 function Card({ data }) {
-  const [info, setInfo] = useState({});
-  function changeItem() {
-    console.log('changed');
-  }
+  const [info, setInfo] = useState(data);
+  const {
+    productID, setProductID,
+  } = useGlobalContext();
   useEffect(() => {
-    axios.get('/relatedItem', { params: { productID: data } })
-      .then((data) => {
-        setInfo(data.data);
+    axios.get('/relatedItem', { params: { productID: info } })
+      .then((result) => {
+        setInfo(result.data);
       })
       .catch((err) => {
         console.log('Card error:', err);
       });
-  }, [data]);
+  }, [setProductID]);
+  function changeItem() {
+    console.log(info.id);
+    setProductID(info.id);
+  }
   return (
     <CardStyle onClick={changeItem}>
       <CardImage imageID={info.id} />
@@ -31,7 +36,7 @@ function Card({ data }) {
 
 const CardStyle = styled.div`
   display: grid;
-  border: 5px solid #69BF64;
+  border: 4px solid #0ABAB5;
 `;
 
 const Cards = styled.div`

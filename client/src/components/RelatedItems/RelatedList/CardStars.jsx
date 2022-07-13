@@ -22,11 +22,11 @@ function CardStars(card) {
       });
   }, [card]);
   // console.log(Math.ceil(stars));
-  for (let i = 0; i < Math.ceil(stars); i += 1) {
+  for (let i = 0; i < Math.round(stars); i += 1) {
     totalStars.push(<span className="star" key={i}>&#9733;</span>);
   }
-  for (let i = 0; i < (5 - Math.ceil(stars)); i += 1) {
-    totalStars.push(<span className="star" key={Math.ceil(stars) + i}>&#9734;</span>);
+  for (let i = 0; i < (5 - Math.round(stars)); i += 1) {
+    totalStars.push(<span className="star" key={Math.round(stars) + i}>&#9734;</span>);
   }
 
   return (
