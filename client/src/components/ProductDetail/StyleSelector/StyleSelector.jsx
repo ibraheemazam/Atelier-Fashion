@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+// import PropTypes from 'prop-types';
+//import styled from 'styled-components';
 import axios from 'axios';
 
+import ProductDetail from '../ProductDetail.jsx';
 import ProductOverview from './ProductOverview/ProductOverview.jsx';
 import StyleSelector from './StyleSelector/StyleSelector.jsx';
 import ImageGallery from './ImageGallery/ImageGallery.jsx';
@@ -8,18 +11,15 @@ import AddToCart from './AddToCart';
 import getAvailableSizes from './AddToCart/selectSize.jsx';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
-function ProductDetail() {
+function StyleSelector() {
 
   const {
     productID, setProductId
   } = useGlobalContext();
 
-
   const productId = window.location.pathname;
   console.log(productId);
-  setProductID(productId); // need help setting parent state
-
-  setProductId(window.location.pathname);
+  setProductID(productId);
 
   const [stylesData, setStylesData] = useState(defaultStyle);
 
@@ -31,25 +31,12 @@ function ProductDetail() {
         .then((stylesResult) => getAvailableSizes(stylesResult))
         .catch((err) => { console.log('error getting available sizes', err) })
     };
-    // function getProductData() {
-    //   axios
-    //     .get(`http:localhost:3000/products/${productID}/styles`)
-    //     .then((stylesResult) => getAvailableSizes(stylesResult))
-    //     .catch((err) => { console.log('error getting available sizes', err) })
-    // };
     getStyles();
   };
 
-  return (
-    <div>
-      <div>
-        <ImageGallery />
-        <ProductOverview />
-        <StyleSelector styles={styleData}/>
-        <AddToCart></AddToCart>
-      </div>
-    </div>
+  return(
+    null
   );
-}
+};
 
-export default ProductDetail;
+export default StyleSelector;

@@ -9,7 +9,7 @@ export function useGlobalContext() {
 // eslint-disable-next-line react/prop-types
 export function GlobalContextProvider({ children }) {
   // will use API later to get information
-  const [productID, setProductID] = useState(() => {}); // but it doesn't depend on previous productID state?
+  const [productID, setProductID] = useState(40348);
   const [productStyles, setProductStyles] = useState({});
   const [questions, setQuestions] = useState([]);
   const [numQuestions, setNumQuestions] = useState(4);
