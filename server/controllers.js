@@ -92,6 +92,7 @@ const getRelated = (req, res) => {
 };
 
 const getRelatedItem = (req, res) => {
+  // console.log(req.query.productID);
   axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${req.query.productID}`, {
     headers: {
       Authorization: process.env.AUTH_TOKEN,

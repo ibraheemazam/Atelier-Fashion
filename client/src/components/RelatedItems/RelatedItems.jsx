@@ -1,19 +1,28 @@
 import React from 'react';
-import { useGlobalContext } from '../../contexts/GlobalStore';
-import CardsList from './RelatedList/CardsList.jsx';
-import Outfit from './OutfitList/Outfit.jsx';
+import styled from 'styled-components';
+import CardsList from './RelatedList/CardsList';
+import OutfitList from './OutfitList/OutfitList';
 
 function RelatedItems() {
-  const {
-    productID, setProductID,
-  } = useGlobalContext();
   return (
     <div>
-      ADD RELATED ITEMS COMPONENTS HERE
-      <CardsList productID={productID} setProductID={setProductID} />
-      <Outfit />
+      <Text>
+        Related Items
+      </Text>
+      <CardsList />
+      <Text>
+        Outfit List
+      </Text>
+      <OutfitList />
     </div>
   );
 }
+
+const Text = styled.div`
+  font-size: large;
+  font-weight: bold;
+  text-align: center;
+  background: #0ABAB5;
+`;
 
 export default RelatedItems;
