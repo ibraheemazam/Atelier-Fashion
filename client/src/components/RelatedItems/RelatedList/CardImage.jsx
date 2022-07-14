@@ -24,6 +24,7 @@ function CardImage(card) {
   function handleAdd() {
     let newOutfit = card.outfitInfo;
     newOutfit.thumbnail = image;
+    // Note: Need to use below syntax for component to re-render properly
     const tempArray = [...outfits, newOutfit];
     // tempArray.push(newOutfit);
     // console.log(tempArray);
@@ -33,12 +34,10 @@ function CardImage(card) {
   return (
     <div>
       <ImageCard src={image} alt="RelatedProductImage" />
-      <div>
-        <Button onClick={(e) => {
-          e.stopPropagation();
-          handleAdd();
-        }}>&#9734;</Button>
-      </div>
+      <Button onClick={(e) => {
+        e.stopPropagation();
+        handleAdd();
+      }}>&#9734;</Button>
     </div>
   );
 }
@@ -54,7 +53,9 @@ const Button = styled.button`
   display: block;
   position: absolute;
   position: relative;
-  right: -90%;
+  top: -75%;
+  right: -85%;
+  color: yellow;
 `;
 
 export default CardImage;
