@@ -43,5 +43,12 @@ module.exports.putReviewHelpful = (req, res) => {
 
 module.exports.putReviewReport = (req, res) => {
   console.log(req.params);
-  res.sendStatus(501);
+  axios.put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/${req.params.review_id}/report`)
+    .then((result) => {
+      res.send(result.data);
+    })
+    .catch((err) => {
+      console.error('There was an error in the putReviewReport controller function:\n', err);
+      res.sendStatus(400);
+    });
 };

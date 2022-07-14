@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { format, parseISO } from 'date-fns';
-import Helpfulness from './Helpfulness';
+import HelpfulReport from './HelpfulReport';
 
 function ReviewTile({ review }) {
   const starCount = [];
@@ -56,7 +56,8 @@ function ReviewTile({ review }) {
         </div>
         )
       }
-      <Helpfulness review={review} />
+      <HelpfulReport review={review} />
+      <br />
     </Container>
   );
 }
