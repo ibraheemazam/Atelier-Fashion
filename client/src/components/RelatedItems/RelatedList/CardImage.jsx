@@ -37,7 +37,7 @@ function CardImage(card) {
       <Button onClick={(e) => {
         e.stopPropagation();
         handleAdd();
-      }}>&#9734;</Button>
+      }}>&#9733;</Button>
     </div>
   );
 }
@@ -55,7 +55,14 @@ const Button = styled.button`
   position: relative;
   top: -75%;
   right: -85%;
-  color: yellow;
+  color: black;
+  background-color: transparent;
+  border: none;
+  font-size: 25px;
+  font-width: bold;
+  &:hover {
+    background-color: #0ABAB5;
+  }
 `;
 
 export default CardImage;
