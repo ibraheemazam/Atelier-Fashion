@@ -9,7 +9,7 @@ function RatingsAndReviews() {
     productID, setProductID, reviews, setReviews,
   } = useGlobalContext();
 
-  useEffect(() => {
+  const getReviews = function getReviews() {
     axios.get('/reviews', {
       params: {
         product_id: productID,
@@ -25,7 +25,9 @@ function RatingsAndReviews() {
       .catch((err) => {
         console.log('Error in axios get request in client function RatingsAndRevies():\n', err);
       });
-  }, [productID, setReviews]);
+  };
+
+  useEffect(getReviews, [productID, setReviews]);
 
   return (
     <Container>
