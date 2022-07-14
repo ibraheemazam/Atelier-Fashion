@@ -36,7 +36,6 @@ module.exports.postAnswer = (req, res) => {
 };
 
 module.exports.helpfulAnswer = (req, res) => {
-  console.log(req.body);
   const answerID = req.body.answer_id;
 
   axios
