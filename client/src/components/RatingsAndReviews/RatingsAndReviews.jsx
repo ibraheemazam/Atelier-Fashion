@@ -1,45 +1,67 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { useGlobalContext } from '../../contexts/GlobalStore';
-import ReviewTile from './ReviewTile';
+import ReviewTile from './ReviewList/ReviewTile';
+import MoreAdd from './ReviewList/MoreAdd';
+import Breakdown from './Breakdown';
 
 function RatingsAndReviews() {
   const {
     productID, setProductID, reviews, setReviews,
   } = useGlobalContext();
 
-  useEffect(() => {
+  const noMoreReviews = useRef(false);
+
+  const getReviews = function getReviews(pageNum = 1) {
+    console.log('get reviews is run with the following pageNum:\n', pageNum)
     axios.get('/reviews', {
       params: {
         product_id: productID,
-        count: 5,
+        count: 2,
         sort: null,
+        page: pageNum,
       },
     })
       .then((result) => {
         console.log('Value of reviews after RatingsAndReviews() axios get request:\n', result.data.results);
-        setReviews(result.data.results);
+        if (result.data.results.length === 0) {
+          noMoreReviews.current = true;
+        }
+        setReviews((prevReviews) => result.data.results.concat(prevReviews));
       })
       .then(() => {})
       .catch((err) => {
         console.log('Error in axios get request in client function RatingsAndRevies():\n', err);
       });
-  }, [productID, setReviews]);
+  };
+
+  useEffect(getReviews, [productID, setReviews]);
 
   return (
     <Container>
-      <h3>
-        &nbsp;
-        {reviews.length}
-        &nbsp;
-        reviews, sorted by ~sort placeholder~`
-      </h3>
-      <ReviewContainer>
+      <BreakdownContainer>
+        <Breakdown productID={productID} />
+      </BreakdownContainer>
+      <ReviewListContainer>
+        <h3>
+          &nbsp;
+          {reviews.length}
+          &nbsp;
+          reviews, sorted by&nbsp;
+          <u>~sort placeholder~</u>
+        </h3>
         {reviews.map((review) => (
           <ReviewTile key={review.review_id} review={review} />
         ))}
-      </ReviewContainer>
+        <MoreAddContainer>
+          <MoreAdd
+            reviews={reviews}
+            getReviews={(pageNum) => getReviews(pageNum)}
+            noMoreReviews={noMoreReviews}
+          />
+        </MoreAddContainer>
+      </ReviewListContainer>
     </Container>
   );
 }
@@ -47,11 +69,24 @@ function RatingsAndReviews() {
 export default RatingsAndReviews;
 
 const Container = styled.div`
+  display: flex;
   padding: 1em;
   background: ;
 `;
 
-const ReviewContainer = styled.div`
+const ReviewListContainer = styled.div`
   padding: 1em;
   background: ;
+  width: 80%;
+`;
+
+const MoreAddContainer = styled.div`
+  padding: 1em;
+  background: ;
+`;
+
+const BreakdownContainer = styled.div`
+  padding: 1em;
+  background: ;
+  width: 20%;
 `;

@@ -14,7 +14,7 @@ function QuestionSearch() {
           filtered.push(question);
         }
       });
-      setFilteredQuestions(filtered);
+      setFilteredQuestions(filtered.slice(0, numQuestions));
     } else if (searchTerm.length < 3) {
       setFilteredQuestions(questions.slice(0, numQuestions));
     }
@@ -28,7 +28,9 @@ function QuestionSearch() {
         placeholder="HAVE A QUESTION? SEARCH FOR ANSWERS..."
         style={{ width: '84%' }}
       />
-      <button type="submit" style={{ width: '9%' }}>Search</button>
+      <button type="submit" style={{ width: '9%' }}>
+        Search
+      </button>
     </QuestionSearchBar>
   );
 }

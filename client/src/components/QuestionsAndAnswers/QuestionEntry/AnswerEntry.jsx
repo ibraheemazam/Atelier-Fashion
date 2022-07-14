@@ -3,14 +3,11 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { format, parseISO } from 'date-fns';
-import { useGlobalContext } from '../../../contexts/GlobalStore';
 
 function AnswerEntry({ answer }) {
-  const { productID } = useGlobalContext();
   const [helpfulness, setHelpfulness] = useState(answer.helpfulness);
 
   function helpfulAnswer() {
-    // TODO: MAKE UPDATE ONLY SPECIFIC ANSWER
     axios
       .put('/answers/helpful', { answer_id: answer.id })
       .then(() => {
@@ -21,17 +18,9 @@ function AnswerEntry({ answer }) {
       });
   }
   function reportAnswer() {
-    // TODO: MAKE UPDATE ONLY SPECIFIC ANSWER
     axios
       .put('/answers/report', { answer_id: answer.id })
       .then(() => {
-        axios
-          .get('/questions', { params: { product_id: productID } })
-          .then(() => {
-          })
-          .catch((err) => {
-            console.log(err);
-          });
       })
       .catch((err) => {
         console.log(err);
@@ -43,23 +32,29 @@ function AnswerEntry({ answer }) {
       <AnswerBody>
         {answer.body}
       </AnswerBody>
+      <AnswerPhotos>
+        {answer.photos.map((photo) => (
+          <AnswerImage
+            src={photo}
+            alt=""
+            key={photo}
+          />
+        ))}
+      </AnswerPhotos>
       <AnswerFooter>
         <AnswerDate>
-          by
-          {' '}
+          {'by '}
           {answer.answerer_name}
-          {' on '}
-          {format(parseISO(answer.date), 'MMM dd, yyyy')}
+          {` on ${format(parseISO(answer.date), 'MMM dd, yyyy')}`}
         </AnswerDate>
         <div>
-          Helpful?
-          {' '}
+          {'Helpful? '}
           <Clickable onClick={() => helpfulAnswer()}>Yes</Clickable>
-          (
-          {helpfulness}
-          )
+          {`(${helpfulness})`}
         </div>
-        <Clickable onClick={() => reportAnswer()}>Report</Clickable>
+        <div>
+          <Clickable onClick={() => reportAnswer()}>Report</Clickable>
+        </div>
       </AnswerFooter>
     </Answer>
   );
@@ -68,6 +63,16 @@ function AnswerEntry({ answer }) {
 const Answer = styled.div`
   grid-column: 2 / 3;
   padding-bottom: 1%;
+`;
+
+const AnswerPhotos = styled.span`
+
+`;
+
+const AnswerImage = styled.img`
+  width: 30%;
+  height: 30%;
+  padding-right: 5%;
 `;
 
 const AnswerFooter = styled.div`

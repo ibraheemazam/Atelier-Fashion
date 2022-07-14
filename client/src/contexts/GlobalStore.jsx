@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 
 export const GlobalContext = React.createContext();
@@ -6,7 +7,6 @@ export function useGlobalContext() {
   return React.useContext(GlobalContext);
 }
 
-// eslint-disable-next-line react/prop-types
 export function GlobalContextProvider({ children }) {
   // will use API later to get information
   const [productID, setProductID] = useState(40348);
