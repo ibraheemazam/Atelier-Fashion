@@ -41,7 +41,7 @@ function RatingsAndReviews() {
   return (
     <Container>
       <BreakdownContainer>
-        <Breakdown />
+        <Breakdown productID={productID} />
       </BreakdownContainer>
       <ReviewListContainer>
         <h3>
