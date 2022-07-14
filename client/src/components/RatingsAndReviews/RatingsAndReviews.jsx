@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { useGlobalContext } from '../../contexts/GlobalStore';
@@ -11,17 +11,24 @@ function RatingsAndReviews() {
     productID, setProductID, reviews, setReviews,
   } = useGlobalContext();
 
-  const getReviews = function getReviews() {
+  const noMoreReviews = useRef(false);
+
+  const getReviews = function getReviews(pageNum = 1) {
+    console.log('get reviews is run with the following pageNum:\n', pageNum)
     axios.get('/reviews', {
       params: {
         product_id: productID,
         count: 2,
         sort: null,
+        page: pageNum,
       },
     })
       .then((result) => {
         console.log('Value of reviews after RatingsAndReviews() axios get request:\n', result.data.results);
-        setReviews(result.data.results);
+        if (result.data.results.length === 0) {
+          noMoreReviews.current = true;
+        }
+        setReviews((prevReviews) => result.data.results.concat(prevReviews));
       })
       .then(() => {})
       .catch((err) => {
@@ -48,7 +55,11 @@ function RatingsAndReviews() {
           <ReviewTile key={review.review_id} review={review} />
         ))}
         <MoreAddContainer>
-          <MoreAdd reviews={reviews} />
+          <MoreAdd
+            reviews={reviews}
+            getReviews={(pageNum) => getReviews(pageNum)}
+            noMoreReviews={noMoreReviews}
+          />
         </MoreAddContainer>
       </ReviewListContainer>
     </Container>
