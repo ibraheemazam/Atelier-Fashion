@@ -2,11 +2,10 @@ import React, { useRef } from 'react';
 import styled from 'styled-components';
 
 function MoreAdd({ reviews, getReviews, noMoreReviews }) {
-  const pageNum = useRef(2);
+  const pageNum = useRef(1);
 
   const handleMoreReviews = function handleMoreReviews() {
-    getReviews(pageNum.current);
-    pageNum.current += 1;
+    getReviews(pageNum.current += 1);
   };
 
   return (
