@@ -44,16 +44,18 @@ function ReviewTile({ review }) {
       && <div> &#10003; I recommend this product</div>}
       <br />
       {
-        true
+        review.response
         && (
-        <Response>
-          <h4>Response:</h4>
+        <div>
+          <Response>
+            <h4>Response:</h4>
+            <br />
+            <div>{review.response}</div>
+          </Response>
           <br />
-          <div>I wish this was a real repsonse. Thanks for reviewing, but no thanks</div>
-        </Response>
+        </div>
         )
       }
-      <br />
       <Helpfulness review={review} />
     </Container>
   );
@@ -67,6 +69,7 @@ ReviewTile.propTypes = {
     rating: PropTypes.number,
     reviewer_name: PropTypes.string,
     date: PropTypes.string,
+    response: PropTypes.string,
 
   }).isRequired,
 };
