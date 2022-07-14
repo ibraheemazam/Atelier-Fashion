@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react/button-has-type */
 import React, { useState } from 'react';
@@ -13,7 +14,11 @@ function AddAnswerModal({ setShowModal, question }) {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [answer, setAnswer] = useState('');
-  const [photo, setPhoto] = useState();
+  const [photoURL, setPhotoURL] = useState();
+
+  const [fileInput, setFileInput] = useState('');
+  const [encodedImage, setEncodedImage] = useState('');
+  const [selectedFile, setSelectedFile] = useState('');
 
   const { productID, productInfo, setQuestions } = useGlobalContext();
 
@@ -23,15 +28,12 @@ function AddAnswerModal({ setShowModal, question }) {
       name: username,
       email,
       question_ID: question.question_id,
+      photos: [photoURL],
     };
+
     axios
       .post('/answers', postBody)
       .then(() => {
-        // axios
-        //   .get('/questions', { params: { product_id: productID } })
-        //   .then((results) => {
-        //     setQuestions(results.data.results);
-        //   });
         setShowModal(false);
       })
       .catch((err) => {
@@ -39,12 +41,33 @@ function AddAnswerModal({ setShowModal, question }) {
       });
   }
 
+  function submitFile(file) {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      const base64image = reader.result;
+      axios.post('/answers/photo', { image: base64image })
+        .then((result) => {
+          setPhotoURL(result.data.url);
+        }).catch((err) => {
+          console.log(err);
+        });
+    };
+  }
+
   function handlePhotos(event) {
-    console.log(event.target.files);
+    const file = event.target.files[0];
+    submitFile(file);
+  }
+
+  function closeModal(event) {
+    if (event.target.id === 'background') {
+      setShowModal(false);
+    }
   }
 
   return (
-    <ModalBackground>
+    <ModalBackground id="background" onClick={(event) => closeModal(event)}>
       <ModalContainer>
         <CloseButtonDiv>
           <CloseButtonButton onClick={() => setShowModal(false)}>&#10006;</CloseButtonButton>

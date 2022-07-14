@@ -59,7 +59,9 @@ function AnswerEntry({ answer }) {
           {helpfulness}
           )
         </div>
-        <Clickable onClick={() => reportAnswer()}>Report</Clickable>
+        <div>
+          <Clickable onClick={() => reportAnswer()}>Report</Clickable>
+        </div>
       </AnswerFooter>
     </Answer>
   );
