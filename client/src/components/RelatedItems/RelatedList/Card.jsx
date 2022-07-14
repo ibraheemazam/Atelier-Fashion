@@ -2,34 +2,40 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
-import CardImage from './CardImage.jsx';
-import CardStars from './CardStars.jsx';
+import CardImage from './CardImage';
+import CardStars from './CardStars';
 
 function Card({ data }) {
-  const [info, setInfo] = useState(data);
+  // Note: Can't use global variable for info/setInfo. Returns only last productID
+  // Each card needs its own set of states
   const {
     productID, setProductID,
   } = useGlobalContext();
+  const [ID, setID] = useState(data);
+  const [info, setInfo] = useState({});
   useEffect(() => {
-    axios.get('/relatedItem', { params: { productID: info } })
+    console.log('ID:', ID);
+    axios.get('/relatedItem', { params: { productID: ID } })
       .then((result) => {
+        console.log('result data:', result.data);
         setInfo(result.data);
+        setID(result.data.id);
       })
       .catch((err) => {
         console.log('Card error:', err);
       });
-  }, [setProductID]);
+  }, [data]);
   function changeItem() {
-    console.log(info.id);
-    setProductID(info.id);
+    console.log('Info id:', ID);
+    setProductID(ID);
   }
   return (
-    <CardStyle onClick={changeItem}>
-      <CardImage imageID={info.id} />
+    <CardStyle onClick={() => changeItem()}>
+      <CardImage imageID={ID} outfitInfo={info} />
       <Cards>{info.name}</Cards>
       <Cards>{info.category}</Cards>
       <Cards>${info.default_price}</Cards>
-      <CardStars reviewID={info.id} />
+      <CardStars reviewID={ID} />
     </CardStyle>
   );
 }
