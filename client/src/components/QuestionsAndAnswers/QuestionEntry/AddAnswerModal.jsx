@@ -1,34 +1,25 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-undef */
-/* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/prop-types */
-/* eslint-disable react/self-closing-comp */
-/* eslint-disable react/button-has-type */
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
 function AddAnswerModal({ setShowModal, question }) {
-  const [username, setUsername] = useState('');
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [answer, setAnswer] = useState('');
-  const [photoURL, setPhotoURL] = useState();
+  const [body, setBody] = useState('');
+  const [photoURL, setPhotoURL] = useState([]);
 
-  const [fileInput, setFileInput] = useState('');
-  const [encodedImage, setEncodedImage] = useState('');
-  const [selectedFile, setSelectedFile] = useState('');
-
-  const { productID, productInfo, setQuestions } = useGlobalContext();
+  const { productInfo } = useGlobalContext();
 
   function askQuestion() {
     const postBody = {
-      body: answer,
-      name: username,
+      body,
+      name,
       email,
       question_ID: question.question_id,
-      photos: [photoURL],
+      photos: photoURL,
     };
 
     axios
@@ -41,23 +32,22 @@ function AddAnswerModal({ setShowModal, question }) {
       });
   }
 
-  function submitFile(file) {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      const base64image = reader.result;
-      axios.post('/answers/photo', { image: base64image })
-        .then((result) => {
-          setPhotoURL(result.data.url);
-        }).catch((err) => {
-          console.log(err);
-        });
-    };
-  }
-
   function handlePhotos(event) {
-    const file = event.target.files[0];
-    submitFile(file);
+    const { files } = event.target;
+    for (let i = 0; i < files.length; i += 1) {
+      const file = files[i];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = async () => {
+        const base64image = reader.result;
+        await axios.post('/answers/photo', { image: base64image })
+          .then((result) => {
+            setPhotoURL([...photoURL, result.data.url]);
+          }).catch((err) => {
+            console.log(err);
+          });
+      };
+    }
   }
 
   function closeModal(event) {
@@ -83,12 +73,12 @@ function AddAnswerModal({ setShowModal, question }) {
           </h3>
         </QuestionBody>
         <Form>
-          <label htmlFor="username">Username</label>
-          <input onChange={(event) => setUsername(event.target.value)} maxLength="60" type="text" id="username" name="username" placeholder="Example: jackson11!" />
+          <label htmlFor="name">Username</label>
+          <input onChange={(event) => setName(event.target.value)} maxLength="60" type="text" id="name" name="name" placeholder="Example: jackson11!" />
           <label htmlFor="email">Email</label>
-          <input onChange={(event) => setEmail(event.target.value)} maxLength="60" type="text" id="email" placeholder="jack@email.com"></input>
-          <label htmlFor="answer">Answer</label>
-          <InputAnswer onChange={(event) => setAnswer(event.target.value)} maxLength="1000"></InputAnswer>
+          <input onChange={(event) => setEmail(event.target.value)} maxLength="60" type="text" id="email" placeholder="jack@email.com" />
+          <label htmlFor="body">Answer</label>
+          <InputAnswer onChange={(event) => setBody(event.target.value)} maxLength="1000" />
           <label htmlFor="photos">Photos</label>
           <input onChange={(event) => handlePhotos(event)} type="file" id="photos" accept="image/png, image/jpeg" multiple />
           <Footer id="footer">
