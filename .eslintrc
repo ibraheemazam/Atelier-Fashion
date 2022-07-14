@@ -1,6 +1,7 @@
 {
   "extends": ["airbnb", "airbnb/hooks"],
   "rules": {
-    "no-console": "off"
+    "no-console": "off",
+    "linebreak-style" : 0
   }
 }

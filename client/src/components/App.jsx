@@ -9,9 +9,9 @@ function App() {
   return (
     <div>
       <GlobalContextProvider>
-        <ProductDetail />
+        {/* <ProductDetail />
         <RelatedItems />
-        <RatingsAndReviews />
+        <RatingsAndReviews /> */}
         <QuestionsAndAnswers />
       </GlobalContextProvider>
     </div>
