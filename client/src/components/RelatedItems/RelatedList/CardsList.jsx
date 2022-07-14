@@ -1,30 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import Card from './Card.jsx';
+import { useGlobalContext } from '../../../contexts/GlobalStore';
+import Card from './Card';
 
-function CardsList({ productID, setProductID }) {
-  const [initial, setInitial] = useState([]);
+function CardsList() {
+  const {
+    productID, relatedID, setRelatedID,
+  } = useGlobalContext();
   useEffect(() => {
     axios.get('/related', { params: { productID: productID } })
-      .then((data) => {
-        setInitial(data.data);
-        // console.log('Initial:', initial);
-        // console.log('SetInitial:', data.data);
+      .then((results) => {
+        setRelatedID(results.data);
+        // console.log('related:', relatedID);
       })
       .catch((error) => console.log('Error here:', error));
   }, [productID]);
   // const [initial, setInitial] = useState(temp);
+  // console.log('related:', relatedID);
   return (
     <StyleCardList>
-      {initial.map((data, index) => <Card data={data} key={index} />)}
+      {relatedID.map((data, index) => <Card data={data} key={index} />)}
     </StyleCardList>
   );
 }
 
 const StyleCardList = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   background: #0ABAB5;
 `;
 

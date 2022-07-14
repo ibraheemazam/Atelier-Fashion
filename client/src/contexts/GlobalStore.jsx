@@ -43,8 +43,9 @@ export function GlobalContextProvider({ children }) {
   const [questions, setQuestions] = useState([]);
   const [filteredQuestions, setFilteredQuestions] = useState([]);
   const [numQuestions, setNumQuestions] = useState(4);
-  const [outfits, setOutfits] = useState([]);
   const [reviews, setReviews] = useState([]);
+  const [outfits, setOutfits] = useState([]);
+  const [relatedID, setRelatedID] = useState([]);
 
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value = {
@@ -58,10 +59,12 @@ export function GlobalContextProvider({ children }) {
     setFilteredQuestions,
     numQuestions,
     setNumQuestions,
-    outfits,
-    setOutfits,
     reviews,
     setReviews,
+    outfits,
+    setOutfits,
+    relatedID,
+    setRelatedID,
   };
   return (
     <GlobalContext.Provider value={value}>
