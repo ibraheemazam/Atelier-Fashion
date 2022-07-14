@@ -4,12 +4,7 @@ require('dotenv').config();
 axios.defaults.headers.common.Authorization = process.env.AUTH_TOKEN;
 
 module.exports.getReviews = (req, res) => {
-  axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews', {
-    headers: {
-      Authorization: process.env.AUTH_TOKEN,
-    },
-    params: req.query,
-  })
+  axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews', { params: req.query })
     .then((result) => {
       res.send(result.data);
     })
@@ -20,12 +15,7 @@ module.exports.getReviews = (req, res) => {
 };
 
 module.exports.getReviewsMeta = (req, res) => {
-  axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/meta', {
-    headers: {
-      Authorization: process.env.AUTH_TOKEN,
-    },
-    params: req.query,
-  })
+  axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/meta', { params: req.query })
     .then((result) => {
       res.send(result.data);
     })
@@ -41,11 +31,7 @@ module.exports.postReview = (req, res) => {
 
 module.exports.putReviewHelpful = (req, res) => {
   console.log(req.params);
-  axios.put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/${req.params.review_id}/helpful`, {}, {
-    headers: {
-      Authorization: process.env.AUTH_TOKEN,
-    },
-  })
+  axios.put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/${req.params.review_id}/helpful`)
     .then((result) => {
       res.send(result.data);
     })
@@ -57,5 +43,12 @@ module.exports.putReviewHelpful = (req, res) => {
 
 module.exports.putReviewReport = (req, res) => {
   console.log(req.params);
-  res.sendStatus(501);
+  axios.put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/${req.params.review_id}/report`)
+    .then((result) => {
+      res.send(result.data);
+    })
+    .catch((err) => {
+      console.error('There was an error in the putReviewReport controller function:\n', err);
+      res.sendStatus(400);
+    });
 };
