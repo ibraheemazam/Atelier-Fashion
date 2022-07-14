@@ -8,6 +8,7 @@ import AddAnswerModal from './AddAnswerModal';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
 function QuestionEntry({ question }) {
+  console.log(question);
   const { productID, setQuestions } = useGlobalContext();
 
   const [numAnswers, setNumAnswers] = useState(2);
@@ -38,35 +39,39 @@ function QuestionEntry({ question }) {
     setNumAnswers(numAnswers + 2);
   }
 
+  function answersList() {
+    if (topAnswers.length === 0) {
+      return (<AnswerNone>This question has not been answered yet!</AnswerNone>);
+    }
+    return topAnswers.map((answer) => (
+      <AnswerEntry answer={answer} key={answer.id} />
+    ));
+  }
+
+  function moreAnswers() {
+    if (topAnswers.length < allAnswers.length) {
+      return (<MoreAnswers onClick={() => increaseNumAnswers()}>LOAD MORE ANSWERS</MoreAnswers>);
+    }
+    return null;
+  }
   return (
     <Entry>
       <Question>Q.</Question>
       <QuestionBody>{question.question_body}</QuestionBody>
       <QuestionHelpful>
-        Helpful?
-        {' '}
+        {'Helpful? '}
         <Clickable onClick={() => helpfulQuestion()}>Yes</Clickable>
-        (
-        {helpfulness}
-        )
+        {`(${helpfulness})`}
       </QuestionHelpful>
       <AddAnswer>
         <Clickable onClick={() => answerQuestion()}>Add Answer</Clickable>
       </AddAnswer>
       <Answer>A.</Answer>
-      {topAnswers.length > 0 ? (
-        topAnswers.map((answer) => (
-          <AnswerEntry answer={answer} key={answer.id} />
-        ))
-      ) : (
-        <AnswerNone>
-          This question has not been answered yet!
-        </AnswerNone>
-      )}
-      {topAnswers.length < allAnswers.length ? (
-        <MoreAnswers onClick={() => increaseNumAnswers()}>LOAD MORE ANSWERS</MoreAnswers>
-      ) : null}
-      {showModal ? <AddAnswerModal setShowModal={setShowModal} question={question} /> : null}
+      <AnswersListContainer>
+        {answersList()}
+        {moreAnswers()}
+      </AnswersListContainer>
+      {showModal && <AddAnswerModal setShowModal={setShowModal} question={question} />}
     </Entry>
   );
 }
@@ -95,6 +100,13 @@ const QuestionHelpful = styled.div`
 `;
 
 const AddAnswer = styled.div`
+`;
+
+const AnswersListContainer = styled.div`
+  background-color: #f1f1f1;
+  height: 200px;
+  overflow: auto;
+  text-align: justify;
 `;
 
 const Answer = styled.div`
