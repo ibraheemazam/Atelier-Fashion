@@ -47,15 +47,18 @@ const ImageCard = styled.img`
   position: relative;
   margin-left: auto;
   margin-right: auto;
+  width: 200px;
+  height: 200px;
+  object-fit: fill;
 `;
 
 const Button = styled.button`
   display: block;
   position: absolute;
   position: relative;
-  top: -75%;
-  right: -85%;
-  color: black;
+  top: -86%;
+  right: -72%;
+  color: yellow;
   background-color: transparent;
   border: none;
   font-size: 25px;
