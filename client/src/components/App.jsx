@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import ProductDetail from './ProductDetail/ProductDetail';
 import RelatedItems from './RelatedItems/RelatedItems';
 import RatingsAndReviews from './RatingsAndReviews/RatingsAndReviews';
@@ -7,15 +8,19 @@ import { GlobalContextProvider } from '../contexts/GlobalStore';
 
 function App() {
   return (
-    <div>
+    <StyledContainer>
       <GlobalContextProvider>
         <ProductDetail />
-        <RelatedItems />
+        {/* <RelatedItems /> */}
         <QuestionsAndAnswers />
         <RatingsAndReviews />
       </GlobalContextProvider>
-    </div>
+    </StyledContainer>
   );
 }
+
+const StyledContainer = styled.div`
+  font-family: 'Roboto Condensed', sans-serif;
+`;
 
 export default App;

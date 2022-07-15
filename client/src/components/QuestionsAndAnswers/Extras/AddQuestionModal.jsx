@@ -1,29 +1,62 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/self-closing-comp */
-/* eslint-disable react/button-has-type */
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import axios from 'axios';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
 function AddQuestionModal({ setShowModal }) {
-  const [username, setUsername] = useState('');
+  AddQuestionModal.propTypes = {
+    setShowModal: PropTypes.func.isRequired,
+  };
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [question, setQuestion] = useState('');
+  const [body, setBody] = useState('');
+  const [validInput, setValidInput] = useState(true);
+
   const { productID, productInfo } = useGlobalContext();
 
+  function validateInput() {
+    function validateEmail(emailName) {
+      const regex = /\S+@\S+\.\S+/;
+      return regex.test(emailName);
+    }
+
+    if (name === '' || email === '' || body === '') {
+      return false;
+    }
+
+    if (!validateEmail(email)) {
+      return false;
+    }
+    return true;
+  }
+
+  function input() {
+    if (!validInput) {
+      return (
+        <Disclaimer>
+          <div>1. Not all fields have been provided.</div>
+          <div>2. Email is not in the correct email format.</div>
+        </Disclaimer>
+      );
+    }
+    return null;
+  }
+
   function askQuestion() {
+    if (!validateInput()) {
+      setValidInput(false);
+      return;
+    }
     const postBody = {
-      body: question,
-      name: username,
+      body,
+      name,
       email,
       product_id: productID,
     };
     axios
       .post('/questions', postBody)
-      .then((results) => {
+      .then(() => {
         setShowModal(false);
       })
       .catch((err) => {
@@ -43,20 +76,34 @@ function AddQuestionModal({ setShowModal }) {
         <CloseButtonDiv>
           <CloseButtonButton onClick={() => setShowModal(false)}>&#10006;</CloseButtonButton>
         </CloseButtonDiv>
-        <h1>
-          About the
-          {' '}
-          {productInfo.name}
-        </h1>
+        <h3>
+          {`About the ${productInfo.name}`}
+        </h3>
         <Form>
-          <label htmlFor="username">Username</label>
-          <input onChange={(event) => setUsername(event.target.value)} maxLength="60" type="text" id="username" name="username" placeholder="Example: jackson11!" />
-          <label htmlFor="email">Email</label>
-          <input onChange={(event) => setEmail(event.target.value)} maxLength="60" type="text" id="email" placeholder="Why did you like the product or not?"></input>
-          <label htmlFor="question">Question</label>
-          <InputQuestion onChange={(event) => setQuestion(event.target.value)} maxLength="1000"></InputQuestion>
+          <FormField htmlFor="name">
+            Username
+            <Required>*</Required>
+          </FormField>
+          <FormEntry onChange={(event) => setName(event.target.value)} maxLength="60" type="text" id="name" name="name" placeholder="Example: jackson11!" />
+          <Disclaimer>
+            For privacy reasons, do not use your full name or email address.
+          </Disclaimer>
+          <FormField htmlFor="email">
+            Email
+            <Required>*</Required>
+          </FormField>
+          <FormEntry onChange={(event) => setEmail(event.target.value)} maxLength="60" type="text" id="email" placeholder="jack@email.com" />
+          <Disclaimer>
+            For authentication reasons, you will not be emailed.
+          </Disclaimer>
+          <FormField htmlFor="body">
+            Question
+            <Required>*</Required>
+          </FormField>
+          <InputQuestion onChange={(event) => setBody(event.target.value)} maxLength="1000" placeholder="Ask your question" />
+          {input()}
           <Footer>
-            <FooterButton onClick={() => askQuestion()}>Confirm</FooterButton>
+            <FooterButton onClick={() => askQuestion()}>Submit</FooterButton>
             <FooterButton onClick={() => setShowModal(false)}>Cancel</FooterButton>
           </Footer>
         </Form>
@@ -78,8 +125,8 @@ const ModalBackground = styled.div`
 `;
 
 const ModalContainer = styled.div`
-  width: 50%;
-  height: 50%;
+  width: 60%;
+  height: 75%;
   border-radius: 12px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -105,9 +152,21 @@ const Form = styled.div`
   gap: 5%;
 `;
 
+const FormField = styled.label`
+  font-size: 18px;
+  grid-column: 1;
+  cursor: initial;
+`;
+
+const FormEntry = styled.input`
+  grid-column: 2;
+  cursor: initial;
+`;
+
 const InputQuestion = styled.textarea`
   resize: none;
-  height: 100px;
+  height: 125px;
+  font-family: Arial;
 `;
 
 const Footer = styled.div`
@@ -129,6 +188,16 @@ const FooterButton = styled.button`
   border-radius: 8px;
   font-size: 20px;
   cursor: pointer;
+`;
+
+const Required = styled.sup`
+  color: #ff0000;
+`;
+
+const Disclaimer = styled.div`
+  font-size: 12px;
+  color: #ff0000;
+  grid-column: 2;
 `;
 
 export default AddQuestionModal;

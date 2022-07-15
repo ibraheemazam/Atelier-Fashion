@@ -7,29 +7,32 @@ import QuestionSearch from './QuestionSearch/QuestionSearch';
 import ExtraButtons from './Extras/ExtraButtons';
 
 function QuestionAndAnswers() {
-  // TODO: NEED TO SORT QUESTIONS IN ORDER OF HELPFULNESS
   const {
-    setQuestions, numQuestions, filteredQuestions, productID,
+    productID, setQuestions, numQuestions, filteredQuestions,
   } = useGlobalContext();
 
   useEffect(() => {
-    axios
-      .get('/questions', {
-        params: { product_id: productID, count: 100 },
-      })
-      .then((results) => {
-        setQuestions(results.data.results);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    function getQuestions() {
+      axios
+        .get('/questions', {
+          params: { product_id: productID, count: 100 },
+        })
+        .then((results) => {
+          setQuestions(results.data.results);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
+    getQuestions();
   }, [productID, setQuestions]);
 
   return (
-    <Container>
+    <Container style={{ marginTop: '100px' }}>
       <QuestionSearch />
       <QuestionListContainer>
-        {numQuestions === 0 ? <NoQuestions>Be the first to ask a question!</NoQuestions>
+        {numQuestions === 0 ? <div>Be the first to ask a question!</div>
           : filteredQuestions.map((question) => (
             <QuestionEntry question={question} key={question.question_id} />
           ))}
@@ -48,13 +51,8 @@ const Container = styled.div`
 
 const QuestionListContainer = styled.div`
   background-color: #f1f1f1;
-  height: 500px;
+  max-height: 600px;
   overflow: auto;
   margin: 20px;
-  text-align: justify;
-  padding: 20px;
-`;
-
-const NoQuestions = styled.div`
-
+  padding: 10px;
 `;
