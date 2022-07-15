@@ -11,8 +11,7 @@ function App() {
       <GlobalContextProvider>
         <ProductDetail />
         {/* <RelatedItems /> */}
-        <RatingsAndReviews />
-        <QuestionsAndAnswers />
+        {/* <QuestionsAndAnswers /> */}
         <RatingsAndReviews />
       </GlobalContextProvider>
     </div>

@@ -51,9 +51,11 @@ function RatingsAndReviews() {
           reviews, sorted by&nbsp;
           <u>~sort placeholder~</u>
         </h3>
-        {reviews.map((review) => (
-          <ReviewTile key={review.review_id} review={review} />
-        ))}
+        <ReviewTilesContainer>
+          {reviews.map((review) => (
+            <ReviewTile key={review.review_id} review={review} />
+          ))}
+        </ReviewTilesContainer>
         <MoreAddContainer>
           <MoreAdd
             reviews={reviews}
@@ -78,6 +80,14 @@ const ReviewListContainer = styled.div`
   padding: 1em;
   background: ;
   width: 80%;
+`;
+
+const ReviewTilesContainer = styled.div`
+  padding: 1em;
+  background: ;
+  width: 80%;
+  height: 25em;
+  overflow: auto;
 `;
 
 const MoreAddContainer = styled.div`

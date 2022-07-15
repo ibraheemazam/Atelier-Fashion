@@ -11,8 +11,17 @@ function Breakdown({ productID }) {
       Width: {},
     },
     product_id: null,
-    ratings: {},
-    recommended: {},
+    ratings: {
+      1: 1,
+      2: 1,
+      3: 1,
+      4: 1,
+      5: 1,
+    },
+    recommended: {
+      true: 1,
+      false: 1,
+    },
   });
 
   const getMetaData = function getMetaData() {
@@ -38,28 +47,37 @@ function Breakdown({ productID }) {
     + parseInt(revMeta.recommended.true, 10))) * 100,
   );
 
-  // const aveRatingCalc = (ratingsObj) => {
-  //   let totalRatings = 0;
-  //   // Object.keys(ratingsObj) {
-  //   //   let voteCount = parseInt(ratingsObj[rating], 10);
-  //   //   totalRatings += {}
-  //   // }
+  const aveRatingCalc = (ratingsObj) => {
+    let totalRatings = 0;
+    let totalVotes = 0;
+    const entries = Object.entries(ratingsObj);
+    entries.forEach((entry) => {
+      const rating = parseInt(entry[0], 10);
+      const votes = parseInt(entry[1], 10);
+      totalVotes += votes;
+      totalRatings += rating * votes;
+    });
+    return Math.round((totalRatings / totalVotes) * 100) / 100;
+  };
 
-  // }
+  const aveRating = aveRatingCalc(revMeta.ratings);
 
   return (
     <div>
       RATINGS &#38; REVIEWS
-      <RatingHeader>3.5</RatingHeader>
+      <RatingHeader>{aveRating}</RatingHeader>
       <p>
         {recommendPercentage}
         % of reviews recommend this product
       </p>
-      <p><u>5 stars</u></p>
-      <p><u>4 stars</u></p>
-      <p><u>3 stars</u></p>
-      <p><u>2 stars</u></p>
-      <p><u>1 stars</u></p>
+      {
+        Object.keys(revMeta.ratings).map((rating) => (
+          <p key={rating}>
+            <u>{`${rating} stars`}</u>
+            <br />
+          </p>
+        ))
+      }
       <br />
       <div>
         <div>Size</div>
