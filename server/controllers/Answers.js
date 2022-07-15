@@ -1,5 +1,12 @@
 const axios = require('axios');
+const cloudinary = require('cloudinary').v2;
 require('dotenv').config();
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 axios.defaults.headers.common.Authorization = process.env.AUTH_TOKEN;
 
@@ -10,9 +17,13 @@ module.exports.postAnswer = (req, res) => {
     body: req.body.body,
     name: req.body.name,
     email: req.body.email,
-    photos: req.body.photos,
   };
 
+  if (req.body.photos) {
+    postBody.photos = req.body.photos;
+  }
+
+  console.log(postBody);
   axios
     .post(
       `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${questionID}/answers`,
@@ -27,7 +38,6 @@ module.exports.postAnswer = (req, res) => {
 };
 
 module.exports.helpfulAnswer = (req, res) => {
-  console.log(req.body);
   const answerID = req.body.answer_id;
 
   axios
@@ -55,4 +65,16 @@ module.exports.reportAnswer = (req, res) => {
     .catch((err) => {
       res.status(400).send(err);
     });
+};
+
+module.exports.uploadFile = async (req, res) => {
+  try {
+    const file = req.body.image;
+    const uploadedResponse = await cloudinary.uploader.upload(file, {
+      upload_preset: 'retail-app',
+    });
+    res.status(201).send(uploadedResponse);
+  } catch (err) {
+    console.log(err);
+  }
 };

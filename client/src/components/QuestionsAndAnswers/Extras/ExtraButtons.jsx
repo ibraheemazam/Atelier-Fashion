@@ -11,15 +11,22 @@ export default function ExtraButtons() {
     setNumQuestions(numQuestions + 2);
   }
 
-  return (
-    <div>
-      <Button type="submit" onClick={() => setShowModal(true)}>ASK A QUESTION</Button>
-      {numQuestions < questions.length ? (
+  function displayMoreQuestionsButton() {
+    if (numQuestions < questions.length) {
+      return (
         <Button type="submit" onClick={() => increaseQuestions()}>
           MORE ANSWERED QUESTIONS
         </Button>
-      ) : null}
-      {showModal ? <AddQuestionModal setShowModal={setShowModal} /> : null}
+      );
+    }
+    return null;
+  }
+
+  return (
+    <div>
+      <Button type="submit" onClick={() => setShowModal(true)}>ASK A QUESTION</Button>
+      {displayMoreQuestionsButton()}
+      {showModal && <AddQuestionModal setShowModal={setShowModal} />}
     </div>
   );
 }

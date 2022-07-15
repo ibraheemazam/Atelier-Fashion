@@ -13,6 +13,7 @@ function App() {
         {/* <RelatedItems /> */}
         <RatingsAndReviews />
         <QuestionsAndAnswers />
+        <RatingsAndReviews />
       </GlobalContextProvider>
     </div>
   );

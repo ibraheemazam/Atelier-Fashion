@@ -28,10 +28,12 @@ function QuestionAndAnswers() {
   return (
     <Container>
       <QuestionSearch />
-      {numQuestions === 0 ? <NoQuestions>Be the first to ask a question!</NoQuestions>
-        : filteredQuestions.map((question) => (
-          <QuestionEntry question={question} key={question.question_id} />
-        ))}
+      <QuestionListContainer>
+        {numQuestions === 0 ? <NoQuestions>Be the first to ask a question!</NoQuestions>
+          : filteredQuestions.map((question) => (
+            <QuestionEntry question={question} key={question.question_id} />
+          ))}
+      </QuestionListContainer>
       <ExtraButtons />
     </Container>
   );
@@ -40,8 +42,17 @@ function QuestionAndAnswers() {
 export default QuestionAndAnswers;
 
 const Container = styled.div`
-  width:100%;
+  width: 100%;
   justify-content: center;
+`;
+
+const QuestionListContainer = styled.div`
+  background-color: #f1f1f1;
+  height: 500px;
+  overflow: auto;
+  margin: 20px;
+  text-align: justify;
+  padding: 20px;
 `;
 
 const NoQuestions = styled.div`

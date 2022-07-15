@@ -22,6 +22,7 @@ router.put('/questions/report', Questions.reportQuestion);
 router.post('/answers', Answers.postAnswer);
 router.put('/answers/helpful', Answers.helpfulAnswer);
 router.put('/answers/report', Answers.reportAnswer);
+router.post('/answers/photo', Answers.uploadFile);
 
 // REVIEW ROUTES:
 router.get('/reviews', Reviews.getReviews);
