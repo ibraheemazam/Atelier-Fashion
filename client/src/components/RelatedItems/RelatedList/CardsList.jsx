@@ -11,34 +11,35 @@ function CardsList() {
   useEffect(() => {
     axios.get('/related', { params: { productID: productID } })
       .then((results) => {
+        // RelatedID = array of IDs
         setRelatedID(results.data);
         // console.log('related:', relatedID);
       })
       .catch((error) => console.log('Error here:', error));
+      console.log(relatedID);
   }, [productID, cardIndex]);
-  // const [initial, setInitial] = useState(temp);
-  // console.log('related:', relatedID);
+  console.log('related:', relatedID);
   function clickRight() {
     console.log(relatedID.length);
     if (cardIndex + 4 < relatedID.length) {
       setCardIndex(cardIndex + 1);
-      console.log('CardIndex Right:', cardIndex);
+      // console.log('CardIndex Right:', cardIndex);
     }
   }
   function clickLeft() {
     if (cardIndex > 0) {
       setCardIndex(cardIndex - 1);
-      console.log('CardIndex Left:', cardIndex);
+      // console.log('CardIndex Left:', cardIndex);
     }
   }
   const list = [...relatedID].slice(cardIndex, cardIndex + 4);
-  console.log('List:', list);
+  // console.log('List:', list);
   return (
     <div>
       {cardIndex === 0
         ? <div /> : <LeftButton onClick={() => clickLeft()}> &lt; </LeftButton> }
       <StyleCardList>
-        {console.log('Check List:', list)}
+        {/* {console.log('Check List:', list)} */}
         {list.map((data, i) => <Card data={data} key={i} />)}
       </StyleCardList>
       {cardIndex === relatedID.length - 4
