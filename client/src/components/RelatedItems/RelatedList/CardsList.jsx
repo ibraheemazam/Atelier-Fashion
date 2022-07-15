@@ -35,12 +35,14 @@ function CardsList() {
   console.log('List:', list);
   return (
     <div>
-      <LeftButton onClick={() => clickLeft()}> &lt; </LeftButton>
+      {cardIndex === 0
+        ? <div /> : <LeftButton onClick={() => clickLeft()}> &lt; </LeftButton> }
       <StyleCardList>
         {console.log('Check List:', list)}
         {list.map((data, i) => <Card data={data} key={i} />)}
       </StyleCardList>
-      <RightButton onClick={() => clickRight()}> &gt; </RightButton>
+      {cardIndex === relatedID.length - 4
+        ? <div /> : <RightButton onClick={() => clickRight()}> &gt; </RightButton> }
     </div>
   );
 }
