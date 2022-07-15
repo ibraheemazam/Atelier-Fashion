@@ -19,7 +19,7 @@ function RatingsAndReviews() {
       params: {
         product_id: productID,
         count: 2,
-        sort: null,
+        sort: 'newest',
         page: pageNum,
       },
     })
@@ -56,6 +56,9 @@ function RatingsAndReviews() {
             <ReviewTile key={review.review_id} review={review} />
           ))}
         </ReviewTilesContainer>
+        {/* Need to split more button and add button into
+        their own compnents and have add conitionally render
+        if there are no reviews */}
         <MoreAddContainer>
           <MoreAdd
             reviews={reviews}
@@ -86,7 +89,7 @@ const ReviewTilesContainer = styled.div`
   padding: 1em;
   background: ;
   width: 80%;
-  height: 25em;
+  max-height: 25em;
   overflow: auto;
 `;
 
