@@ -30,46 +30,6 @@ function CardsList() {
             .catch((err) => {
               console.log(err);
             });
-          // // console.log('Check id:', id);
-          // let productInfo = {};
-          // // Get related info
-          // axios.get('/relatedItem', { params: { productID: id } })
-          //   .then((details) => {
-          //     console.log('Cardlist productInfo:', details);
-          //     productInfo.details = details.data;
-          //     // console.log('Check productInfo,', productInfo);
-          //   })
-          //   .catch((err) => {
-          //     console.log('Card error:', err);
-          //   }).then(
-
-          // // Get related image
-          // axios.get('/relatedImage', { params: { productID: id } })
-          //   )
-          //   .then((image) => {
-          //     console.log('Cardlist image:', image);
-          //     productInfo.image = image.data;
-          //     // setImage(data.data.results[0].photos[0].thumbnail_url);
-          //   })
-          //   .catch((err) => {
-          //     console.log('Card error:', err);
-          //   }).then(
-
-          // // Get related star
-          // axios.get('/relatedStars', { params: { reviewID: id } })
-          // )
-          //   .then((stars) => {
-          //     console.log('Cardlist stars:', stars);
-          //     productInfo.stars = stars.data;
-          //     setProductList((oldList) => [...oldList, productInfo]);
-          //     // console.log('All product Info:', productInfo);
-          //     // console.log('Check product list:', productList);
-          //   })
-          //   .catch((err) => {
-          //     console.log('Card error:', err);
-          //   });
-          // // Placeholder
-          // return productInfo;
         });
       })
       .catch((error) => console.log('Error here:', error));
@@ -89,7 +49,7 @@ function CardsList() {
   }
   // const list = [...productList].slice(cardIndex, cardIndex + 4);
   // console.log('List:', list);
-  console.log('List:',productList);
+  // console.log('List:', productList);
   return (
     <div>
       {cardIndex === 0

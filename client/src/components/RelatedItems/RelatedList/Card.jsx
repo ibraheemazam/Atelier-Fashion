@@ -17,23 +17,7 @@ function Card({ data }) {
   useEffect(() => {
     setInfo(data);
   }, [data]);
-  // useEffect(() => {
-  //   let itemInfo = {};
-    // console.log('ID:', ID);
-    // axios.get('/relatedItem', { params: { productID: data } })
-    //   .then((result) => {
-    //     console.log('result data:', result);
-    //     // console.log('result data:', result.data);
-    //     setInfo(result.data);
-    //     setID(result.data.id);
-    //   })
-    //   .catch((err) => {
-    //     console.log('Card error:', err);
-    //   });
-  // }, [data]);
-  // useEffect(() => {
-  //   setInfo(data);
-  // }, [productID, cardIndex, data]);
+
   function changeItem() {
     // console.log('Info id:', ID);
     setProductID(data.details.data.id);

@@ -10,16 +10,7 @@ function Outfit(outfitObj) {
   } = useGlobalContext();
   let outfitImage = outfitObj.outfit.imageInfo.results[0].photos[0].thumbnail_url;
   let outfitDetails = outfitObj.outfit.details.data;
-  // useEffect(() => {
-  //   if (outfitObj.details) {
-  //     outfitDetails = outfitObj.details;
-  //   }
-  //   if (outfitObj.imageInfo) {
-  //     outfitImage = outfitObj.imageInfo.results[0].photos[0].thumbnail_url;
-  //   }
-  //   console.log(outfitImage);
-  //   console.log(outfitDetails);
-  // }, [outfits, setOutfits]);
+
   function removeOutfit() {
     // Note: Need to use below syntax for component to re-render properly
     let tempArray = [...outfits];
