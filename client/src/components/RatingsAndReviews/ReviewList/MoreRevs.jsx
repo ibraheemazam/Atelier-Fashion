@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
 
-function MoreAdd({ reviews, getReviews, noMoreReviews, setRevCount }) {
+function MoreRevs({ reviews, getReviews, noMoreReviews, setRevCount }) {
   const handleMoreReviews = function handleMoreReviews() {
     setRevCount((prevRevCount) => prevRevCount + 2);
   };
@@ -16,11 +16,8 @@ function MoreAdd({ reviews, getReviews, noMoreReviews, setRevCount }) {
           </button>
         )
       }
-      <button type="button">
-        ADD A REVIEW +
-      </button>
     </div>
   );
 }
 
-export default MoreAdd;
+export default MoreRevs;

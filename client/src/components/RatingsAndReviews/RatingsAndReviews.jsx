@@ -3,7 +3,8 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { useGlobalContext } from '../../contexts/GlobalStore';
 import ReviewTile from './ReviewList/ReviewTile';
-import MoreAdd from './ReviewList/MoreAdd';
+import MoreRevs from './ReviewList/MoreRevs';
+import AddRev from './ReviewList/AddRev';
 import Breakdown from './Breakdown';
 
 function RatingsAndReviews() {
@@ -11,7 +12,7 @@ function RatingsAndReviews() {
     productID, reviews, setReviews,
   } = useGlobalContext();
 
-  const [sortOrder, setSortOrder] = useState('helpful');
+  const [sortOrder, setSortOrder] = useState('relevant');
 
   const [revCount, setRevCount] = useState(2);
   const prevSortOrder = useRef(sortOrder);
@@ -82,12 +83,18 @@ function RatingsAndReviews() {
         their own compnents and have add conitionally render
         if there are no reviews */}
         <MoreAddContainer>
-          <MoreAdd
-            reviews={reviews}
-            setRevCount={setRevCount}
-            getReviews={(thingg) => getReviews(thingg)}
-            noMoreReviews={noMoreReviews}
-          />
+          {
+            reviews.length >= 2
+            && (
+              <MoreRevs
+                reviews={reviews}
+                setRevCount={setRevCount}
+                getReviews={(thingg) => getReviews(thingg)}
+                noMoreReviews={noMoreReviews}
+              />
+            )
+          }
+          <AddRev />
         </MoreAddContainer>
       </ReviewListContainer>
     </Container>
@@ -119,6 +126,7 @@ const ReviewTilesContainer = styled.div`
 const MoreAddContainer = styled.div`
   padding: 1em;
   background: ;
+  display: flex;
 `;
 
 const BreakdownContainer = styled.div`
