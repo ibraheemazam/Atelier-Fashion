@@ -60,7 +60,7 @@ module.exports.helpfulQuestion = (req, res) => {
 };
 
 module.exports.reportQuestion = (req, res) => {
-  const { questionID } = req.body;
+  const questionID = req.body.question_id;
 
   axios
     .put(

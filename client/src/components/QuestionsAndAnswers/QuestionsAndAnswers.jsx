@@ -24,14 +24,13 @@ function QuestionAndAnswers() {
           console.log(err);
         });
     }
-
     getQuestions();
   }, [productID, setQuestions]);
 
   return (
-    <Container style={{ marginTop: '100px' }}>
+    <Container>
       <QuestionSearch />
-      <QuestionListContainer>
+      <QuestionListContainer id="scrollable-container">
         {numQuestions === 0 ? <div>Be the first to ask a question!</div>
           : filteredQuestions.map((question) => (
             <QuestionEntry question={question} key={question.question_id} />
@@ -45,14 +44,17 @@ function QuestionAndAnswers() {
 export default QuestionAndAnswers;
 
 const Container = styled.div`
-  width: 100%;
   justify-content: center;
+  margin-top: 100px;
 `;
 
 const QuestionListContainer = styled.div`
   background-color: #f1f1f1;
   max-height: 600px;
   overflow: auto;
-  margin: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
   padding: 10px;
+  border-radius: 10px;
+  justify-content: center;
 `;

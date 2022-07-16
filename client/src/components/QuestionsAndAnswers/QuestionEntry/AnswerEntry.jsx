@@ -11,7 +11,7 @@ function AnswerEntry({ answer }) {
       helpfulness: PropTypes.number.isRequired,
       body: PropTypes.string.isRequired,
       answerer_name: PropTypes.string.isRequired,
-      date: PropTypes.instanceOf(Date).isRequired,
+      date: PropTypes.string.isRequired,
       photos: PropTypes.arrayOf(PropTypes.string),
     }).isRequired,
   };
@@ -87,8 +87,8 @@ const AnswerPhotos = styled.span`
 `;
 
 const AnswerImage = styled.img`
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   padding-right: 10px;
 `;
 
@@ -106,6 +106,9 @@ const AnswerBody = styled.div`
 const Clickable = styled.u`
   cursor: pointer;
   text-decoration: underline;
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
 `;
 
 export default AnswerEntry;

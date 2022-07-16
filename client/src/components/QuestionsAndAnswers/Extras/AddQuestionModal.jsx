@@ -126,13 +126,13 @@ const ModalBackground = styled.div`
 
 const ModalContainer = styled.div`
   width: 60%;
-  height: 75%;
-  border-radius: 12px;
+  height: 500px;
+  border-radius: 10px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   display: flex;
   flex-direction: column;
-  padding: 1%;
+  padding: 25px;
 `;
 
 const CloseButtonDiv = styled.div`
@@ -170,12 +170,10 @@ const InputQuestion = styled.textarea`
 `;
 
 const Footer = styled.div`
-  flex: 20%;
   display: flex;
   justify-content: center;
   align-items: center;
   grid-column: 1 / 3;
-  padding-top: 5%;
 `;
 
 const FooterButton = styled.button`
@@ -185,9 +183,12 @@ const FooterButton = styled.button`
   border: none;
   color: white;
   background-color: grey;
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 20px;
   cursor: pointer;
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
 `;
 
 const Required = styled.sup`
