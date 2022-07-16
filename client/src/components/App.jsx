@@ -10,8 +10,8 @@ function App() {
   return (
     <StyledContainer>
       <GlobalContextProvider>
-        <ProductDetail />
-        <RelatedItems />
+        {/* <ProductDetail /> */}
+        {/* <RelatedItems /> */}
         <QuestionsAndAnswers />
         <RatingsAndReviews />
       </GlobalContextProvider>
