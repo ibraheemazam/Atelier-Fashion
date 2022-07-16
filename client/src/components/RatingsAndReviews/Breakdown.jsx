@@ -1,19 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 function Breakdown({ productID }) {
-  const [revMeta, setRevMeta] = useState({
-    characteristics: {
-      Comfort: {},
-      Quality: {},
-      Size: {},
-      Width: {},
-    },
-    product_id: null,
-    ratings: {},
-    recommended: {},
-  });
+  const [revMeta, setRevMeta] = useState({});
 
   const getMetaData = function getMetaData() {
     axios.get('/reviews/meta', {
@@ -32,34 +23,49 @@ function Breakdown({ productID }) {
 
   useEffect(getMetaData, [productID]);
 
+  if (!revMeta.product_id) {
+    return (
+      <div />
+    );
+  }
+
   const recommendPercentage = Math.trunc(
     (parseInt(revMeta.recommended.true, 10)
     / (parseInt(revMeta.recommended.false, 10)
     + parseInt(revMeta.recommended.true, 10))) * 100,
   );
 
-  // const aveRatingCalc = (ratingsObj) => {
-  //   let totalRatings = 0;
-  //   // Object.keys(ratingsObj) {
-  //   //   let voteCount = parseInt(ratingsObj[rating], 10);
-  //   //   totalRatings += {}
-  //   // }
+  const aveRatingCalc = (ratingsObj) => {
+    let totalRatings = 0;
+    let totalVotes = 0;
+    const entries = Object.entries(ratingsObj);
+    entries.forEach((entry) => {
+      const rating = parseInt(entry[0], 10);
+      const votes = parseInt(entry[1], 10);
+      totalVotes += votes;
+      totalRatings += rating * votes;
+    });
+    return Math.round((totalRatings / totalVotes) * 100) / 100;
+  };
 
-  // }
+  const aveRating = aveRatingCalc(revMeta.ratings);
 
   return (
     <div>
       RATINGS &#38; REVIEWS
-      <RatingHeader>3.5</RatingHeader>
+      <RatingHeader>{aveRating}</RatingHeader>
       <p>
         {recommendPercentage}
         % of reviews recommend this product
       </p>
-      <p><u>5 stars</u></p>
-      <p><u>4 stars</u></p>
-      <p><u>3 stars</u></p>
-      <p><u>2 stars</u></p>
-      <p><u>1 stars</u></p>
+      {
+        Object.keys(revMeta.ratings).map((rating) => (
+          <p key={rating}>
+            <u>{`${rating} stars`}</u>
+            <br />
+          </p>
+        ))
+      }
       <br />
       <div>
         <div>Size</div>
@@ -68,6 +74,10 @@ function Breakdown({ productID }) {
     </div>
   );
 }
+
+Breakdown.propTypes = {
+  productID: PropTypes.number.isRequired,
+};
 
 export default Breakdown;
 

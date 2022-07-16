@@ -11,7 +11,7 @@ function App() {
     <StyledContainer>
       <GlobalContextProvider>
         <ProductDetail />
-        {/* <RelatedItems /> */}
+        <RelatedItems />
         <QuestionsAndAnswers />
         <RatingsAndReviews />
       </GlobalContextProvider>
