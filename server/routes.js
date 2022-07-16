@@ -8,6 +8,7 @@ const Reviews = require('./controllers/Reviews');
 const router = express.Router();
 
 router.get('/products', Products.getProducts);
+router.get('/styles', Products.getStyles);
 
 router.get('/related', Related.getRelated);
 router.get('/relatedItem', Related.getRelatedItem);
