@@ -10,7 +10,7 @@ function OutfitList() {
   // const [list, setList] = useState(outfits);
   useEffect(() => {
     setOutfits(outfits);
-    console.log('In Outfits:', outfits);
+    // console.log('In Outfits:', outfits);
   }, [outfits, setOutfits]);
   return (
     <Outline>

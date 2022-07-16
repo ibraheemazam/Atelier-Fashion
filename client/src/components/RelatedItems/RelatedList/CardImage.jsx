@@ -3,27 +3,18 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
-function CardImage(card) {
-  // console.log('CardImage', card.imageID);
-  const [image, setImage] = useState('');
+function CardImage(imageObj) {
+  // console.log('CardImage', imageObj, imageObj.imageInfo);
+  const [image, setImage] = useState(imageObj);
   const {
     outfits, setOutfits,
   } = useGlobalContext();
   useEffect(() => {
-    axios.get('/relatedImage', { params: { productID: card.imageID } })
-      .then((data) => {
-        // console.log('Card Image Data:', data);
-        // console.log('Inside Data:', data.data.results[0].photos[0].thumbnail_url);
-        setImage(data.data.results[0].photos[0].thumbnail_url);
-        // console.log('URL:', image);
-      })
-      .catch((err) => {
-        console.log('Card error:', err);
-      });
-  }, [card]);
+    setImage(imageObj);
+  }, [imageObj]);
   function handleAdd() {
-    let newOutfit = card.outfitInfo;
-    newOutfit.thumbnail = image;
+    const newOutfit = imageObj;
+    // newOutfit.thumbnail = image;
     // Note: Need to use below syntax for component to re-render properly
     const tempArray = [...outfits, newOutfit];
     // tempArray.push(newOutfit);
@@ -31,9 +22,10 @@ function CardImage(card) {
     setOutfits(tempArray);
     console.log('Outfit list', outfits);
   }
+
   return (
     <div>
-      <ImageCard src={image} alt="RelatedProductImage" />
+      <ImageCard src={image.imageInfo.results[0].photos[0].thumbnail_url} alt="RelatedProductImage" />
       <Button onClick={(e) => {
         e.stopPropagation();
         handleAdd();
@@ -64,7 +56,8 @@ const Button = styled.button`
   font-size: 25px;
   font-width: bold;
   &:hover {
-    background-color: #0ABAB5;
+    background-color: trasparent;
+    opacity: 0.60;
   }
 `;
 
