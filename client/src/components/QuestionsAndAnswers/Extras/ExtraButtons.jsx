@@ -15,7 +15,7 @@ export default function ExtraButtons() {
     if (numQuestions < questions.length) {
       return (
         <Button type="submit" onClick={() => increaseQuestions()}>
-          MORE ANSWERED QUESTIONS
+          More Answered Questions
         </Button>
       );
     }
@@ -23,16 +23,22 @@ export default function ExtraButtons() {
   }
 
   return (
-    <div>
-      <Button type="submit" onClick={() => setShowModal(true)}>ASK A QUESTION</Button>
+    <ButtonContainer>
+      <Button type="submit" onClick={() => setShowModal(true)}>Ask a Question +</Button>
       {displayMoreQuestionsButton()}
       {showModal && <AddQuestionModal setShowModal={setShowModal} />}
-    </div>
+    </ButtonContainer>
   );
 }
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+`;
 
 const Button = styled.button`
   height: 50px;
   margin-top: 10px;
-  margin-left: 10px;
+  margin-left: 20px;
+  font-family: 'Roboto', sans-serif;
 `;

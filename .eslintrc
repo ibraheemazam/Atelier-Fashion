@@ -2,7 +2,8 @@
   "extends": ["airbnb", "airbnb/hooks"],
   "rules": {
     "no-console": "off",
-    "linebreak-style" : 0
+    "linebreak-style": 0,
+    "react/jsx-no-constructed-context-values": 0
   },
   "env": {
     "browser": true,
