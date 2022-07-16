@@ -61,19 +61,17 @@ function RatingsAndReviews() {
         <Breakdown productID={productID} />
       </BreakdownContainer>
       <ReviewListContainer>
-        <h3>
+        <RevListHeader>
           &nbsp;
           {reviews.length}
           &nbsp;
           reviews, sorted by&nbsp;
-          <u>
-            <select onChange={handleSortSelect}>
-              <option value="relevant">Relevance</option>
-              <option value="newest">Newest</option>
-              <option value="helpful">Helpful</option>
-            </select>
-          </u>
-        </h3>
+          <select onChange={handleSortSelect}>
+            <option value="relevant">Relevance</option>
+            <option value="newest">Newest</option>
+            <option value="helpful">Helpful</option>
+          </select>
+        </RevListHeader>
         <ReviewTilesContainer>
           {reviews.map((review) => (
             <ReviewTile key={review.review_id} review={review} />
@@ -109,6 +107,17 @@ const Container = styled.div`
   background: ;
 `;
 
+const RevListHeader = styled.div`
+  padding: 1em;
+  font-size: 1.3em;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+  display: flex;
+`;
+
 const ReviewListContainer = styled.div`
   padding: 1em;
   background: ;
@@ -118,7 +127,6 @@ const ReviewListContainer = styled.div`
 const ReviewTilesContainer = styled.div`
   padding: 1em;
   background: ;
-  width: 80%;
   max-height: 25em;
   overflow: auto;
 `;

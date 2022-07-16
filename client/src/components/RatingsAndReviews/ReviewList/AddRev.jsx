@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
 function AddRev() {
-  const { productInfo } = useGlobalContext();
+  const { productInfo, revMeta } = useGlobalContext();
   const [addClicked, setAddClicked] = useState(false);
+  const [recommendProd, setRecommendProd] = useState();
 
   const handleAddRev = function handleAddRev() {
     setAddClicked((prevAddClicked) => !prevAddClicked);
@@ -14,6 +15,15 @@ function AddRev() {
     //
     event.preventDefault();
     console.log('submitted pho');
+    console.log('addClicked:\n', addClicked);
+    console.log('recommendProd:\n', recommendProd);
+    console.log(revMeta);
+  };
+
+  const handleBackgroundClick = function handleBackgroundClick(event) {
+    if (event.target.id === 'AddRevBackground') {
+      setAddClicked(false);
+    }
   };
 
   return (
@@ -23,10 +33,13 @@ function AddRev() {
       </button>
       {
         addClicked && (
-          <AddRevBackground>
+          <AddRevBackground id="AddRevBackground" onClick={(event) => handleBackgroundClick(event)}>
             <TestDiv>
               <h2>Write a Review</h2>
-              <h3>About the {productInfo.name}</h3>
+              <h3>
+                About the&nbsp;
+                {productInfo.name}
+              </h3>
               <FormContainer onSubmit={handleSubmit}>
                 <label htmlFor="overall rating">
                   Overall rating*&nbsp;
@@ -38,17 +51,35 @@ function AddRev() {
                     <option>5 star</option>
                   </select>
                 </label>
-                <label htmlFor="overall rating">
+                <br />
+                <label htmlFor="recommendProd" onChange={(event) => setRecommendProd(event.target.value === 'true')}>
                   Do you recommend this product?*&nbsp;
                   <div>
-                    <label htmlFor="option one">Yes</label>
-                    <input type="radio" value="yes" id="choice1" />
-                  </div>
-                  <div>
-                    <label htmlFor="option two">No</label>
-                    <input type="radio" value="no" id="choice2" />
+                    <input type="radio" value="true" name="ovRating" />
+                    Yes
+                    <input type="radio" value="false" name="ovRating" />
+                    No
                   </div>
                 </label>
+                <br />
+
+                <label htmlFor="characteristics" onChange={() => null}>
+                  None selected
+                  <div>
+                    <input type="radio" value={1} name="chars" />
+                    1
+                    <input type="radio" value={2} name="chars" />
+                    2
+                    <input type="radio" value={1} name="chars" />
+                    3
+                    <input type="radio" value={2} name="chars" />
+                    4
+                    <input type="radio" value={1} name="chars" />
+                    5
+                  </div>
+                </label>
+                <br />
+
                 <button type="submit">Submit</button>
               </FormContainer>
             </TestDiv>

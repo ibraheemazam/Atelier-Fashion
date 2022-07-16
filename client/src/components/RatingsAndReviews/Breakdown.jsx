@@ -1,27 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
-import PropTypes from 'prop-types';
+import { useGlobalContext } from '../../contexts/GlobalStore';
 
-function Breakdown({ productID }) {
-  const [revMeta, setRevMeta] = useState({});
-
-  const getMetaData = function getMetaData() {
-    axios.get('/reviews/meta', {
-      params: {
-        product_id: productID,
-      },
-    })
-      .then((result) => {
-        console.log(result.data);
-        setRevMeta(result.data);
-      })
-      .catch((err) => {
-        console.log('error in getMetaData() function inside Breakdown.jsx:/n', err);
-      });
-  };
-
-  useEffect(getMetaData, [productID]);
+function Breakdown() {
+  const { revMeta } = useGlobalContext();
 
   if (!revMeta.product_id) {
     return (
@@ -74,10 +56,6 @@ function Breakdown({ productID }) {
     </div>
   );
 }
-
-Breakdown.propTypes = {
-  productID: PropTypes.number.isRequired,
-};
 
 export default Breakdown;
 
