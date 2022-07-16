@@ -77,6 +77,7 @@ export function GlobalContextProvider({ children }) {
     relatedID,
     setRelatedID,
   };
+
   return (
     <GlobalContext.Provider value={value}>
       {children}
