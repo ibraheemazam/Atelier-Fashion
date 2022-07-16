@@ -16,8 +16,9 @@ function AddAnswerModal({ setShowModal, question }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [body, setBody] = useState('');
-  const [photoURL, setPhotoURL] = useState([]);
+
   const [validInput, setValidInput] = useState(true);
+  const [preview, setPreview] = useState([]);
 
   const { productInfo } = useGlobalContext();
 
@@ -41,9 +42,12 @@ function AddAnswerModal({ setShowModal, question }) {
     if (!validInput) {
       return (
         <Disclaimer>
-          <div>1. Not all fields have been provided.</div>
+          <div>1. Not all mandatory fields have been provided.</div>
           <div>2. Email is not in the correct email format.</div>
-          <div>3. The images selected are invalid or unable to be uploaded.</div>
+          <div>
+            3. The images selected are invalid or unable to be
+            uploaded.
+          </div>
         </Disclaimer>
       );
     }
@@ -61,36 +65,59 @@ function AddAnswerModal({ setShowModal, question }) {
       name,
       email,
       question_ID: question.question_id,
-      photos: photoURL,
+      photos: [],
     };
 
-    axios
-      .post('/answers', postBody)
-      .then(() => {
-        setShowModal(false);
-      })
-      .catch((err) => {
-        console.log(err);
+    const promises = [];
+    for (let i = 0; i < preview.length; i += 1) {
+      const promise = axios.post('/answers/photo', {
+        image: preview[i],
+      });
+      promises.push(promise);
+    }
+
+    Promise.all(promises)
+      .then(async (results) => {
+        await results.forEach((result) => {
+          postBody.photos.push(result.data.url);
+        });
+
+        axios.post('/answers', postBody).then(() => {
+          setShowModal(false);
+        });
       });
   }
 
-  function handlePhotos(event) {
-    const { files } = event.target;
+  function handlePreviews(event) {
+    if (preview.length >= 5 || event.target.files.length === 0) return;
 
-    for (let i = 0; i < files.length; i += 1) {
-      const file = files[i];
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onloadend = async () => {
-        const base64image = reader.result;
-        await axios.post('/answers/photo', { image: base64image })
-          .then((result) => {
-            setPhotoURL([...photoURL, result.data.url]);
-          }).catch((err) => {
-            console.log(err);
-          });
-      };
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      const base64image = reader.result;
+      setPreview([...preview, base64image]);
+    };
+  }
+
+  function displayUpload() {
+    if (preview.length >= 5) {
+      return null;
     }
+    return (
+      <>
+        <FormField>
+          <div>Photos(optional)</div>
+          <div>Max 5</div>
+        </FormField>
+        <FormEntry
+          onChange={(event) => handlePreviews(event)}
+          type="file"
+          id="photos"
+          accept="image/png, image/jpeg"
+        />
+      </>
+    );
   }
 
   function closeModal(event) {
@@ -100,29 +127,52 @@ function AddAnswerModal({ setShowModal, question }) {
   }
 
   return (
-    <ModalBackground id="background" onClick={(event) => closeModal(event)}>
+    <ModalBackground
+      id="background"
+      onClick={(event) => closeModal(event)}
+    >
       <ModalContainer>
         <CloseButtonDiv>
-          <CloseButtonButton onClick={() => setShowModal(false)}>&#10006;</CloseButtonButton>
+          <CloseButtonButton onClick={() => setShowModal(false)}>
+            &#10006;
+          </CloseButtonButton>
         </CloseButtonDiv>
-        <header>
-          <div><b>Submit your answer</b></div>
-          <div><b>{`${productInfo.name} : ${question.question_body}`}</b></div>
-        </header>
-        <Form>
+        <Header>
+          <div>
+            <b>Submit your answer</b>
+          </div>
+          <div>
+            <b>{`${productInfo.name} : ${question.question_body}`}</b>
+          </div>
+        </Header>
+        <Form id="form">
           <FormField htmlFor="name">
             Username
             <Required>*</Required>
           </FormField>
-          <FormEntry onChange={(event) => setName(event.target.value)} maxLength="60" type="text" id="name" name="name" placeholder="Example: jackson11!" />
+          <FormEntry
+            onChange={(event) => setName(event.target.value)}
+            maxLength="60"
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Example: jackson11!"
+          />
           <Disclaimer>
-            For privacy reasons, do not use your full name or email address.
+            For privacy reasons, do not use your full name or email
+            address.
           </Disclaimer>
           <FormField htmlFor="email">
             Email
             <Required>*</Required>
           </FormField>
-          <FormEntry onChange={(event) => setEmail(event.target.value)} maxLength="60" type="text" id="email" placeholder="jack@email.com" />
+          <FormEntry
+            onChange={(event) => setEmail(event.target.value)}
+            maxLength="60"
+            type="text"
+            id="email"
+            placeholder="jack@email.com"
+          />
           <Disclaimer>
             For authentication reasons, you will not be emailed.
           </Disclaimer>
@@ -130,19 +180,26 @@ function AddAnswerModal({ setShowModal, question }) {
             Answer
             <Required>*</Required>
           </FormField>
-          <InputAnswer onChange={(event) => setBody(event.target.value)} maxLength="1000" placeholder="Enter your answer" />
-          <FormField>
-            Photos(optional)
-          </FormField>
-          <FormEntry onChange={(event) => handlePhotos(event)} type="file" id="photos" accept="image/png, image/jpeg" multiple />
-          {input()}
+          <InputAnswer
+            onChange={(event) => setBody(event.target.value)}
+            maxLength="1000"
+            placeholder="Enter your answer"
+          />
+          {displayUpload()}
           <PhotoPreviews>
-            {photoURL.map((photo) => <ImagePreview src={photo} alt="" key={photo} />)}
+            {preview.map((photo) => (
+              <ImagePreview src={photo} alt="" key={photo} />
+            ))}
           </PhotoPreviews>
+          {input()}
         </Form>
         <Footer id="footer">
-          <FooterButton onClick={() => askQuestion()}>Confirm</FooterButton>
-          <FooterButton onClick={() => setShowModal(false)}>Cancel</FooterButton>
+          <FooterButton onClick={() => askQuestion()}>
+            Confirm
+          </FooterButton>
+          <FooterButton onClick={() => setShowModal(false)}>
+            Cancel
+          </FooterButton>
         </Footer>
       </ModalContainer>
     </ModalBackground>
@@ -163,8 +220,7 @@ const ModalBackground = styled.div`
 
 const ModalContainer = styled.div`
   width: 60%;
-  height: 90%;
-  border-radius: 12px;
+  border-radius: 10px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   display: flex;
@@ -174,7 +230,7 @@ const ModalContainer = styled.div`
 
 const CloseButtonDiv = styled.div`
   display: flex;
-  justify-content:flex-end;
+  justify-content: flex-end;
 `;
 
 const CloseButtonButton = styled.button`
@@ -185,7 +241,7 @@ const CloseButtonButton = styled.button`
 
 const Form = styled.div`
   display: grid;
-  grid-template-columns: 15% 75%;
+  grid-template-columns: 20% 75%;
   gap: 5%;
 `;
 
@@ -202,16 +258,16 @@ const FormEntry = styled.input`
 
 const InputAnswer = styled.textarea`
   resize: none;
-  height: 100px;
+  height: 50px;
   font-family: Arial;
 `;
 
 const Footer = styled.div`
   display: flex;
-  flex: auto;
+  flex: none;
   justify-content: center;
   align-items: flex-end;
-  grid-column: 1 / 3;
+  align-content: flex-end;
   margin-top: 20%;
 `;
 
@@ -222,9 +278,12 @@ const FooterButton = styled.button`
   border: none;
   color: white;
   background-color: grey;
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 20px;
   cursor: pointer;
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
 `;
 
 const Required = styled.sup`
@@ -239,14 +298,18 @@ const Disclaimer = styled.div`
 
 const PhotoPreviews = styled.div`
   display: flex;
+  flex-direction: row;
   justify-content: center;
   grid-column: 1 / 3;
 `;
 
 const ImagePreview = styled.img`
-  width: 150px;
-  height: 150px;
-  padding-right: 10px;
+  width: 80px;
+  height: 80px;
+  margin-right: 1%;
 `;
 
+const Header = styled.header`
+  margin-bottom: 10px;
+`;
 export default AddAnswerModal;

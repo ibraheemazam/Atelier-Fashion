@@ -22,24 +22,39 @@ function QuestionSearch() {
 
   return (
     <QuestionSearchBar>
-      <input
+      <Input
         onChange={(event) => setSearchTerm(event.target.value)}
         type="text"
         placeholder="HAVE A QUESTION? SEARCH FOR ANSWERS..."
-        style={{ width: '90%' }}
       />
-      <button type="submit" style={{ width: '9%' }}>
-        Search
-      </button>
+      <Button type="submit" style={{ width: '14%' }}>
+        <i className="fa-solid fa-magnifying-glass" />
+      </Button>
     </QuestionSearchBar>
   );
 }
 
 const QuestionSearchBar = styled.div`
-  margin: 20px;
   justify-content: center;
   align-items: center;
   text-align: center;
+  background-color: #82827d;
+  padding: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+  border-radius: 10px;
 `;
 
+const Input = styled.input`
+  width: 80%;
+  height: 44px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+`;
+const Button = styled.button`
+  height: 50px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  margin-left: -1%;
+`;
 export default QuestionSearch;
