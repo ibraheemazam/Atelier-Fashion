@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { useGlobalContext } from '../../contexts/GlobalStore';
@@ -9,7 +9,7 @@ import Breakdown from './Breakdown';
 
 function RatingsAndReviews() {
   const {
-    productID, reviews, setReviews,
+    productID, reviews, setReviews, revMeta, setRevMeta,
   } = useGlobalContext();
 
   const [sortOrder, setSortOrder] = useState('relevant');
@@ -18,37 +18,61 @@ function RatingsAndReviews() {
   const prevSortOrder = useRef(sortOrder);
   const noMoreReviews = useRef(false);
 
-  const getReviews = function getReviews() {
-    console.log('get reviews is run with the following revCount:\n', revCount);
-    axios.get('/reviews', {
-      params: {
-        product_id: productID,
-        count: revCount,
-        sort: sortOrder,
-      },
-    })
-      .then((result) => {
-        console.log('Value of reviews after RatingsAndReviews() axios get request:\n', result.data.results);
-        setReviews(
-          (prevState) => {
-            if (prevState.length >= result.data.results.length - 1) {
-              if (prevSortOrder.current === sortOrder) {
-                noMoreReviews.current = true;
-              } else {
-                prevSortOrder.current = sortOrder;
-              }
-            }
-            return result.data.results;
-          },
-        );
+  const getReviews = useCallback(
+    () => {
+      console.log('get reviews is run with the following revCount:\n', revCount);
+      axios.get('/reviews', {
+        params: {
+          product_id: productID,
+          count: revCount,
+          sort: sortOrder,
+        },
       })
-      .then(() => {})
-      .catch((err) => {
-        console.log('Error in axios get request in client function RatingsAndRevies():\n', err);
-      });
-  };
+        .then((result) => {
+          console.log('Value of reviews after RatingsAndReviews() axios get request:\n', result.data.results);
+          setReviews(
+            (prevState) => {
+              if (prevState.length >= result.data.results.length - 1) {
+                if (prevSortOrder.current === sortOrder) {
+                  noMoreReviews.current = true;
+                } else {
+                  prevSortOrder.current = sortOrder;
+                }
+              }
+              return result.data.results;
+            },
+          );
+        })
+        .then(() => {})
+        .catch((err) => {
+          console.log('Error in axios get request in client function RatingsAndRevies():\n', err);
+        });
+    },
+    [productID, setReviews, sortOrder, revCount],
+  );
 
-  useEffect(getReviews, [productID, setReviews, sortOrder, revCount]);
+  const getMetaData = useCallback(
+    () => {
+      axios.get('/reviews/meta', {
+        params: {
+          product_id: productID,
+        },
+      })
+        .then((result) => {
+          console.log(result.data);
+          setRevMeta(result.data);
+        })
+        .catch((err) => {
+          console.log('error in getMetaData() function inside Breakdown.jsx:/n', err);
+        });
+    },
+    [productID, setRevMeta],
+  );
+
+  useEffect(() => {
+    getReviews();
+    getMetaData();
+  }, [productID, setReviews, sortOrder, revCount, getReviews, getMetaData]);
 
   const handleSortSelect = function handleSortSelect(event) {
     console.log(event.target.value);
@@ -58,7 +82,7 @@ function RatingsAndReviews() {
   return (
     <Container>
       <BreakdownContainer>
-        <Breakdown productID={productID} />
+        <Breakdown productID={productID} revMeta={revMeta} />
       </BreakdownContainer>
       <ReviewListContainer>
         <RevListHeader>

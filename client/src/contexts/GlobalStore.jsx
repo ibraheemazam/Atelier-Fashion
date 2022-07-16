@@ -31,24 +31,6 @@ export function GlobalContextProvider({ children }) {
   const [productList, setProductList] = useState([]);
   const [revMeta, setRevMeta] = useState({});
 
-  const getMetaData = useCallback(
-    () => {
-      axios.get('/reviews/meta', {
-        params: {
-          product_id: productID,
-        },
-      })
-        .then((result) => {
-          console.log(result.data);
-          setRevMeta(result.data);
-        })
-        .catch((err) => {
-          console.log('error in getMetaData() function inside Breakdown.jsx:/n', err);
-        });
-    },
-    [productID],
-  );
-
   useEffect(() => {
     setProductInfo({
       id: 40348,
@@ -81,8 +63,7 @@ export function GlobalContextProvider({ children }) {
       ],
     });
     setNumQuestions(4);
-    getMetaData();
-  }, [productID, getMetaData]);
+  }, [productID]);
 
   const value = {
     productID,

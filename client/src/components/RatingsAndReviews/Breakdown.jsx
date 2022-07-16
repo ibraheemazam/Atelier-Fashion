@@ -1,10 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useGlobalContext } from '../../contexts/GlobalStore';
 
-function Breakdown() {
-  const { revMeta } = useGlobalContext();
-
+function Breakdown( {revMeta} ) {
   if (!revMeta.product_id) {
     return (
       <div />
