@@ -14,6 +14,7 @@ function RatingsAndReviews() {
   const [sortOrder, setSortOrder] = useState('helpful');
 
   const [revCount, setRevCount] = useState(2);
+  const prevSortOrder = useRef(sortOrder);
   const noMoreReviews = useRef(false);
 
   const getReviews = function getReviews() {
@@ -29,8 +30,12 @@ function RatingsAndReviews() {
         console.log('Value of reviews after RatingsAndReviews() axios get request:\n', result.data.results);
         setReviews(
           (prevState) => {
-            if (JSON.stringify(result.data.results) === JSON.stringify(prevState)) {
-              noMoreReviews.current = true;
+            if (prevState.length >= result.data.results.length - 1) {
+              if (prevSortOrder.current === sortOrder) {
+                noMoreReviews.current = true;
+              } else {
+                prevSortOrder.current = sortOrder;
+              }
             }
             return result.data.results;
           },
