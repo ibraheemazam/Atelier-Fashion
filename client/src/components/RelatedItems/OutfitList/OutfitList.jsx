@@ -10,13 +10,10 @@ function OutfitList() {
   // const [list, setList] = useState(outfits);
   useEffect(() => {
     setOutfits(outfits);
-    console.log('In Outfits:', outfits);
+    // console.log('In Outfits:', outfits);
   }, [outfits, setOutfits]);
   return (
     <Outline>
-      {/* {outfits.length > 0
-        ? outfits.map((outfit) => <Outfit outfit={outfit} />)
-        : <div>No outfits added</div> } */}
       {outfits.map((outfit, index) => <Outfit outfit={outfit} key={index} index={index} />)}
     </Outline>
   );
