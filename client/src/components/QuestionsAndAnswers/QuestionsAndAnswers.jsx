@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import { useGlobalContext } from '../../contexts/GlobalStore';
 import QuestionEntry from './QuestionEntry/QuestionEntry';
 import QuestionSearch from './QuestionSearch/QuestionSearch';
@@ -7,11 +8,29 @@ import ExtraButtons from './Extras/ExtraButtons';
 
 function QuestionAndAnswers() {
   const {
-    numQuestions, filteredQuestions,
+    productID, setQuestions, numQuestions, setNumQuestions, filteredQuestions,
   } = useGlobalContext();
 
+  useEffect(() => {
+    function getQuestions() {
+      axios
+        .get('/questions', {
+          params: { product_id: productID, count: 100 },
+        })
+        .then((results) => {
+          setQuestions(results.data.results);
+        })
+        .catch((err) => {
+          throw new Error(err);
+        });
+    }
+    getQuestions();
+
+    setNumQuestions(4);
+  }, [productID, setNumQuestions, setQuestions]);
+
   return (
-    <Container>
+    <Container id="question-and-answers">
       <QuestionSearch />
       <QuestionListContainer id="scrollable-container">
         {numQuestions === 0 ? <div>Be the first to ask a question!</div>

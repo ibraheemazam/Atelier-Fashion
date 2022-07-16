@@ -8,6 +8,7 @@ function AddQuestionModal({ setShowModal }) {
   AddQuestionModal.propTypes = {
     setShowModal: PropTypes.func.isRequired,
   };
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [body, setBody] = useState('');

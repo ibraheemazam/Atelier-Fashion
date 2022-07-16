@@ -13,8 +13,7 @@ export function GlobalContextProvider({ children }) {
     children: PropTypes.node.isRequired,
   };
 
-  // will use API later to get information
-  const [productID, setProductID] = useState(40348);
+  const [productID, setProductID] = useState(40351);
   const [productInfo, setProductInfo] = useState({});
   const [styles, setStyles] = useState([]);
   const [selectedStyle, setSelectedStyle] = useState({});
@@ -40,23 +39,8 @@ export function GlobalContextProvider({ children }) {
         setProductInfo(results.data);
       });
     }
-    function getQuestions() {
-      axios
-        .get('/questions', {
-          params: { product_id: productID, count: 100 },
-        })
-        .then((results) => {
-          setQuestions(results.data.results);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
 
-    getQuestions();
     getProductInfo();
-
-    setNumQuestions(4);
   }, [productID]);
 
   const value = {

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import axios from 'axios';
 import { format, parseISO } from 'date-fns';
+import ExpandedImageModal from './ExpandedImageModal';
 
 function AnswerEntry({ answer }) {
   AnswerEntry.propTypes = {
@@ -17,6 +18,9 @@ function AnswerEntry({ answer }) {
   };
 
   const [helpfulness, setHelpfulness] = useState(answer.helpfulness);
+  const [showModal, setShowModal] = useState(false);
+  const [source, setSource] = useState();
+
   const clickedHelpful = useRef(false);
 
   function helpfulAnswer() {
@@ -28,7 +32,7 @@ function AnswerEntry({ answer }) {
           clickedHelpful.current = true;
         })
         .catch((err) => {
-          console.log(err);
+          throw new Error(err);
         });
     }
   }
@@ -39,8 +43,13 @@ function AnswerEntry({ answer }) {
       .then(() => {
       })
       .catch((err) => {
-        console.log(err);
+        throw new Error(err);
       });
+  }
+
+  function handlePhotoClick(event) {
+    setShowModal(true);
+    setSource(event.target.src);
   }
 
   return (
@@ -54,6 +63,7 @@ function AnswerEntry({ answer }) {
             src={photo}
             alt=""
             key={photo}
+            onClick={(event) => handlePhotoClick(event)}
           />
         ))}
       </AnswerPhotos>
@@ -72,6 +82,7 @@ function AnswerEntry({ answer }) {
           <Clickable onClick={() => reportAnswer()}>Report</Clickable>
         </div>
       </AnswerFooter>
+      {showModal && <ExpandedImageModal src={source} setShowModal={setShowModal} />}
     </Answer>
   );
 }
@@ -90,6 +101,7 @@ const AnswerImage = styled.img`
   width: 80px;
   height: 80px;
   padding-right: 10px;
+  cursor: pointer;
 `;
 
 const AnswerFooter = styled.div`

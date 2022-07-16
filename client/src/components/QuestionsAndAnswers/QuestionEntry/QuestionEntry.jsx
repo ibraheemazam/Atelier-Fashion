@@ -27,13 +27,22 @@ function QuestionEntry({ question }) {
   const [helpfulness, setHelpfulness] = useState(question.question_helpfulness);
   const [clickedReport, setClickedReport] = useState(false);
 
-  const clickedHelpful = useRef(false); // can only say it was helpful once
+  const clickedHelpful = useRef(false);
 
   const { answers } = question;
   const allAnswers = Object.values(answers);
-  allAnswers.sort((a, b) => b.helpfulness - a.helpfulness);
-  const topAnswers = Object.values(allAnswers).slice(0, numAnswers);
+  function sellerFirst(a, b) {
+    if (a.answerer_name.toLowerCase() === 'seller') return -1;
+    if (b.answerer_name.toLowerCase() === 'seller') return 1;
+    return b.helpfulness - a.helpfulness;
+  }
+  function helpfulnessFirst(a, b) {
+    return b.helpfulness - a.helpfulness;
+  }
+  allAnswers.sort(helpfulnessFirst);
+  allAnswers.sort(sellerFirst);
 
+  const topAnswers = Object.values(allAnswers).slice(0, numAnswers);
   function reportQuestion() {
     if (!clickedReport) {
       axios
@@ -42,7 +51,7 @@ function QuestionEntry({ question }) {
           setClickedReport(true);
         })
         .catch((err) => {
-          console.log(err);
+          throw new Error(err);
         });
     }
   }
@@ -56,7 +65,7 @@ function QuestionEntry({ question }) {
           clickedHelpful.current = true;
         })
         .catch((err) => {
-          console.log(err);
+          throw new Error(err);
         });
     }
   }
