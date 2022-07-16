@@ -3,26 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 function Breakdown({ productID }) {
-  const [revMeta, setRevMeta] = useState({
-    characteristics: {
-      Comfort: {},
-      Quality: {},
-      Size: {},
-      Width: {},
-    },
-    product_id: null,
-    ratings: {
-      1: 1,
-      2: 1,
-      3: 1,
-      4: 1,
-      5: 1,
-    },
-    recommended: {
-      true: 1,
-      false: 1,
-    },
-  });
+  const [revMeta, setRevMeta] = useState({});
 
   const getMetaData = function getMetaData() {
     axios.get('/reviews/meta', {
@@ -40,6 +21,12 @@ function Breakdown({ productID }) {
   };
 
   useEffect(getMetaData, [productID]);
+
+  if (!revMeta.product_id) {
+    return (
+      <div />
+    );
+  }
 
   const recommendPercentage = Math.trunc(
     (parseInt(revMeta.recommended.true, 10)
