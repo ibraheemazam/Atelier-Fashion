@@ -26,7 +26,7 @@ function QuestionSearch() {
         onChange={(event) => setSearchTerm(event.target.value)}
         type="text"
         placeholder="HAVE A QUESTION? SEARCH FOR ANSWERS..."
-        style={{ width: '84%' }}
+        style={{ width: '90%' }}
       />
       <button type="submit" style={{ width: '9%' }}>
         Search
@@ -36,8 +36,10 @@ function QuestionSearch() {
 }
 
 const QuestionSearchBar = styled.div`
-  width: 100%;
-  margin-bottom 10px;
+  margin: 20px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 `;
 
 export default QuestionSearch;

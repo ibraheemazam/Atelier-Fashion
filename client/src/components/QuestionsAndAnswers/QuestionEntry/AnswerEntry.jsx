@@ -1,22 +1,38 @@
-/* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import axios from 'axios';
 import { format, parseISO } from 'date-fns';
 
 function AnswerEntry({ answer }) {
+  AnswerEntry.propTypes = {
+    answer: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      helpfulness: PropTypes.number.isRequired,
+      body: PropTypes.string.isRequired,
+      answerer_name: PropTypes.string.isRequired,
+      date: PropTypes.instanceOf(Date).isRequired,
+      photos: PropTypes.arrayOf(PropTypes.string),
+    }).isRequired,
+  };
+
   const [helpfulness, setHelpfulness] = useState(answer.helpfulness);
+  const clickedHelpful = useRef(false);
 
   function helpfulAnswer() {
-    axios
-      .put('/answers/helpful', { answer_id: answer.id })
-      .then(() => {
-        setHelpfulness(helpfulness + 1);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (!clickedHelpful.current) {
+      axios
+        .put('/answers/helpful', { answer_id: answer.id })
+        .then(() => {
+          setHelpfulness(helpfulness + 1);
+          clickedHelpful.current = true;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }
+
   function reportAnswer() {
     axios
       .put('/answers/report', { answer_id: answer.id })
@@ -42,11 +58,11 @@ function AnswerEntry({ answer }) {
         ))}
       </AnswerPhotos>
       <AnswerFooter>
-        <AnswerDate>
+        <div>
           {'by '}
-          {answer.answerer_name}
+          {answer.answerer_name.toLowerCase() === 'seller' ? <b>{answer.answerer_name}</b> : answer.answerer_name}
           {` on ${format(parseISO(answer.date), 'MMM dd, yyyy')}`}
-        </AnswerDate>
+        </div>
         <div>
           {'Helpful? '}
           <Clickable onClick={() => helpfulAnswer()}>Yes</Clickable>
@@ -66,23 +82,20 @@ const Answer = styled.div`
 `;
 
 const AnswerPhotos = styled.span`
-
+  display: flex;
+  justify-content: flex-start;
 `;
 
 const AnswerImage = styled.img`
-  width: 30%;
-  height: 30%;
-  padding-right: 5%;
+  width: 100px;
+  height: 100px;
+  padding-right: 10px;
 `;
 
 const AnswerFooter = styled.div`
   display: grid;
   grid-template-columns: 50% 25% 25%;
   font-size: 12px;
-`;
-
-const AnswerDate = styled.div`
-
 `;
 
 const AnswerBody = styled.div`

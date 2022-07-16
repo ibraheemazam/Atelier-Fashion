@@ -1,19 +1,61 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import axios from 'axios';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
 function AddAnswerModal({ setShowModal, question }) {
+  AddAnswerModal.propTypes = {
+    question: PropTypes.shape({
+      question_id: PropTypes.number.isRequired,
+      question_body: PropTypes.string.isRequired,
+    }).isRequired,
+    setShowModal: PropTypes.func.isRequired,
+  };
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [body, setBody] = useState('');
   const [photoURL, setPhotoURL] = useState([]);
+  const [validInput, setValidInput] = useState(true);
 
   const { productInfo } = useGlobalContext();
 
+  function validateInput() {
+    function validateEmail(emailName) {
+      const regex = /\S+@\S+\.\S+/;
+      return regex.test(emailName);
+    }
+
+    if (name === '' || email === '' || body === '') {
+      return false;
+    }
+
+    if (!validateEmail(email)) {
+      return false;
+    }
+    return true;
+  }
+
+  function input() {
+    if (!validInput) {
+      return (
+        <Disclaimer>
+          <div>1. Not all fields have been provided.</div>
+          <div>2. Email is not in the correct email format.</div>
+          <div>3. The images selected are invalid or unable to be uploaded.</div>
+        </Disclaimer>
+      );
+    }
+    return null;
+  }
+
   function askQuestion() {
+    if (!validateInput()) {
+      setValidInput(false);
+      return;
+    }
+
     const postBody = {
       body,
       name,
@@ -34,6 +76,7 @@ function AddAnswerModal({ setShowModal, question }) {
 
   function handlePhotos(event) {
     const { files } = event.target;
+
     for (let i = 0; i < files.length; i += 1) {
       const file = files[i];
       const reader = new FileReader();
@@ -62,30 +105,45 @@ function AddAnswerModal({ setShowModal, question }) {
         <CloseButtonDiv>
           <CloseButtonButton onClick={() => setShowModal(false)}>&#10006;</CloseButtonButton>
         </CloseButtonDiv>
-        <Title>
-          <h1>Submit your answer</h1>
-        </Title>
-        <QuestionBody>
-          <h3>
-            {productInfo.name}
-            {': '}
-            {question.question_body}
-          </h3>
-        </QuestionBody>
+        <header>
+          <div><b>Submit your answer</b></div>
+          <div><b>{`${productInfo.name} : ${question.question_body}`}</b></div>
+        </header>
         <Form>
-          <label htmlFor="name">Username</label>
-          <input onChange={(event) => setName(event.target.value)} maxLength="60" type="text" id="name" name="name" placeholder="Example: jackson11!" />
-          <label htmlFor="email">Email</label>
-          <input onChange={(event) => setEmail(event.target.value)} maxLength="60" type="text" id="email" placeholder="jack@email.com" />
-          <label htmlFor="body">Answer</label>
-          <InputAnswer onChange={(event) => setBody(event.target.value)} maxLength="1000" />
-          <label htmlFor="photos">Photos</label>
-          <input onChange={(event) => handlePhotos(event)} type="file" id="photos" accept="image/png, image/jpeg" multiple />
-          <Footer id="footer">
-            <FooterButton onClick={() => askQuestion()}>Confirm</FooterButton>
-            <FooterButton onClick={() => setShowModal(false)}>Cancel</FooterButton>
-          </Footer>
+          <FormField htmlFor="name">
+            Username
+            <Required>*</Required>
+          </FormField>
+          <FormEntry onChange={(event) => setName(event.target.value)} maxLength="60" type="text" id="name" name="name" placeholder="Example: jackson11!" />
+          <Disclaimer>
+            For privacy reasons, do not use your full name or email address.
+          </Disclaimer>
+          <FormField htmlFor="email">
+            Email
+            <Required>*</Required>
+          </FormField>
+          <FormEntry onChange={(event) => setEmail(event.target.value)} maxLength="60" type="text" id="email" placeholder="jack@email.com" />
+          <Disclaimer>
+            For authentication reasons, you will not be emailed.
+          </Disclaimer>
+          <FormField htmlFor="body">
+            Answer
+            <Required>*</Required>
+          </FormField>
+          <InputAnswer onChange={(event) => setBody(event.target.value)} maxLength="1000" placeholder="Enter your answer" />
+          <FormField>
+            Photos(optional)
+          </FormField>
+          <FormEntry onChange={(event) => handlePhotos(event)} type="file" id="photos" accept="image/png, image/jpeg" multiple />
+          {input()}
+          <PhotoPreviews>
+            {photoURL.map((photo) => <ImagePreview src={photo} alt="" key={photo} />)}
+          </PhotoPreviews>
         </Form>
+        <Footer id="footer">
+          <FooterButton onClick={() => askQuestion()}>Confirm</FooterButton>
+          <FooterButton onClick={() => setShowModal(false)}>Cancel</FooterButton>
+        </Footer>
       </ModalContainer>
     </ModalBackground>
   );
@@ -104,8 +162,8 @@ const ModalBackground = styled.div`
 `;
 
 const ModalContainer = styled.div`
-  width: 50%;
-  height: 75%;
+  width: 60%;
+  height: 90%;
   border-radius: 12px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -125,31 +183,36 @@ const CloseButtonButton = styled.button`
   cursor: pointer;
 `;
 
-const Title = styled.div`
-
-`;
-
-const QuestionBody = styled.div`
-`;
-
 const Form = styled.div`
   display: grid;
   grid-template-columns: 15% 75%;
   gap: 5%;
 `;
 
+const FormField = styled.label`
+  font-size: 18px;
+  grid-column: 1;
+  cursor: initial;
+`;
+
+const FormEntry = styled.input`
+  grid-column: 2;
+  cursor: initial;
+`;
+
 const InputAnswer = styled.textarea`
   resize: none;
   height: 100px;
+  font-family: Arial;
 `;
 
 const Footer = styled.div`
   display: flex;
   flex: auto;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   grid-column: 1 / 3;
-  padding-top: 10%;
+  margin-top: 20%;
 `;
 
 const FooterButton = styled.button`
@@ -162,6 +225,28 @@ const FooterButton = styled.button`
   border-radius: 8px;
   font-size: 20px;
   cursor: pointer;
+`;
+
+const Required = styled.sup`
+  color: #ff0000;
+`;
+
+const Disclaimer = styled.div`
+  font-size: 12px;
+  color: #ff0000;
+  grid-column: 2;
+`;
+
+const PhotoPreviews = styled.div`
+  display: flex;
+  justify-content: center;
+  grid-column: 1 / 3;
+`;
+
+const ImagePreview = styled.img`
+  width: 150px;
+  height: 150px;
+  padding-right: 10px;
 `;
 
 export default AddAnswerModal;

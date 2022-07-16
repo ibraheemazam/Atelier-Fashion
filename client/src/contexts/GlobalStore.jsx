@@ -1,5 +1,5 @@
-/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 export const GlobalContext = React.createContext();
 
@@ -8,6 +8,10 @@ export function useGlobalContext() {
 }
 
 export function GlobalContextProvider({ children }) {
+  GlobalContextProvider.propTypes = {
+    children: PropTypes.node.isRequired,
+  };
+
   // will use API later to get information
   const [productID, setProductID] = useState(40348);
   const [productInfo, setProductInfo] = useState({
@@ -49,7 +53,6 @@ export function GlobalContextProvider({ children }) {
   const [outfitIndex, setOutfitIndex] = useState(0);
   const [productList, setProductList] = useState([]);
 
-  // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value = {
     productID,
     setProductID,

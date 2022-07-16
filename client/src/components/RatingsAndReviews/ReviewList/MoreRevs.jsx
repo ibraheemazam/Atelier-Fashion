@@ -1,12 +1,9 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
 
-function MoreAdd({ reviews, getReviews, noMoreReviews }) {
-  const pageNum = useRef(2);
-
+function MoreRevs({ reviews, getReviews, noMoreReviews, setRevCount }) {
   const handleMoreReviews = function handleMoreReviews() {
-    getReviews(pageNum.current);
-    pageNum.current += 1;
+    setRevCount((prevRevCount) => prevRevCount + 2);
   };
 
   return (
@@ -19,11 +16,8 @@ function MoreAdd({ reviews, getReviews, noMoreReviews }) {
           </button>
         )
       }
-      <button type="button">
-        ADD A REVIEW +
-      </button>
     </div>
   );
 }
 
-export default MoreAdd;
+export default MoreRevs;

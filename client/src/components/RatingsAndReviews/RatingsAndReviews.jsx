@@ -1,34 +1,46 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { useGlobalContext } from '../../contexts/GlobalStore';
 import ReviewTile from './ReviewList/ReviewTile';
-import MoreAdd from './ReviewList/MoreAdd';
+import MoreRevs from './ReviewList/MoreRevs';
+import AddRev from './ReviewList/AddRev';
 import Breakdown from './Breakdown';
 
 function RatingsAndReviews() {
   const {
-    productID, setProductID, reviews, setReviews,
+    productID, reviews, setReviews,
   } = useGlobalContext();
 
+  const [sortOrder, setSortOrder] = useState('relevant');
+
+  const [revCount, setRevCount] = useState(2);
+  const prevSortOrder = useRef(sortOrder);
   const noMoreReviews = useRef(false);
 
-  const getReviews = function getReviews(pageNum = 1) {
-    console.log('get reviews is run with the following pageNum:\n', pageNum)
+  const getReviews = function getReviews() {
+    console.log('get reviews is run with the following revCount:\n', revCount);
     axios.get('/reviews', {
       params: {
         product_id: productID,
-        count: 2,
-        sort: null,
-        page: pageNum,
+        count: revCount,
+        sort: sortOrder,
       },
     })
       .then((result) => {
         console.log('Value of reviews after RatingsAndReviews() axios get request:\n', result.data.results);
-        if (result.data.results.length === 0) {
-          noMoreReviews.current = true;
-        }
-        setReviews((prevReviews) => result.data.results.concat(prevReviews));
+        setReviews(
+          (prevState) => {
+            if (prevState.length >= result.data.results.length - 1) {
+              if (prevSortOrder.current === sortOrder) {
+                noMoreReviews.current = true;
+              } else {
+                prevSortOrder.current = sortOrder;
+              }
+            }
+            return result.data.results;
+          },
+        );
       })
       .then(() => {})
       .catch((err) => {
@@ -36,7 +48,12 @@ function RatingsAndReviews() {
       });
   };
 
-  useEffect(getReviews, [productID, setReviews]);
+  useEffect(getReviews, [productID, setReviews, sortOrder, revCount]);
+
+  const handleSortSelect = function handleSortSelect(event) {
+    console.log(event.target.value);
+    setSortOrder(event.target.value);
+  };
 
   return (
     <Container>
@@ -49,17 +66,35 @@ function RatingsAndReviews() {
           {reviews.length}
           &nbsp;
           reviews, sorted by&nbsp;
-          <u>~sort placeholder~</u>
+          <u>
+            <select onChange={handleSortSelect}>
+              <option value="relevant">Relevance</option>
+              <option value="newest">Newest</option>
+              <option value="helpful">Helpful</option>
+            </select>
+          </u>
         </h3>
-        {reviews.map((review) => (
-          <ReviewTile key={review.review_id} review={review} />
-        ))}
+        <ReviewTilesContainer>
+          {reviews.map((review) => (
+            <ReviewTile key={review.review_id} review={review} />
+          ))}
+        </ReviewTilesContainer>
+        {/* Need to split more button and add button into
+        their own compnents and have add conitionally render
+        if there are no reviews */}
         <MoreAddContainer>
-          <MoreAdd
-            reviews={reviews}
-            getReviews={(pageNum) => getReviews(pageNum)}
-            noMoreReviews={noMoreReviews}
-          />
+          {
+            reviews.length >= 2
+            && (
+              <MoreRevs
+                reviews={reviews}
+                setRevCount={setRevCount}
+                getReviews={(thingg) => getReviews(thingg)}
+                noMoreReviews={noMoreReviews}
+              />
+            )
+          }
+          <AddRev />
         </MoreAddContainer>
       </ReviewListContainer>
     </Container>
@@ -80,9 +115,18 @@ const ReviewListContainer = styled.div`
   width: 80%;
 `;
 
+const ReviewTilesContainer = styled.div`
+  padding: 1em;
+  background: ;
+  width: 80%;
+  max-height: 25em;
+  overflow: auto;
+`;
+
 const MoreAddContainer = styled.div`
   padding: 1em;
   background: ;
+  display: flex;
 `;
 
 const BreakdownContainer = styled.div`
