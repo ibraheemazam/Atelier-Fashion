@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 function Breakdown({ productID }) {
   const [revMeta, setRevMeta] = useState({});
@@ -73,6 +74,10 @@ function Breakdown({ productID }) {
     </div>
   );
 }
+
+Breakdown.propTypes = {
+  productID: PropTypes.number.isRequired,
+};
 
 export default Breakdown;
 

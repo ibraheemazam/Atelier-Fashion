@@ -8,14 +8,15 @@ import Breakdown from './Breakdown';
 
 function RatingsAndReviews() {
   const {
-    productID, setProductID, reviews, setReviews,
+    productID, reviews, setReviews,
   } = useGlobalContext();
 
-  const [sortOrder, setSortOrder] = useState("helpful");
+  const [sortOrder, setSortOrder] = useState('helpful');
 
+  const [revCount, setRevCount] = useState(2);
   const noMoreReviews = useRef(false);
 
-  const getReviews = function getReviews(revCount = 2) {
+  const getReviews = function getReviews() {
     console.log('get reviews is run with the following revCount:\n', revCount);
     axios.get('/reviews', {
       params: {
@@ -28,7 +29,7 @@ function RatingsAndReviews() {
         console.log('Value of reviews after RatingsAndReviews() axios get request:\n', result.data.results);
         setReviews(
           (prevState) => {
-            if (result.data.results.length === prevState.length) {
+            if (JSON.stringify(result.data.results) === JSON.stringify(prevState)) {
               noMoreReviews.current = true;
             }
             return result.data.results;
@@ -41,7 +42,12 @@ function RatingsAndReviews() {
       });
   };
 
-  useEffect(getReviews, [productID, setReviews]);
+  useEffect(getReviews, [productID, setReviews, sortOrder, revCount]);
+
+  const handleSortSelect = function handleSortSelect(event) {
+    console.log(event.target.value);
+    setSortOrder(event.target.value);
+  };
 
   return (
     <Container>
@@ -55,10 +61,10 @@ function RatingsAndReviews() {
           &nbsp;
           reviews, sorted by&nbsp;
           <u>
-            <select>
-              <option>Relevance</option>
-              <option>Newest</option>
-              <option>Helpful</option>
+            <select onChange={handleSortSelect}>
+              <option value="relevant">Relevance</option>
+              <option value="newest">Newest</option>
+              <option value="helpful">Helpful</option>
             </select>
           </u>
         </h3>
@@ -73,7 +79,8 @@ function RatingsAndReviews() {
         <MoreAddContainer>
           <MoreAdd
             reviews={reviews}
-            getReviews={(revCount) => getReviews(revCount)}
+            setRevCount={setRevCount}
+            getReviews={(thingg) => getReviews(thingg)}
             noMoreReviews={noMoreReviews}
           />
         </MoreAddContainer>

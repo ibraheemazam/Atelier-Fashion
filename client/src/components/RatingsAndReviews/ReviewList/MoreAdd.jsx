@@ -1,11 +1,9 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
 
-function MoreAdd({ reviews, getReviews, noMoreReviews }) {
-  const revCount = useRef(2);
-
+function MoreAdd({ reviews, getReviews, noMoreReviews, setRevCount }) {
   const handleMoreReviews = function handleMoreReviews() {
-    getReviews(revCount.current += 2);
+    setRevCount((prevRevCount) => prevRevCount + 2);
   };
 
   return (
