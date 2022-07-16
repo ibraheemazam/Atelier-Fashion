@@ -23,7 +23,6 @@ module.exports.postAnswer = (req, res) => {
     postBody.photos = req.body.photos;
   }
 
-  console.log(postBody);
   axios
     .post(
       `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${questionID}/answers`,

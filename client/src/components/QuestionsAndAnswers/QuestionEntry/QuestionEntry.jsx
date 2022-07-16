@@ -11,19 +11,41 @@ function QuestionEntry({ question }) {
       question_id: PropTypes.number.isRequired,
       question_helpfulness: PropTypes.number.isRequired,
       question_body: PropTypes.string.isRequired,
-      answers: PropTypes.node,
+      answers: PropTypes.objectOf(PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        helpfulness: PropTypes.number.isRequired,
+        body: PropTypes.string.isRequired,
+        answerer_name: PropTypes.string.isRequired,
+        date: PropTypes.string.isRequired,
+        photos: PropTypes.arrayOf(PropTypes.string).isRequired,
+      })).isRequired,
     }).isRequired,
   };
 
   const [numAnswers, setNumAnswers] = useState(2);
   const [showModal, setShowModal] = useState(false);
   const [helpfulness, setHelpfulness] = useState(question.question_helpfulness);
+  const [clickedReport, setClickedReport] = useState(false);
+
   const clickedHelpful = useRef(false); // can only say it was helpful once
 
   const { answers } = question;
   const allAnswers = Object.values(answers);
   allAnswers.sort((a, b) => b.helpfulness - a.helpfulness);
   const topAnswers = Object.values(allAnswers).slice(0, numAnswers);
+
+  function reportQuestion() {
+    if (!clickedReport) {
+      axios
+        .put('/questions/report', { question_id: question.question_id })
+        .then(() => {
+          setClickedReport(true);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }
 
   function helpfulQuestion() {
     if (!clickedHelpful.current) {
@@ -48,6 +70,26 @@ function QuestionEntry({ question }) {
     setNumAnswers(count);
   }
 
+  function helpfulReport() {
+    if (clickedReport) {
+      return (
+        <Reported>Reported</Reported>
+      );
+    }
+    return (
+      <>
+        <HelpfulReport>
+          {'Helpful? '}
+          <Clickable onClick={() => helpfulQuestion()}>Yes</Clickable>
+          {`(${helpfulness}) `}
+          <Clickable onClick={() => reportQuestion()}>Report</Clickable>
+        </HelpfulReport>
+        <AddAnswer>
+          <Clickable onClick={() => answerQuestion()}>Add Answer</Clickable>
+        </AddAnswer>
+      </>
+    );
+  }
   function answersList() {
     if (topAnswers.length === 0) {
       return (<AnswerNone>This question has not been answered yet!</AnswerNone>);
@@ -62,23 +104,26 @@ function QuestionEntry({ question }) {
       return null;
     }
     if (topAnswers.length < allAnswers.length) {
-      return (<MoreAnswers onClick={() => changeNumAnswers(100)}>See More Answers</MoreAnswers>);
+      return (
+        <MoreAnswers onClick={() => changeNumAnswers(100)}>
+          <i className="fa-solid fa-chevron-down" />
+          <span>See More Answers</span>
+        </MoreAnswers>
+      );
     }
-    return (<MoreAnswers onClick={() => changeNumAnswers(-100)}>Collapse Answers</MoreAnswers>);
+    return (
+      <MoreAnswers onClick={() => changeNumAnswers(-100)}>
+        <i className="fa-solid fa-chevron-up" />
+        <span>Collapse Answers</span>
+      </MoreAnswers>
+    );
   }
 
   return (
     <Entry>
       <Question>Q.</Question>
       <QuestionBody>{question.question_body}</QuestionBody>
-      <QuestionHelpful>
-        {'Helpful? '}
-        <Clickable onClick={() => helpfulQuestion()}>Yes</Clickable>
-        {`(${helpfulness})`}
-      </QuestionHelpful>
-      <div>
-        <Clickable onClick={() => answerQuestion()}>Add Answer</Clickable>
-      </div>
+      {helpfulReport()}
       <Answer>A.</Answer>
       <AnswersListContainer>
         {answersList()}
@@ -91,7 +136,7 @@ function QuestionEntry({ question }) {
 
 const Entry = styled.div`
   display: grid;
-  grid-template-columns: 5% 65% 15% 10%;
+  grid-template-columns: 5% 64% 20% 10%;
   padding-bottom: 5%;
   width: 100%;
   justify-content: center;
@@ -100,6 +145,7 @@ const Entry = styled.div`
 const Question = styled.div`
   grid-column: 1;
   font-weight: bold;
+  margin-bottom: 10px;
 `;
 
 const QuestionBody = styled.div`
@@ -108,15 +154,27 @@ const QuestionBody = styled.div`
   padding-right: 10px;
 `;
 
-const QuestionHelpful = styled.div`
+const HelpfulReport = styled.div`
   grid-column: 3;
 `;
 
+const AddAnswer = styled.div`
+  grid-column: 4;
+`;
+
+const Reported = styled.div`
+  grid-column: 3 / 5;
+  font-weight: bold;
+`;
+
 const AnswersListContainer = styled.div`
+  border: 1px solid;
   background-color: #f1f1f1;
-  max-height: 250px;
+  max-height: 350px;
   overflow: auto;
   text-align: justify;
+  padding: 1%;
+  border-radius: 10px;
 `;
 
 const Answer = styled.div`
@@ -129,14 +187,20 @@ const AnswerNone = styled.div`
 `;
 
 const MoreAnswers = styled.div`
-  grid-column: 1 / 5;
+  display: flex;
+  grid-column: 2;
   font-weight: bold;
   cursor: pointer;
-  padding-left: 5%
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
 `;
 
 const Clickable = styled.u`
   cursor: pointer;
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
 `;
 
 export default QuestionEntry;
