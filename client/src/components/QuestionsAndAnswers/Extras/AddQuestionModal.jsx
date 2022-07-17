@@ -103,11 +103,11 @@ function AddQuestionModal({ setShowModal }) {
           </FormField>
           <InputQuestion onChange={(event) => setBody(event.target.value)} maxLength="1000" placeholder="Ask your question" />
           {input()}
-          <Footer>
-            <FooterButton onClick={() => askQuestion()}>Submit</FooterButton>
-            <FooterButton onClick={() => setShowModal(false)}>Cancel</FooterButton>
-          </Footer>
         </Form>
+        <Footer>
+          <FooterButton onClick={() => askQuestion()}>Submit</FooterButton>
+          <FooterButton onClick={() => setShowModal(false)}>Cancel</FooterButton>
+        </Footer>
       </ModalContainer>
     </ModalBackground>
   );
@@ -126,8 +126,8 @@ const ModalBackground = styled.div`
 `;
 
 const ModalContainer = styled.div`
-  width: 60%;
-  height: 500px;
+  width: 60vw;
+  max-height: 90vh;
   border-radius: 10px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -146,6 +146,7 @@ const CloseButtonButton = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
+  color: ${(props) => props.theme.fontColor};
 `;
 
 const Form = styled.div`
@@ -163,19 +164,41 @@ const FormField = styled.label`
 const FormEntry = styled.input`
   grid-column: 2;
   cursor: initial;
+  color: ${(props) => props.theme.fontColor};
+  background-color: ${(props) => props.theme.tertiaryColor};
+  ::placeholder,
+  ::-webkit-input-placeholder {
+    opacity: 0.2;
+    color: ${(props) => props.theme.fontColor};
+  }
+  :-ms-input-placeholder {
+     color: ${(props) => props.theme.fontColor};
+  }
 `;
 
 const InputQuestion = styled.textarea`
   resize: none;
   height: 125px;
   font-family: Arial;
+  color: ${(props) => props.theme.fontColor};
+  background-color: ${(props) => props.theme.tertiaryColor};
+  ::placeholder,
+  ::-webkit-input-placeholder {
+    opacity: 0.2;
+    color: ${(props) => props.theme.fontColor};
+  }
+  :-ms-input-placeholder {
+     color: ${(props) => props.theme.fontColor};
+  }
 `;
 
 const Footer = styled.div`
   display: flex;
+  flex: none;
   justify-content: center;
-  align-items: center;
-  grid-column: 1 / 3;
+  align-items: flex-end;
+  align-content: flex-end;
+  margin-top: 20%;
 `;
 
 const FooterButton = styled.button`

@@ -118,9 +118,6 @@ const AnswerBody = styled.div`
 const Clickable = styled.u`
   cursor: pointer;
   text-decoration: underline;
-  &:hover {
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  }
 `;
 
 export default AnswerEntry;

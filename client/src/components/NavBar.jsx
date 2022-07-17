@@ -1,15 +1,19 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 function NavBar({ toggleTheme }) {
+  NavBar.propTypes = {
+    toggleTheme: PropTypes.func.isRequired,
+  };
+
   return (
     <Background id="navbar">
-      <Link href="/#" onClick={() => toggleTheme()}><GridItem>Toggle Dark Mode</GridItem></Link>
-      <Link href="/#"><GridItem>Product Overview</GridItem></Link>
-      <Link href="/#"><GridItem>Related Products</GridItem></Link>
-      <Link href="/#"><GridItem>Questions & Answers</GridItem></Link>
-      <Link href="/#"><GridItem>Reviews</GridItem></Link>
+      <GridItem onClick={() => toggleTheme()}>Toggle Dark Mode</GridItem>
+      <Link href="#ProductDetails"><GridItem>Product Details</GridItem></Link>
+      <Link href="#RelatedProducts"><GridItem>Related Products</GridItem></Link>
+      <Link href="#QuestionsAndAnswers"><GridItem>Questions & Answers</GridItem></Link>
+      <Link href="#RatingsAndReviews"><GridItem>Ratings & Reviews</GridItem></Link>
       <GridItem>
         <Input />
         <i className="fa-solid fa-magnifying-glass" />
@@ -48,7 +52,8 @@ const Link = styled.a`
 `;
 
 const Input = styled.input`
-  background-color : ${(props) => props.theme.secondaryColor};
+  background-color: ${(props) => props.theme.secondaryColor};
+  color: ${(props) => props.theme.fontColor};
   border: 2 px solid;
   &:focus {
     outline: none;

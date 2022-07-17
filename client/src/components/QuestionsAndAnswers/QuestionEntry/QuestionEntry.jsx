@@ -86,17 +86,12 @@ function QuestionEntry({ question }) {
       );
     }
     return (
-      <>
-        <HelpfulReport>
-          {'Helpful? '}
-          <Clickable onClick={() => helpfulQuestion()}>Yes</Clickable>
-          {`(${helpfulness}) `}
-          <Clickable onClick={() => reportQuestion()}>Report</Clickable>
-        </HelpfulReport>
-        <AddAnswer>
-          <Clickable onClick={() => answerQuestion()}>Add Answer</Clickable>
-        </AddAnswer>
-      </>
+      <HelpfulReport>
+        {'Helpful? '}
+        <Clickable onClick={() => helpfulQuestion()}>Yes</Clickable>
+        {`(${helpfulness}) `}
+        <Clickable onClick={() => reportQuestion()}>Report</Clickable>
+      </HelpfulReport>
     );
   }
   function answersList() {
@@ -133,6 +128,9 @@ function QuestionEntry({ question }) {
       <Question>Q.</Question>
       <QuestionBody>{question.question_body}</QuestionBody>
       {helpfulReport()}
+      <AddAnswer>
+        <Clickable onClick={() => answerQuestion()}>Add Answer</Clickable>
+      </AddAnswer>
       <Answer>A.</Answer>
       <AnswersListContainer>
         {answersList()}
@@ -172,7 +170,7 @@ const AddAnswer = styled.div`
 `;
 
 const Reported = styled.div`
-  grid-column: 3 / 5;
+  grid-column: 3;
   font-weight: bold;
 `;
 
@@ -200,16 +198,10 @@ const MoreAnswers = styled.div`
   grid-column: 2;
   font-weight: bold;
   cursor: pointer;
-  &:hover {
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  }
 `;
 
 const Clickable = styled.u`
   cursor: pointer;
-  &:hover {
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  }
 `;
 
 export default QuestionEntry;

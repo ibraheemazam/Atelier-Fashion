@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/anchor-has-content */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import ProductDetail from './ProductDetail/ProductDetail';
@@ -36,14 +38,17 @@ function App() {
         <Tertiary>EXAMPLE</Tertiary>
         <Font>EXAMPLE</Font> */}
         <GlobalContextProvider>
-          <NavBar toggleTheme={toggleTheme} />
+          <NavBar theme={theme} toggleTheme={toggleTheme} />
+          <a id="ProductDetails">Product Details</a>
           {/* <ProductDetail /> */}
-          {/* <RelatedItems /> */}
+          <a id="RelatedProducts">Related Items</a>
+          <RelatedItems />
+          <a id="QuestionsAndAnswers">Questions & Answers</a>
           <QuestionsAndAnswers />
+          <a id="RatingsAndReviews">Ratings & Reviews</a>
           <RatingsAndReviews />
         </GlobalContextProvider>
       </StyledContainer>
-
     </ThemeProvider>
   );
 }
@@ -51,6 +56,7 @@ function App() {
 const StyledContainer = styled.div`
   font-family: 'Roboto Condensed', sans-serif;
   background-color: ${(props) => props.theme.backgroundColor};
+  color: ${(props) => props.theme.fontColor};
 `;
 
 const Primary = styled.div`

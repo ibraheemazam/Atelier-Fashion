@@ -48,9 +48,11 @@ const QuestionSearchBar = styled.div`
 const Input = styled.input`
   width: 80%;
   height: 44px;
+  border-color: ${(props) => props.theme.fontColor};
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
   background-color: ${(props) => props.theme.tertiaryColor};
+  color: ${(props) => props.theme.fontColor};
   ::placeholder,
   ::-webkit-input-placeholder {
     color: ${(props) => props.theme.fontColor};
@@ -63,9 +65,12 @@ const Input = styled.input`
 const Button = styled.button`
   width: 14%;
   height: 50px;
+  border-color: ${(props) => props.theme.fontColor};
+  color: ${(props) => props.theme.fontColor};
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
   margin-left: -1%;
   background-color: ${(props) => props.theme.secondaryColor};
 `;
+
 export default QuestionSearch;

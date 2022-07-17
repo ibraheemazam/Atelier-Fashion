@@ -13,7 +13,7 @@ export function GlobalContextProvider({ children }) {
     children: PropTypes.node.isRequired,
   };
 
-  const [productID, setProductID] = useState(40347);
+  const [productID, setProductID] = useState(40346);
   const [productInfo, setProductInfo] = useState({});
   const [styles, setStyles] = useState([]);
   const [selectedStyle, setSelectedStyle] = useState({});

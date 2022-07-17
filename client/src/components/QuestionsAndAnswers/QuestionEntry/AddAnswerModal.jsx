@@ -22,6 +22,25 @@ function AddAnswerModal({ setShowModal, question }) {
 
   const { productInfo } = useGlobalContext();
 
+  function input() {
+    if (!validInput) {
+      return (
+        <Disclaimer>
+          <div>
+            1. Not all mandatory fields have been provided.
+          </div>
+          <div>
+            2. Email is not in the correct email format.
+          </div>
+          <div>
+            3. The images selected are invalid or unable to be uploaded.
+          </div>
+        </Disclaimer>
+      );
+    }
+    return null;
+  }
+
   function validateInput() {
     function validateEmail(emailName) {
       const regex = /\S+@\S+\.\S+/;
@@ -36,22 +55,6 @@ function AddAnswerModal({ setShowModal, question }) {
       return false;
     }
     return true;
-  }
-
-  function input() {
-    if (!validInput) {
-      return (
-        <Disclaimer>
-          <div>1. Not all mandatory fields have been provided.</div>
-          <div>2. Email is not in the correct email format.</div>
-          <div>
-            3. The images selected are invalid or unable to be
-            uploaded.
-          </div>
-        </Disclaimer>
-      );
-    }
-    return null;
   }
 
   function askQuestion() {
@@ -110,7 +113,7 @@ function AddAnswerModal({ setShowModal, question }) {
           <div>Photos(optional)</div>
           <div>Max 5</div>
         </FormField>
-        <FormEntry
+        <input
           onChange={(event) => handlePreviews(event)}
           type="file"
           id="photos"
@@ -218,7 +221,8 @@ const ModalBackground = styled.div`
 `;
 
 const ModalContainer = styled.div`
-  width: 60%;
+  width: 60vw;
+  max-height: 90vh;
   border-radius: 10px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -237,6 +241,7 @@ const CloseButtonButton = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
+  color: ${(props) => props.theme.fontColor};
 `;
 
 const Form = styled.div`
@@ -254,12 +259,32 @@ const FormField = styled.label`
 const FormEntry = styled.input`
   grid-column: 2;
   cursor: initial;
+  color: ${(props) => props.theme.fontColor};
+  background-color: ${(props) => props.theme.tertiaryColor};
+  ::placeholder,
+  ::-webkit-input-placeholder {
+    opacity: 0.2;
+    color: ${(props) => props.theme.fontColor};
+  }
+  :-ms-input-placeholder {
+     color: ${(props) => props.theme.fontColor};
+  }
 `;
 
 const InputAnswer = styled.textarea`
   resize: none;
-  height: 50px;
+  height: 125px;
   font-family: Arial;
+  color: ${(props) => props.theme.fontColor};
+  background-color: ${(props) => props.theme.tertiaryColor};
+  ::placeholder,
+  ::-webkit-input-placeholder {
+    opacity: 0.2;
+    color: ${(props) => props.theme.fontColor};
+  }
+  :-ms-input-placeholder {
+     color: ${(props) => props.theme.fontColor};
+  }
 `;
 
 const Footer = styled.div`
@@ -312,4 +337,5 @@ const ImagePreview = styled.img`
 const Header = styled.header`
   margin-bottom: 10px;
 `;
+
 export default AddAnswerModal;

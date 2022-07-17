@@ -40,8 +40,8 @@ const ModalBackground = styled.div`
 `;
 
 const ModalContainer = styled.div`
-  width: 60%;
-  height: 75%;
+  max-width: 60vw;
+  max-height: 90vh;
   border-radius: 10px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -60,11 +60,12 @@ const CloseButtonButton = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
+  color: ${(props) => props.theme.fontColor};
 `;
 
 const Image = styled.img`
-  width: auto;
-  height: auto;
+  width: 50vw;
+  height: 50vh;
 `;
 
 export default ExpandedImageModal;

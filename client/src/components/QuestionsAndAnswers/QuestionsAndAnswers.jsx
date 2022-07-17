@@ -48,7 +48,6 @@ export default QuestionAndAnswers;
 const Container = styled.div`
   justify-content: center;
   margin-top: 100px;
-  color: ${(props) => props.theme.fontColor};
 `;
 
 const QuestionListContainer = styled.div`
