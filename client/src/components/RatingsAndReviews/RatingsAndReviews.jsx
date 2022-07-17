@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useGlobalContext } from '../../contexts/GlobalStore';
 import ReviewTile from './ReviewList/ReviewTile';
 import MoreRevs from './ReviewList/MoreRevs';
-import AddRev from './ReviewList/AddRev';
+import AddRev from './AddRev/AddRev';
 import Breakdown from './Breakdown';
 
 function RatingsAndReviews() {
@@ -116,7 +116,7 @@ function RatingsAndReviews() {
               />
             )
           }
-          <AddRev />
+          <AddRev revMeta={revMeta} />
         </MoreAddContainer>
       </ReviewListContainer>
     </Container>

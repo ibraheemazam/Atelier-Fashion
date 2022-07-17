@@ -1,23 +1,44 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
+import Characteristics from './Characteristics';
 
-function AddRev() {
-  const { productInfo, revMeta } = useGlobalContext();
-  const [addClicked, setAddClicked] = useState(false);
+function AddRev({ revMeta }) {
+  const { productInfo } = useGlobalContext();
+  const [addClicked, setAddClicked] = useState(true);
   const [recommendProd, setRecommendProd] = useState();
+  const [charVal, setCharVal] = useState({
+    Size: 'none selected',
+    sizeNum: null,
+    Width: 'none selected',
+    widthNum: null,
+    Comfort: 'none selected',
+    comfortNum: null,
+    Quality: 'none selected',
+    qualityNum: null,
+    Length: 'none selected',
+    lengthNum: null,
+    Fit: 'none selected',
+    fitNum: null,
+  });
+
+  if (!revMeta.product_id) {
+    return (
+      <div />
+    );
+  }
 
   const handleAddRev = function handleAddRev() {
     setAddClicked((prevAddClicked) => !prevAddClicked);
   };
 
   const handleSubmit = function handleSubmit(event) {
-    //
     event.preventDefault();
     console.log('submitted pho');
     console.log('addClicked:\n', addClicked);
     console.log('recommendProd:\n', recommendProd);
-    console.log(revMeta);
+    console.log('revMeta:\n', revMeta);
+    console.log('charVal:\n', charVal);
   };
 
   const handleBackgroundClick = function handleBackgroundClick(event) {
@@ -40,7 +61,7 @@ function AddRev() {
                 About the&nbsp;
                 {productInfo.name}
               </h3>
-              <FormContainer onSubmit={handleSubmit}>
+              <FormContainer onSubmit={(event) => handleSubmit(event)}>
                 <label htmlFor="overall rating">
                   Overall rating*&nbsp;
                   <select>
@@ -63,22 +84,12 @@ function AddRev() {
                 </label>
                 <br />
 
-                <label htmlFor="characteristics" onChange={() => null}>
-                  None selected
-                  <div>
-                    <input type="radio" value={1} name="chars" />
-                    1
-                    <input type="radio" value={2} name="chars" />
-                    2
-                    <input type="radio" value={1} name="chars" />
-                    3
-                    <input type="radio" value={2} name="chars" />
-                    4
-                    <input type="radio" value={1} name="chars" />
-                    5
-                  </div>
-                </label>
-                <br />
+                <Characteristics
+                  revMeta={revMeta}
+                  productInfo={productInfo}
+                  charVal={charVal}
+                  setCharVal={setCharVal}
+                />
 
                 <button type="submit">Submit</button>
               </FormContainer>
@@ -106,9 +117,10 @@ const AddRevBackground = styled.div`
 const TestDiv = styled.div`
   padding: 1em;
   background: pink;
-  height: 35%;
+  height: 40%;
   width: 50%;
   border: 1px solid;
+  overflow: scroll;
 `;
 
 const FormContainer = styled.form`

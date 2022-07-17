@@ -71,7 +71,6 @@ ReviewTile.propTypes = {
     reviewer_name: PropTypes.string,
     date: PropTypes.string,
     response: PropTypes.string,
-
   }).isRequired,
 };
 
