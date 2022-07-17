@@ -8,7 +8,7 @@ import ImageGallery from './ImageGallery/ImageGallery';
 import AddToCart from './AddToCart/AddToCart';
 import { useGlobalContext } from '../../contexts/GlobalStore';
 
-function ProductDetail() {
+function ProductDetail({ href }) {
   const {
     productID, setProductID, setProductInfo, productInfo,
   } = useGlobalContext();
@@ -34,7 +34,7 @@ function ProductDetail() {
             <ImageGallery />
           </Column1>
           <Column2>
-            <ProductOverview />
+            <ProductOverview productInfo={productInfo} href={href} />
             <StyleSelector />
             <AddToCart />
           </Column2>

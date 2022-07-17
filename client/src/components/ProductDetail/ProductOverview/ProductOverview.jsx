@@ -1,28 +1,33 @@
 import React, { useEffect, useState } from 'react';
 // import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
 import axios from 'axios';
 
 import StyleSelector from '../StyleSelector/StyleSelector';
 import RatingsAndReviews from '../../RatingsAndReviews/RatingsAndReviews';
+import App from '../../App';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
 // const initialState = { count: 0, sum: 0 };
 
-function ProductOverview({ style }) {
+function ProductOverview({ productInfo, href }) {
   const {
-    reviews, setReviews, productInfo, selectedStyle, setSelectedStyle,
+    reviews, setReviews, selectedStyle, setSelectedStyle,
+    productID, setProductID,
   } = useGlobalContext();
 
   const [price, setPrice] = useState('');
-  const [salePrice, setSalePrice] = useState('89.00');
+  const [salePrice, setSalePrice] = useState('');
+  // const [descriptionLength, setDescriptionLength] = useState(0);
+  const [description, setDescription] = useState('');
 
   useEffect(() => {
     // setReviews([{ no: 1 }, { no: 2 }, { no: 3 }]);
     setPrice(() => selectedStyle.original_price);
     setSalePrice(() => selectedStyle.sale_price);
-  }, [setReviews, setSelectedStyle, selectedStyle.original_price, selectedStyle.sale_price]);
+    setDescription(() => productInfo.description);
+   // setDescriptionLength(() => productInfo['description'].length);
+  }, [selectedStyle, setSelectedStyle, selectedStyle.original_price, selectedStyle.sale_price]);
 
   // useEffect(() => {
   //   // const productId = window.location.pathname;
@@ -32,11 +37,13 @@ function ProductOverview({ style }) {
   //     .then((results) => setProductInfo(results.data))
   //     // alert client when error
   //     .catch((err) => console.log(err));
-  // }, [productID, setProductInfo, ProductInfo]);
+  // }, [productID, setProductInfo]);
 
   // need to calculate average score
   // use reviews metadata
   // or see if Ibraheem already did
+
+  // need to make href work. use id on component, may need to pass that id as props tho so does not get lost in child components
 
   return (
     <div>
@@ -49,7 +56,7 @@ function ProductOverview({ style }) {
                   Seeing Stars
                 </span>
                 <span className="readReviews">
-                  <a href="RatingsAndReviews">{`Read all ${reviews.length} reviews`}</a>
+                  <a href={href}>{`Read all ${reviews.length} reviews`}</a>
                 </span>
               </div>
             )
@@ -76,8 +83,8 @@ function ProductOverview({ style }) {
           )}
         <div />
         <h2>{productInfo.name}</h2>
-        {/* <div>
-          {productInfo.description.length > 0
+        <div>
+          {description
           && (
             <div>
               <h4>{productInfo.slogan}</h4>
@@ -86,7 +93,7 @@ function ProductOverview({ style }) {
               </p>
             </div>
           )}
-        </div> */}
+        </div>
         <div>
           <div>
             <ShareSocial>
