@@ -27,7 +27,7 @@ function QuestionSearch() {
         type="text"
         placeholder="HAVE A QUESTION? SEARCH FOR ANSWERS..."
       />
-      <Button type="submit" style={{ width: '14%' }}>
+      <Button type="submit">
         <i className="fa-solid fa-magnifying-glass" />
       </Button>
     </QuestionSearchBar>
@@ -38,7 +38,7 @@ const QuestionSearchBar = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
-  background-color: #82827d;
+  background-color: ${(props) => props.theme.secondaryColor};
   padding: 10px;
   margin-left: 20px;
   margin-right: 20px;
@@ -50,11 +50,22 @@ const Input = styled.input`
   height: 44px;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
+  background-color: ${(props) => props.theme.tertiaryColor};
+  ::placeholder,
+  ::-webkit-input-placeholder {
+    color: ${(props) => props.theme.fontColor};
+  }
+  :-ms-input-placeholder {
+     color: ${(props) => props.theme.fontColor};
+  }
 `;
+
 const Button = styled.button`
+  width: 14%;
   height: 50px;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
   margin-left: -1%;
+  background-color: ${(props) => props.theme.secondaryColor};
 `;
 export default QuestionSearch;

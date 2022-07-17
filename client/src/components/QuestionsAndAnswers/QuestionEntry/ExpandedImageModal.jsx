@@ -36,17 +36,19 @@ const ModalBackground = styled.div`
   align-items: center;
   left: 0%;
   top: 0%;
+  color: ${(props) => props.theme.fontColor};
 `;
 
 const ModalContainer = styled.div`
   width: 60%;
-  height: 500px;
+  height: 75%;
   border-radius: 10px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   display: flex;
   flex-direction: column;
   padding: 25px;
+  background-color: ${(props) => props.theme.secondaryColor};
 `;
 
 const CloseButtonDiv = styled.div`

@@ -42,7 +42,7 @@ const ButtonContainer = styled.div`
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
-  background-color: #82827d;
+  background-color: ${(props) => props.theme.secondaryColor};
   margin-left: 20px;
   margin-right: 20px;
   border-radius: 10px;
@@ -56,6 +56,8 @@ const Button = styled.button`
   &:hover {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   }
+  background-color: ${(props) => props.theme.tertiaryColor};
+  color: ${(props) => props.theme.fontColor};
 `;
 
 export default ExtraButtons;

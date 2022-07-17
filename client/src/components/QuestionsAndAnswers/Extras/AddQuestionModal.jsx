@@ -134,6 +134,7 @@ const ModalContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 25px;
+  background-color: ${(props) => props.theme.secondaryColor};
 `;
 
 const CloseButtonDiv = styled.div`
@@ -182,8 +183,8 @@ const FooterButton = styled.button`
   height: 45px;
   margin: 10px;
   border: none;
-  color: white;
-  background-color: grey;
+  color: ${(props) => props.theme.fontColor};
+  background-color: ${(props) => props.theme.tertiaryColor};
   border-radius: 10px;
   font-size: 20px;
   cursor: pointer;

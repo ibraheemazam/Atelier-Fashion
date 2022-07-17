@@ -178,7 +178,7 @@ const Reported = styled.div`
 
 const AnswersListContainer = styled.div`
   border: 1px solid;
-  background-color: #f1f1f1;
+  background-color: ${(props) => props.theme.tertiaryColor};
   max-height: 350px;
   overflow: auto;
   text-align: justify;

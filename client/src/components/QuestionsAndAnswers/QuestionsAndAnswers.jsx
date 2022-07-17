@@ -48,10 +48,11 @@ export default QuestionAndAnswers;
 const Container = styled.div`
   justify-content: center;
   margin-top: 100px;
+  color: ${(props) => props.theme.fontColor};
 `;
 
 const QuestionListContainer = styled.div`
-  background-color: #f1f1f1;
+  background-color: ${(props) => props.theme.backgroundColor};
   max-height: 600px;
   overflow: auto;
   margin-left: 20px;
