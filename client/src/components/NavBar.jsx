@@ -8,8 +8,6 @@ function NavBar({ toggleTheme }) {
   };
 
   function scrollTo(event) {
-    if (event.target.getAttribute('target') !== 'question-and-answers') return;
-
     const scrollTarget = event.target.getAttribute('target');
     const target = document.getElementById(scrollTarget);
     target.scrollIntoView({ block: 'center', behavior: 'smooth' });

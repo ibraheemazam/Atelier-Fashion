@@ -38,7 +38,7 @@ function ProductDetail({ href }) {
   // add setProductID above when implemented
 
   return (
-    <div>
+    <div id="product-details">
       <div>
         <ColumnParent>
           <Column1>
