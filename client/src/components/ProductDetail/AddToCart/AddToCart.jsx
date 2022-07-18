@@ -8,7 +8,7 @@ function AddToCart() {
   return (
     <div>
       <div>
-        {/* <SelectSize /> */}
+        <SelectSize />
         {/* <selectQuantity></selectQuantity> */}
       </div>
       <button type="submit">Add to Cart</button>

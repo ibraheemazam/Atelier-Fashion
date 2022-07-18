@@ -6,28 +6,52 @@ import { useGlobalContext } from '../../../contexts/GlobalStore';
 function SelectSize() {
 //   // need to pass in a value for productID somehow (either global state or client url)
   const {
-    productID, setProductID, productInfo, setProductInfo,
-    selectedStyle, setSelectedStyle, styles, setStyles,
+    productInfo, setProductInfo, selectedStyle,
   } = useGlobalContext();
 
-  const [skus, setSkus] = useState([]);
+  const [selectedSize, setSelectedSize] = useState('Select Size');
+  // const [skus, setSkus] = useState([]);
 
-  useEffect(() => {
-    setSkus(() => selectedStyle.skus);
-  }, [selectedStyle]);
 
-//   function getAvailableSizes() {
-//     // could just map all the skus objects and return an option element if quantity > 0
-//     const { skus } = productStyles.results;
-//     console.log({ skus });
-//     const sizes = [];
-//     for (const key in skus) {
-//       const { quantity, size } = skus[key];
-//       const availability = {};
-//       availability[size] = quantity;
-//       availability[sku] = skus[key];
-//       sizes.push(availability);
-//     }
+  function sellSize(e, value) {
+    e.preventDefault();
+  }
+
+  function getAvailableSizes({ skus }) {
+    // could just map all the skus objects and return an option element if quantity > 0
+    const allSkus = Object.values(skus);
+    console.log('allSkus from getAvailableSize: ', allSkus);
+    let sizeAvailable = false;
+    return allSkus.map((sku, index) => (
+      sku.quantity > 0
+      && <option key={sku.size} onSelect={(e) => sellSize(e, index)}>{sku.size}</option>
+    ))
+
+
+    // const sizes = [];
+    // for (const key in skus) {
+    //   const { quantity, size } = skus[key];
+    //   const availability = {};
+    //   availability[size] = quantity;
+    //   availability[sku] = skus[key];
+    //   sizes.push(availability);
+    // }
+  }
+
+
+  // useEffect(() => {
+  //   console.log('skus from useEffect', selectedStyle.skus);
+  //   if (selectedStyle.skus) {
+
+  //   }
+  //    && getAvailableSizes(selectedStyle);
+  //   setSkus(() => selectedStyle.skus);
+  // }, [selectedStyle]);
+
+
+
+
+   // possibly part of get available sized
 
 //     sizes.sort((a, b) => (Number(a.sku) - Number(b.sku)));
 
@@ -52,8 +76,15 @@ function SelectSize() {
 
   return (
     <select>
-      Size
-      <option>{skus['1394895'].size}</option>
+      <option>{selectedSize}</option>
+      {selectedStyle.skus
+      && getAvailableSizes(selectedStyle)}
+
+      {/* //  {!sizeAvailable && <}
+      // <option>{selectedSize}</option>
+
+      // {!sizeAvailable && <} */}
+      {/* <option>{skus['1394895'].size}</option> */}
       {/* {availableSizes.map((size) => <option>{size}</option>)} */}
     </select>
   );
