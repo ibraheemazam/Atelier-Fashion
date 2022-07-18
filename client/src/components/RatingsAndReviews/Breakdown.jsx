@@ -39,18 +39,26 @@ function Breakdown({ revMeta }) {
         % of reviews recommend this product
       </p>
       {
-        Object.keys(revMeta.ratings).map((rating) => (
-          <p key={rating}>
-            <u>{`${rating} stars`}</u>
+        Object.entries(revMeta.ratings).map((ratingEnrty) => (
+          <p key={ratingEnrty[0]}>
+            <u>{`${ratingEnrty[0]} stars`}</u>
+            &nbsp;
+            {ratingEnrty[1]}
             <br />
           </p>
         ))
       }
       <br />
-      <div>
-        <div>Size</div>
-        <div>Comfort</div>
-      </div>
+      {Object.entries(revMeta.characteristics).map((charEntry) => (
+        <div key={charEntry[1].id}>
+          <div>
+            {charEntry[0]}
+            :&nbsp;
+            {Math.round(charEntry[1].value * 100) / 100}
+          </div>
+          <br />
+        </div>
+      ))}
     </div>
   );
 }
@@ -58,7 +66,7 @@ function Breakdown({ revMeta }) {
 Breakdown.propTypes = {
   revMeta: PropTypes.shape({
     characteristics: PropTypes.shape({}),
-    product_id: PropTypes.string.isRequired,
+    product_id: PropTypes.string,
     ratings: PropTypes.shape({}),
     recommended: PropTypes.shape({
       true: PropTypes.string,

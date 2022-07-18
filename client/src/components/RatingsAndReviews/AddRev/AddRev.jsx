@@ -6,7 +6,7 @@ import Characteristics from './Characteristics';
 
 function AddRev({ revMeta }) {
   const { productInfo } = useGlobalContext();
-  const [addClicked, setAddClicked] = useState(true);
+  const [addClicked, setAddClicked] = useState(false);
   const [recommendProd, setRecommendProd] = useState();
   const [charVal, setCharVal] = useState({});
   const [revSum, setRevSum] = useState('');
@@ -41,18 +41,23 @@ function AddRev({ revMeta }) {
 
   return (
     <div>
-      <button type="button" onClick={handleAddRev}>
-        ADD REVIEW
-      </button>
+      <AddButton type="button" onClick={() => handleAddRev()}>
+        ADD A REVIEW +
+      </AddButton>
       {
         addClicked && (
           <AddRevBackground id="AddRevBackground" onClick={(event) => handleBackgroundClick(event)}>
             <AddRevDiv>
-              <h2>Write a Review</h2>
-              <h3>
-                About the&nbsp;
-                {productInfo.name}
-              </h3>
+              <CloseDiv onClick={() => setAddClicked(false)}>
+                X
+              </CloseDiv>
+              <AddRevHeader>
+                <h2>Write a Review</h2>
+                <div>
+                  About the&nbsp;
+                  {productInfo.name}
+                </div>
+              </AddRevHeader>
               <FormContainer onSubmit={(event) => handleSubmit(event)}>
                 <label htmlFor="overall rating">
                   Overall rating*&nbsp;
@@ -131,7 +136,10 @@ function AddRev({ revMeta }) {
                 <AuthTag>For authentication reasons, you will not be emailed</AuthTag>
                 <br />
 
-                <button type="submit">Submit</button>
+                <ButtonContainer>
+                  <ButtonDiv type="submit">Submit</ButtonDiv>
+                  <ButtonDiv type="button" onClick={() => setAddClicked(false)}> Cancel </ButtonDiv>
+                </ButtonContainer>
               </FormContainer>
             </AddRevDiv>
           </AddRevBackground>
@@ -149,6 +157,12 @@ AddRev.propTypes = {
 
 export default AddRev;
 
+const AddButton = styled.button`
+  padding: 1em;
+  font-size: .9em;
+  font-weight: bold;
+`;
+
 const AddRevBackground = styled.div`
   display: flex;
   justify-content: center;
@@ -157,22 +171,36 @@ const AddRevBackground = styled.div`
   width: 100vw;
   position: absolute;
   top: 0; left: 0;
-  background: gold;
+  background: #1fe0;
+`;
+
+const CloseDiv = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  font-size: 1.8em;
+  cursor: pointer;
 `;
 
 const AddRevDiv = styled.div`
   padding: 1em;
-  background: pink;
-  height: 80%;
-  width: 50%;
+  height: 45%;
+  width: 40%;
   border: 1px solid;
   overflow: scroll;
+  background-color: rgba(117, 190, 218, 0.97);
+`;
+
+const AddRevHeader = styled.div`
+  padding: 0em 1em 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const FormContainer = styled.form`
   display: flex;
+  padding: 1em;
   flex-direction: column;
-  background: orange;
 `;
 
 const RecommendProdLabel = styled.label`
@@ -193,4 +221,14 @@ const AuthTag = styled.div`
   font-size: .9em;
   font-style: oblique;
   font-weight: lighter;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+`;
+
+const ButtonDiv = styled.button`
+  width 35%;
+  font-size: .9em;
 `;

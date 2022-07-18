@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 function MoreRevs({ noMoreReviews, setRevCount }) {
   const handleMoreReviews = function handleMoreReviews() {
@@ -11,9 +12,9 @@ function MoreRevs({ noMoreReviews, setRevCount }) {
       {
         !noMoreReviews.current
         && (
-          <button type="button" onClick={handleMoreReviews}>
+          <MoreButton type="button" onClick={handleMoreReviews}>
             MORE REVIEWS
-          </button>
+          </MoreButton>
         )
       }
     </div>
@@ -28,3 +29,9 @@ MoreRevs.propTypes = {
 };
 
 export default MoreRevs;
+
+const MoreButton = styled.button`
+  padding: 1em;
+  font-size: .9em;
+  font-weight: bold;
+`;

@@ -159,8 +159,10 @@ const ReviewTilesContainer = styled.div`
 
 const MoreAddContainer = styled.div`
   padding: 1em;
-  background: ;
   display: flex;
+  width: 20em;
+  justify-content: space-around;
+  margin-left: 20px;
 `;
 
 const BreakdownContainer = styled.div`
