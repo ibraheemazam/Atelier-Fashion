@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
@@ -43,12 +43,24 @@ export function GlobalContextProvider({ children }) {
     getProductInfo();
     window.scrollTo({
       top: 0,
-      left: 0,
       behavior: 'smooth',
     });
   }, [productID]);
 
-  const value = {
+  const dependencies = [
+    productID,
+    productInfo,
+    styles,
+    selectedStyle,
+    questions,
+    filteredQuestions,
+    numQuestions,
+    reviews,
+    outfits,
+    cardIndex,
+    outfitIndex,
+    productList];
+  const value = useMemo(() => ({
     productID,
     setProductID,
     productInfo,
@@ -73,7 +85,7 @@ export function GlobalContextProvider({ children }) {
     setOutfitIndex,
     productList,
     setProductList,
-  };
+  }), dependencies);
 
   return (
     <GlobalContext.Provider value={value}>
