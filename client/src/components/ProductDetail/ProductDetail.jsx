@@ -10,7 +10,7 @@ import { useGlobalContext } from '../../contexts/GlobalStore';
 
 function ProductDetail({ href }) {
   const {
-    productID, setProductID, setProductInfo, productInfo,
+    productID, setProductInfo, productInfo, setSelectedStyle, setStyles,
   } = useGlobalContext();
   // Works when ready to hook up API with URL
   // setProductID(window.location.pathname || 40348); // think should be in useEffect?
@@ -21,9 +21,20 @@ function ProductDetail({ href }) {
         .then((productResult) => { setProductInfo(productResult.data); })
         .catch((err) => { console.log('error getting product information', err); });
     }
+    function getStyles() {
+      axios
+        .get('/styles', { params: { product_id: productID } })
+        .then((stylesResult) => {
+          setSelectedStyle(stylesResult.data.results[0]);
+          setStyles(stylesResult.data.results);
+        })
+        // I'm catching two errors in one here, not great
+        .catch((err) => console.log('error getting product styles', err));
+    }
     getProductInfo();
+    getStyles();
     //   .catch(console.log('error getting product info'), console.error);
-  }, [productID, setProductInfo]);
+  }, [productID, setProductInfo, setStyles, setSelectedStyle]);
   // add setProductID above when implemented
 
   return (
@@ -54,9 +65,9 @@ const ColumnParent = styled.div`
 `;
 
 const Column1 = styled.div`
-  margin: 10px;
-  padding: 2px;
-  text-align: left;
+  margin: 3%;
+  padding: 20% 2%;
+  text-align: center;
   width: 40%;
   flex: 1;
 `;
@@ -66,5 +77,5 @@ const Column2 = styled.div`
   text-align: left;
   width: 40%;
   flex: 1;
-  margin-right: 20px;
+  margin-left: 20px;
 `;

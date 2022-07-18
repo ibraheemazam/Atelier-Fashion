@@ -7,10 +7,36 @@ import { useGlobalContext } from '../../../contexts/GlobalStore';
 import StyleSelector from '../StyleSelector/StyleSelector';
 
 // eslint-disable-next-line react/prop-types
-function ImageGallery({ selectedStyle }) {
+function ImageGallery() {
   const {
-    productID, setProductID,
+    productID, setProductID, selectedStyle, productInfo,
   } = useGlobalContext();
+
+  const [imageUrl, setImageUrl] = useState('');
+  const [photos, setPhotos] = useState([]);
+  const [main, setMain] = useState({});
+
+  useEffect(() => {
+    setPhotos(() => selectedStyle.photos);
+    function getPhotos() {
+      if (photos) {
+        setMain(() => photos[0]);
+      }
+    }
+    function getUrl() {
+      if (main) {
+        setImageUrl(() => main.url);
+      }
+    }
+    getPhotos();
+    getUrl();
+    // setMain(() => photos[0]);
+    //  setImageUrl(() => main.url);
+  }, [setImageUrl, selectedStyle, photos, main, setMain, setPhotos]);
+
+  // useEffect(() => {
+  //   setMain(() => photos[0]);
+  // }, [photos, setMain]);
 
   //   const [styleImages, setStyleImages] = useState([]);
 
@@ -45,21 +71,20 @@ function ImageGallery({ selectedStyle }) {
   //   }
 
   //  {allThumbnails.map((thumbnail) => <img src={thumbnail} />)}
+  console.log(photos);
+  console.log(main);
+  console.log(imageUrl);
 
   return (
     <Gallery>
-      <Container>
-        <Main
-          style={{
-            backgroundImage: 'https://images.unsplash.com/photo-1542280756-74b2f55e73ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80',
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: 'contain',
-            height: 600,
-            width: 600,
-          }}
-          alt=""
-        />
-      </Container>
+      <Main
+        style={{
+          backgroundImage: `url('${imageUrl}')`,
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'contain',
+        }}
+        alt={`${productInfo.name} in ${selectedStyle.name} style`}
+      />
     </Gallery>
   );
 }
@@ -67,18 +92,12 @@ function ImageGallery({ selectedStyle }) {
 export default ImageGallery;
 
 const Gallery = styled.div`
-  width: 50%;
-  height: 0;
+  width: 100%;
+  height: 100%;
   padding-bottom: 56.25%
+  padding-left: 10%
+  padding-right: 10%
   position: relative;
-`;
-
-const Container = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
 `;
 
 const Main = styled.div`

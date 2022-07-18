@@ -5,15 +5,13 @@ import axios from 'axios';
 
 import StyleSelector from '../StyleSelector/StyleSelector';
 import RatingsAndReviews from '../../RatingsAndReviews/RatingsAndReviews';
-import App from '../../App';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
 // const initialState = { count: 0, sum: 0 };
 
 function ProductOverview({ productInfo, href }) {
   const {
-    reviews, setReviews, selectedStyle, setSelectedStyle,
-    productID, setProductID,
+    reviews, selectedStyle, setSelectedStyle,
   } = useGlobalContext();
 
   const [price, setPrice] = useState('');
