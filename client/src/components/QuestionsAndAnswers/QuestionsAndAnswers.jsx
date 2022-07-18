@@ -27,6 +27,7 @@ function QuestionAndAnswers() {
     getQuestions();
 
     setNumQuestions(4);
+    console.log(Date.now());
   }, [productID, setNumQuestions, setQuestions]);
 
   return (
@@ -52,11 +53,12 @@ const Container = styled.div`
 
 const QuestionListContainer = styled.div`
   background-color: ${(props) => props.theme.backgroundColor};
-  max-height: 600px;
+  max-height: 60vh;
   overflow: auto;
   margin-left: 20px;
   margin-right: 20px;
   padding: 10px;
   border-radius: 10px;
   justify-content: center;
+  scroll-behavior: smooth;
 `;

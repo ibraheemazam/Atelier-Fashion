@@ -77,9 +77,14 @@ function AddQuestionModal({ setShowModal }) {
         <CloseButtonDiv>
           <CloseButtonButton onClick={() => setShowModal(false)}>&#10006;</CloseButtonButton>
         </CloseButtonDiv>
-        <h3>
-          {`About the ${productInfo.name}`}
-        </h3>
+        <Header>
+          <div>
+            Ask Your Question
+          </div>
+          <div>
+            {`About the ${productInfo.name}`}
+          </div>
+        </Header>
         <Form>
           <FormField htmlFor="name">
             Username
@@ -224,6 +229,10 @@ const Disclaimer = styled.div`
   font-size: 12px;
   color: #ff0000;
   grid-column: 2;
+`;
+
+const Header = styled.header`
+  margin-bottom: 10px;
 `;
 
 export default AddQuestionModal;

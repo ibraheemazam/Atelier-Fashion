@@ -64,8 +64,8 @@ const CloseButtonButton = styled.button`
 `;
 
 const Image = styled.img`
-  width: 50vw;
-  height: 50vh;
+  max-width: 50vw;
+  max-height: 50vh;
 `;
 
 export default ExpandedImageModal;

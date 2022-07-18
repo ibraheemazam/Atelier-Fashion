@@ -39,13 +39,9 @@ function App() {
         <Font>EXAMPLE</Font> */}
         <GlobalContextProvider>
           <NavBar theme={theme} toggleTheme={toggleTheme} />
-          <a id="ProductDetails">Product Details</a>
-          {/* <ProductDetail /> */}
-          <a id="RelatedProducts">Related Items</a>
+          <ProductDetail />
           <RelatedItems />
-          <a id="QuestionsAndAnswers">Questions & Answers</a>
           <QuestionsAndAnswers />
-          <a id="RatingsAndReviews">Ratings & Reviews</a>
           <RatingsAndReviews />
         </GlobalContextProvider>
       </StyledContainer>

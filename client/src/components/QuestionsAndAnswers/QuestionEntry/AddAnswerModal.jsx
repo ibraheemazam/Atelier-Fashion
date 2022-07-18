@@ -113,7 +113,7 @@ function AddAnswerModal({ setShowModal, question }) {
           <div>Photos(optional)</div>
           <div>Max 5</div>
         </FormField>
-        <input
+        <FileInput
           onChange={(event) => handlePreviews(event)}
           type="file"
           id="photos"
@@ -336,6 +336,16 @@ const ImagePreview = styled.img`
 
 const Header = styled.header`
   margin-bottom: 10px;
+`;
+
+const FileInput = styled.input`
+  color: ${(props) => props.theme.fontColor};
+  cursor: pointer;
+  ::file-selector-button {
+    color: ${(props) => props.theme.fontColor};
+    background-color: ${(props) => props.theme.tertiaryColor};
+    cursor: pointer;
+  }
 `;
 
 export default AddAnswerModal;

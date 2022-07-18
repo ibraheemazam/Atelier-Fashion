@@ -9,11 +9,11 @@ function ExtraButtons() {
 
   function increaseQuestions() {
     const container = document.getElementById('scrollable-container');
-
     setNumQuestions(numQuestions + 2);
 
+    const prevMaxHeight = container.scrollHeight;
     setTimeout(() => {
-      container.scrollTop = container.scrollHeight;
+      container.scrollTop = prevMaxHeight;
     }, 0);
   }
 

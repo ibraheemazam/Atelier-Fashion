@@ -75,7 +75,7 @@ function QuestionEntry({ question }) {
   }
 
   function changeNumAnswers(val) {
-    const count = Math.max(2, val);
+    const count = Math.max(2, numAnswers + val);
     setNumAnswers(count);
   }
 
@@ -109,7 +109,7 @@ function QuestionEntry({ question }) {
     }
     if (topAnswers.length < allAnswers.length) {
       return (
-        <MoreAnswers onClick={() => changeNumAnswers(100)}>
+        <MoreAnswers onClick={() => changeNumAnswers(2)}>
           <i className="fa-solid fa-chevron-down" />
           <span>See More Answers</span>
         </MoreAnswers>

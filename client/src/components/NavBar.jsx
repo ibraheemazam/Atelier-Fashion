@@ -7,13 +7,21 @@ function NavBar({ toggleTheme }) {
     toggleTheme: PropTypes.func.isRequired,
   };
 
+  function scrollTo(event) {
+    if (event.target.getAttribute('target') !== 'question-and-answers') return;
+
+    const scrollTarget = event.target.getAttribute('target');
+    const target = document.getElementById(scrollTarget);
+    target.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  }
+
   return (
     <Background id="navbar">
       <GridItem onClick={() => toggleTheme()}>Toggle Dark Mode</GridItem>
-      <Link href="#ProductDetails"><GridItem>Product Details</GridItem></Link>
-      <Link href="#RelatedProducts"><GridItem>Related Products</GridItem></Link>
-      <Link href="#QuestionsAndAnswers"><GridItem>Questions & Answers</GridItem></Link>
-      <Link href="#RatingsAndReviews"><GridItem>Ratings & Reviews</GridItem></Link>
+      <GridItem target="product-details" onClick={(event) => scrollTo(event)}>Product Details</GridItem>
+      <GridItem target="related-items" onClick={(event) => scrollTo(event)}>Related Items</GridItem>
+      <GridItem target="question-and-answers" onClick={(event) => scrollTo(event)}>Questions & Answers</GridItem>
+      <GridItem target="ratings-and-reviews" onClick={(event) => scrollTo(event)}>Ratings & Reviews</GridItem>
       <GridItem>
         <Input />
         <i className="fa-solid fa-magnifying-glass" />
@@ -39,16 +47,9 @@ const Background = styled.div`
 const GridItem = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   cursor: pointer;
   color: ${(props) => props.theme.fontColor};
-`;
-
-const Link = styled.a`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
 `;
 
 const Input = styled.input`
