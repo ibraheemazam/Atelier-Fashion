@@ -1,7 +1,8 @@
-import React, { useRef } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-function MoreRevs({ reviews, getReviews, noMoreReviews, setRevCount }) {
+function MoreRevs({ noMoreReviews, setRevCount }) {
   const handleMoreReviews = function handleMoreReviews() {
     setRevCount((prevRevCount) => prevRevCount + 2);
   };
@@ -11,13 +12,26 @@ function MoreRevs({ reviews, getReviews, noMoreReviews, setRevCount }) {
       {
         !noMoreReviews.current
         && (
-          <button type="button" onClick={handleMoreReviews}>
+          <MoreButton type="button" onClick={handleMoreReviews}>
             MORE REVIEWS
-          </button>
+          </MoreButton>
         )
       }
     </div>
   );
 }
 
+MoreRevs.propTypes = {
+  noMoreReviews: PropTypes.shape({
+    current: PropTypes.bool,
+  }).isRequired,
+  setRevCount: PropTypes.func.isRequired,
+};
+
 export default MoreRevs;
+
+const MoreButton = styled.button`
+  padding: 1em;
+  font-size: .9em;
+  font-weight: bold;
+`;

@@ -8,14 +8,14 @@ import ExtraButtons from './Extras/ExtraButtons';
 
 function QuestionAndAnswers() {
   const {
-    productID, setQuestions, numQuestions, filteredQuestions,
+    productID, setQuestions, numQuestions, setNumQuestions, filteredQuestions,
   } = useGlobalContext();
 
   useEffect(() => {
     function getQuestions() {
       axios
         .get('/questions', {
-          params: { product_id: productID, count: 100 },
+          params: { product_id: productID, count: 1000 },
         })
         .then((results) => {
           setQuestions(results.data.results);
@@ -25,10 +25,12 @@ function QuestionAndAnswers() {
         });
     }
     getQuestions();
-  }, [productID, setQuestions]);
+
+    setNumQuestions(4);
+  }, [productID]);
 
   return (
-    <Container>
+    <Container id="question-and-answers">
       <QuestionSearch />
       <QuestionListContainer id="scrollable-container">
         {numQuestions === 0 ? <div>Be the first to ask a question!</div>
@@ -49,12 +51,13 @@ const Container = styled.div`
 `;
 
 const QuestionListContainer = styled.div`
-  background-color: #f1f1f1;
-  max-height: 600px;
+  background-color: ${(props) => props.theme.backgroundColor};
+  max-height: 60vh;
   overflow: auto;
   margin-left: 20px;
   margin-right: 20px;
   padding: 10px;
   border-radius: 10px;
   justify-content: center;
+  scroll-behavior: smooth;
 `;

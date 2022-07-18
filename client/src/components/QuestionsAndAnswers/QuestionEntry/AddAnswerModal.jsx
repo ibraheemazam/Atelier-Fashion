@@ -22,6 +22,25 @@ function AddAnswerModal({ setShowModal, question }) {
 
   const { productInfo } = useGlobalContext();
 
+  function input() {
+    if (!validInput) {
+      return (
+        <Disclaimer>
+          <div>
+            1. Not all mandatory fields have been provided.
+          </div>
+          <div>
+            2. Email is not in the correct email format.
+          </div>
+          <div>
+            3. The images selected are invalid or unable to be uploaded.
+          </div>
+        </Disclaimer>
+      );
+    }
+    return null;
+  }
+
   function validateInput() {
     function validateEmail(emailName) {
       const regex = /\S+@\S+\.\S+/;
@@ -36,22 +55,6 @@ function AddAnswerModal({ setShowModal, question }) {
       return false;
     }
     return true;
-  }
-
-  function input() {
-    if (!validInput) {
-      return (
-        <Disclaimer>
-          <div>1. Not all mandatory fields have been provided.</div>
-          <div>2. Email is not in the correct email format.</div>
-          <div>
-            3. The images selected are invalid or unable to be
-            uploaded.
-          </div>
-        </Disclaimer>
-      );
-    }
-    return null;
   }
 
   function askQuestion() {
@@ -70,7 +73,7 @@ function AddAnswerModal({ setShowModal, question }) {
 
     const promises = [];
     for (let i = 0; i < preview.length; i += 1) {
-      const promise = axios.post('/answers/photo', {
+      const promise = axios.post('/cloudinary/upload', {
         image: preview[i],
       });
       promises.push(promise);
@@ -110,7 +113,7 @@ function AddAnswerModal({ setShowModal, question }) {
           <div>Photos(optional)</div>
           <div>Max 5</div>
         </FormField>
-        <FormEntry
+        <FileInput
           onChange={(event) => handlePreviews(event)}
           type="file"
           id="photos"
@@ -209,7 +212,6 @@ function AddAnswerModal({ setShowModal, question }) {
 const ModalBackground = styled.div`
   width: 100vw;
   height: 100vh;
-  background-color: rgba(200, 200, 200, 0.5);
   position: fixed;
   display: flex;
   justify-content: center;
@@ -219,13 +221,15 @@ const ModalBackground = styled.div`
 `;
 
 const ModalContainer = styled.div`
-  width: 60%;
+  width: 60vw;
+  max-height: 90vh;
   border-radius: 10px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   display: flex;
   flex-direction: column;
   padding: 25px;
+  background-color: ${(props) => props.theme.secondaryColor};
 `;
 
 const CloseButtonDiv = styled.div`
@@ -237,6 +241,7 @@ const CloseButtonButton = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
+  color: ${(props) => props.theme.fontColor};
 `;
 
 const Form = styled.div`
@@ -254,20 +259,38 @@ const FormField = styled.label`
 const FormEntry = styled.input`
   grid-column: 2;
   cursor: initial;
+  color: ${(props) => props.theme.fontColor};
+  background-color: ${(props) => props.theme.tertiaryColor};
+  ::placeholder,
+  ::-webkit-input-placeholder {
+    opacity: 0.2;
+    color: ${(props) => props.theme.fontColor};
+  }
+  :-ms-input-placeholder {
+     color: ${(props) => props.theme.fontColor};
+  }
 `;
 
 const InputAnswer = styled.textarea`
   resize: none;
-  height: 50px;
+  height: 125px;
   font-family: Arial;
+  color: ${(props) => props.theme.fontColor};
+  background-color: ${(props) => props.theme.tertiaryColor};
+  ::placeholder,
+  ::-webkit-input-placeholder {
+    opacity: 0.2;
+    color: ${(props) => props.theme.fontColor};
+  }
+  :-ms-input-placeholder {
+     color: ${(props) => props.theme.fontColor};
+  }
 `;
 
 const Footer = styled.div`
   display: flex;
   flex: none;
   justify-content: center;
-  align-items: flex-end;
-  align-content: flex-end;
   margin-top: 20%;
 `;
 
@@ -276,8 +299,8 @@ const FooterButton = styled.button`
   height: 45px;
   margin: 10px;
   border: none;
-  color: white;
-  background-color: grey;
+  color: ${(props) => props.theme.fontColor};
+  background-color: ${(props) => props.theme.tertiaryColor};
   border-radius: 10px;
   font-size: 20px;
   cursor: pointer;
@@ -312,4 +335,15 @@ const ImagePreview = styled.img`
 const Header = styled.header`
   margin-bottom: 10px;
 `;
+
+const FileInput = styled.input`
+  color: ${(props) => props.theme.fontColor};
+  cursor: pointer;
+  ::file-selector-button {
+    color: ${(props) => props.theme.fontColor};
+    background-color: ${(props) => props.theme.tertiaryColor};
+    cursor: pointer;
+  }
+`;
+
 export default AddAnswerModal;

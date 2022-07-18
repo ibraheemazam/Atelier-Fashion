@@ -8,6 +8,7 @@ function AddQuestionModal({ setShowModal }) {
   AddQuestionModal.propTypes = {
     setShowModal: PropTypes.func.isRequired,
   };
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [body, setBody] = useState('');
@@ -76,9 +77,14 @@ function AddQuestionModal({ setShowModal }) {
         <CloseButtonDiv>
           <CloseButtonButton onClick={() => setShowModal(false)}>&#10006;</CloseButtonButton>
         </CloseButtonDiv>
-        <h3>
-          {`About the ${productInfo.name}`}
-        </h3>
+        <Header>
+          <div>
+            Ask Your Question
+          </div>
+          <div>
+            {`About the ${productInfo.name}`}
+          </div>
+        </Header>
         <Form>
           <FormField htmlFor="name">
             Username
@@ -102,11 +108,11 @@ function AddQuestionModal({ setShowModal }) {
           </FormField>
           <InputQuestion onChange={(event) => setBody(event.target.value)} maxLength="1000" placeholder="Ask your question" />
           {input()}
-          <Footer>
-            <FooterButton onClick={() => askQuestion()}>Submit</FooterButton>
-            <FooterButton onClick={() => setShowModal(false)}>Cancel</FooterButton>
-          </Footer>
         </Form>
+        <Footer>
+          <FooterButton onClick={() => askQuestion()}>Submit</FooterButton>
+          <FooterButton onClick={() => setShowModal(false)}>Cancel</FooterButton>
+        </Footer>
       </ModalContainer>
     </ModalBackground>
   );
@@ -125,14 +131,15 @@ const ModalBackground = styled.div`
 `;
 
 const ModalContainer = styled.div`
-  width: 60%;
-  height: 500px;
+  width: 60vw;
+  max-height: 90vh;
   border-radius: 10px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   display: flex;
   flex-direction: column;
   padding: 25px;
+  background-color: ${(props) => props.theme.secondaryColor};
 `;
 
 const CloseButtonDiv = styled.div`
@@ -144,6 +151,7 @@ const CloseButtonButton = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
+  color: ${(props) => props.theme.fontColor};
 `;
 
 const Form = styled.div`
@@ -161,19 +169,39 @@ const FormField = styled.label`
 const FormEntry = styled.input`
   grid-column: 2;
   cursor: initial;
+  color: ${(props) => props.theme.fontColor};
+  background-color: ${(props) => props.theme.tertiaryColor};
+  ::placeholder,
+  ::-webkit-input-placeholder {
+    opacity: 0.2;
+    color: ${(props) => props.theme.fontColor};
+  }
+  :-ms-input-placeholder {
+     color: ${(props) => props.theme.fontColor};
+  }
 `;
 
 const InputQuestion = styled.textarea`
   resize: none;
   height: 125px;
   font-family: Arial;
+  color: ${(props) => props.theme.fontColor};
+  background-color: ${(props) => props.theme.tertiaryColor};
+  ::placeholder,
+  ::-webkit-input-placeholder {
+    opacity: 0.2;
+    color: ${(props) => props.theme.fontColor};
+  }
+  :-ms-input-placeholder {
+     color: ${(props) => props.theme.fontColor};
+  }
 `;
 
 const Footer = styled.div`
   display: flex;
+  flex: none;
   justify-content: center;
-  align-items: center;
-  grid-column: 1 / 3;
+  margin-top: 20%;
 `;
 
 const FooterButton = styled.button`
@@ -181,8 +209,8 @@ const FooterButton = styled.button`
   height: 45px;
   margin: 10px;
   border: none;
-  color: white;
-  background-color: grey;
+  color: ${(props) => props.theme.fontColor};
+  background-color: ${(props) => props.theme.tertiaryColor};
   border-radius: 10px;
   font-size: 20px;
   cursor: pointer;
@@ -199,6 +227,10 @@ const Disclaimer = styled.div`
   font-size: 12px;
   color: #ff0000;
   grid-column: 2;
+`;
+
+const Header = styled.header`
+  margin-bottom: 10px;
 `;
 
 export default AddQuestionModal;

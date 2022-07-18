@@ -1,28 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 
-function Breakdown({ productID }) {
-  const [revMeta, setRevMeta] = useState({});
-
-  const getMetaData = function getMetaData() {
-    axios.get('/reviews/meta', {
-      params: {
-        product_id: productID,
-      },
-    })
-      .then((result) => {
-        console.log(result.data);
-        setRevMeta(result.data);
-      })
-      .catch((err) => {
-        console.log('error in getMetaData() function inside Breakdown.jsx:/n', err);
-      });
-  };
-
-  useEffect(getMetaData, [productID]);
-
+function Breakdown({ revMeta }) {
   if (!revMeta.product_id) {
     return (
       <div />
@@ -59,28 +39,45 @@ function Breakdown({ productID }) {
         % of reviews recommend this product
       </p>
       {
-        Object.keys(revMeta.ratings).map((rating) => (
-          <p key={rating}>
-            <u>{`${rating} stars`}</u>
+        Object.entries(revMeta.ratings).map((ratingEnrty) => (
+          <p key={ratingEnrty[0]}>
+            <u>{`${ratingEnrty[0]} stars`}</u>
+            &nbsp;
+            {ratingEnrty[1]}
             <br />
           </p>
         ))
       }
       <br />
-      <div>
-        <div>Size</div>
-        <div>Comfort</div>
-      </div>
+      {Object.entries(revMeta.characteristics).map((charEntry) => (
+        <div key={charEntry[1].id}>
+          <div>
+            {charEntry[0]}
+            :&nbsp;
+            {Math.round(charEntry[1].value * 100) / 100}
+          </div>
+          <br />
+        </div>
+      ))}
     </div>
   );
 }
 
 Breakdown.propTypes = {
-  productID: PropTypes.number.isRequired,
+  revMeta: PropTypes.shape({
+    characteristics: PropTypes.shape({}),
+    product_id: PropTypes.string,
+    ratings: PropTypes.shape({}),
+    recommended: PropTypes.shape({
+      true: PropTypes.string,
+      false: PropTypes.string,
+    }),
+  }).isRequired,
 };
 
 export default Breakdown;
 
 const RatingHeader = styled.div`
+  padding: .12em;
   font-size: 4em;
 `;
