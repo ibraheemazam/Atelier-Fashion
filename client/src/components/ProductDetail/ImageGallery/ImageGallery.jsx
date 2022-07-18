@@ -77,6 +77,7 @@ function ImageGallery() {
   console.log(photos);
   console.log(main);
   console.log(imageUrl);
+  console.log('place:', place);
 
   function changeMain(e, value) {
     e.preventDefault();
@@ -96,30 +97,35 @@ function ImageGallery() {
         <Side>
           {photos
           && photos.map((photo, index) => (
-            <div index={index}>
+            <div
+              index={index}
+              style={{
+                marginLeft: '2%',
+              }}
+            >
               <div
                 onClick={(e) => changeMain(e, index)}
                 role="presentation"
                 style={{
-                  maxWidth: '30%',
+                  maxWidth: '100%',
                   height: 'auto',
-                  // backgroundImage: `url('${photo.thumbnail_url}')`,
-                  // backgroundRepeat: 'no-repeat',
-                  // backgroundSize: 'contain',
                 }}
               >
                 <img
                   src={photo.thumbnail_url}
                   alt=""
                   style={{
-                    width: '80%',
+                    width: '100%',
                     height: '100%',
+                    border: '.5px black solid',
                   }}
                 />
               </div>
             </div>
           ))}
         </Side>
+        <Back type="button">back</Back>
+        <Forward type="button">Forward</Forward>
       </Main>
     </Gallery>
   );
@@ -143,5 +149,17 @@ const Main = styled.div`
 
 const Side = styled.div`
   width: 10%;
-  top: 20%
+  display: inline-block;
+  text-align: left;
+  padding-right: 1%
+`;
+
+const Back = styled.button`
+  vertical-align: top;
+  margin-right: 55%;
+`;
+
+const Forward = styled.button`
+  vertical-align: top;
+  horizontal-align: middle;
 `;
