@@ -110,6 +110,7 @@ function ImageGallery() {
           {photos
           && photos.map((photo, index) => (
             <div
+              key={photo.url}
               index={index}
               style={{
                 marginLeft: '2%',
