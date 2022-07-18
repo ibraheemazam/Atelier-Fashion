@@ -51,7 +51,7 @@ function QuestionEntry({ question }) {
           setClickedReport(true);
         })
         .catch((err) => {
-          throw new Error(err);
+          console.log(err);
         });
     }
   }
@@ -65,7 +65,7 @@ function QuestionEntry({ question }) {
           clickedHelpful.current = true;
         })
         .catch((err) => {
-          throw new Error(err);
+          console.log(err);
         });
     }
   }

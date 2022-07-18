@@ -32,7 +32,7 @@ function AnswerEntry({ answer }) {
           clickedHelpful.current = true;
         })
         .catch((err) => {
-          throw new Error(err);
+          console.log(err);
         });
     }
   }
@@ -43,7 +43,7 @@ function AnswerEntry({ answer }) {
       .then(() => {
       })
       .catch((err) => {
-        throw new Error(err);
+        console.log(err);
       });
   }
 

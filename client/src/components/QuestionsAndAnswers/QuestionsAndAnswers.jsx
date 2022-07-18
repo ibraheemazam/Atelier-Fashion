@@ -18,11 +18,10 @@ function QuestionAndAnswers() {
           params: { product_id: productID, count: 1000 },
         })
         .then((results) => {
-          console.log(results.data);
           setQuestions(results.data.results);
         })
         .catch((err) => {
-          throw new Error(err);
+          console.log(err);
         });
     }
     getQuestions();

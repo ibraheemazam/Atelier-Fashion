@@ -60,6 +60,7 @@ export function GlobalContextProvider({ children }) {
     cardIndex,
     outfitIndex,
     productList];
+
   const value = useMemo(() => ({
     productID,
     setProductID,

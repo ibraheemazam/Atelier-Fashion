@@ -39,7 +39,7 @@ function App() {
         <Font>EXAMPLE</Font> */}
         <GlobalContextProvider>
           <NavBar theme={theme} toggleTheme={toggleTheme} />
-          <ProductDetail />
+          {/* <ProductDetail /> */}
           <RelatedItems />
           <QuestionsAndAnswers />
           <RatingsAndReviews />

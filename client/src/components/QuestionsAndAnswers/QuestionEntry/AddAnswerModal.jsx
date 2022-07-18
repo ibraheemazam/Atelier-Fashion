@@ -73,7 +73,7 @@ function AddAnswerModal({ setShowModal, question }) {
 
     const promises = [];
     for (let i = 0; i < preview.length; i += 1) {
-      const promise = axios.post('/answers/photo', {
+      const promise = axios.post('/cloudinary/upload', {
         image: preview[i],
       });
       promises.push(promise);
