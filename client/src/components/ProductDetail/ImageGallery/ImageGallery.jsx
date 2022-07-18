@@ -16,6 +16,7 @@ function ImageGallery() {
   const [photos, setPhotos] = useState([]);
   const [main, setMain] = useState({});
   const [place, setPlace] = useState(0);
+  const [photosLength, setPhotosLength] = useState(0);
 
   useEffect(() => {
     function getPhotos() {
@@ -24,6 +25,7 @@ function ImageGallery() {
         // setMain(() => photos[index]);
         // } else {
         setMain(() => photos[place]);
+        setPhotosLength(() => photos.length);
         // }
       }
     }
@@ -35,7 +37,7 @@ function ImageGallery() {
     setPhotos(() => selectedStyle.photos);
     getPhotos();
     getUrl();
-  }, [setImageUrl, selectedStyle, setMain, setPhotos, photos, main, place]);
+  }, [setImageUrl, selectedStyle, setMain, setPhotos, photos, main, place, setPhotosLength]);
 
   // useEffect(() => {
   //   setMain(() => photos[0]);
@@ -84,6 +86,16 @@ function ImageGallery() {
     setPlace(() => value);
   }
 
+  function handleClickBack(e) {
+    e.preventDefault();
+    setPlace((prev) => prev - 1);
+  }
+
+  function handleClickForward(e) {
+    e.preventDefault();
+    setPlace((prev) => prev + 1);
+  }
+
   return (
     <Gallery>
       <Main
@@ -124,8 +136,14 @@ function ImageGallery() {
             </div>
           ))}
         </Side>
-        <Back type="button">back</Back>
-        <Forward type="button">Forward</Forward>
+        <Back>
+          {place > 0
+          && <button type="button" onClick={handleClickBack}>back</button>}
+        </Back>
+        <Forward>
+          {place < photosLength - 1
+          && <button type="button" onClick={handleClickForward}>Forward</button>}
+        </Forward>
       </Main>
     </Gallery>
   );
@@ -154,12 +172,12 @@ const Side = styled.div`
   padding-right: 1%
 `;
 
-const Back = styled.button`
+const Back = styled.span`
   vertical-align: top;
   margin-right: 55%;
 `;
 
-const Forward = styled.button`
+const Forward = styled.span`
   vertical-align: top;
   horizontal-align: middle;
 `;
