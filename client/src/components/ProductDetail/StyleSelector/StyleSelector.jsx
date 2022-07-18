@@ -6,19 +6,19 @@ import { useGlobalContext } from '../../../contexts/GlobalStore';
 
 function StyleSelector() {
   const {
-    productID, setProductID, styles, setStyles, selectedStyle, setSelectedStyle,
+    styles, selectedStyle, setSelectedStyle,
   } = useGlobalContext();
 
-  useEffect(() => {
-    axios
-      .get('/styles', { params: { product_id: productID } })
-      .then((stylesResult) => {
-        setSelectedStyle(stylesResult.data.results[0]);
-        setStyles(stylesResult.data.results);
-      })
-      // I'm catching two errors in one here, not great
-      .catch((err) => console.log('error getting product styles', err));
-  }, [productID, setProductID, setStyles]);
+  // useEffect(() => {
+  //   axios
+  //     .get('/styles', { params: { product_id: productID } })
+  //     .then((stylesResult) => {
+  //       setSelectedStyle(stylesResult.data.results[0]);
+  //       setStyles(stylesResult.data.results);
+  //     })
+  //     // I'm catching two errors in one here, not great
+  //     .catch((err) => console.log('error getting product styles', err));
+  // }, [productID, setProductID, setStyles]);
 
   // const [thumbnails, setThumbnails] = useState([]);
   // console.log('thumbnails before useEffect: ', thumbnails);
@@ -74,10 +74,11 @@ function StyleSelector() {
   // }
   // console.log(imageRows);
 
-  function onClickHandler(e, value) {
+  function onClickHandler(e, value, index) {
     e.preventDefault();
     if (selectedStyle.style_id !== value.style_id) {
       setSelectedStyle(() => value);
+
       // styles.forEach((style) => {
       //   let dfault = style['default?']
       // UpdateImageGallery(selectedStyle);
@@ -105,12 +106,19 @@ function StyleSelector() {
       </h4>
       <div>
         <Thumbnails>
-          {styles.map((style) => (
-            <span key={style.style_id}>
-              <span onClick={(e) => onClickHandler(e, style)} role="presentation">
-                <img src={style.photos[0].thumbnail_url} alt="" />
+          {styles.map((style, index) => (
+            <Thumbnail key={style.style_id}>
+              <span index={index} onClick={(e) => onClickHandler(e, style, index)} role="presentation">
+                <img
+                  src={style.photos[0].thumbnail_url}
+                  alt=""
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                  }}
+                />
               </span>
-            </span>
+            </Thumbnail>
           ))}
         </Thumbnails>
       </div>
@@ -120,9 +128,19 @@ function StyleSelector() {
 
 export default StyleSelector;
 
+// const Thumbnails = styled.div`
+//   display: flex;
+//   border: 1px
+//   padding: 1rem 1rem;
+// `;
+
 const Thumbnails = styled.div`
-  width: auto;
-  height: 50%;
-  padding-bottom: 20%;
-  padding-left: 5%;
+  display: flex;
+`;
+
+const Thumbnail = styled.span`
+  margin: 2%;
+  padding: 3% 1%;
+  text-align: center;
+  width: 20%
 `;
