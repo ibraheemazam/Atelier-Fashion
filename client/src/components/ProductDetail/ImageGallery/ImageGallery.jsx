@@ -15,11 +15,16 @@ function ImageGallery() {
   const [imageUrl, setImageUrl] = useState('');
   const [photos, setPhotos] = useState([]);
   const [main, setMain] = useState({});
+  const [place, setPlace] = useState(0);
 
   useEffect(() => {
     function getPhotos() {
       if (photos) {
-        setMain(() => photos[0]);
+        // if (index) {
+        // setMain(() => photos[index]);
+        // } else {
+        setMain(() => photos[place]);
+        // }
       }
     }
     function getUrl() {
@@ -30,7 +35,7 @@ function ImageGallery() {
     setPhotos(() => selectedStyle.photos);
     getPhotos();
     getUrl();
-  }, [setImageUrl, selectedStyle, setMain, setPhotos, photos, main]);
+  }, [setImageUrl, selectedStyle, setMain, setPhotos, photos, main, place]);
 
   // useEffect(() => {
   //   setMain(() => photos[0]);
@@ -73,6 +78,11 @@ function ImageGallery() {
   console.log(main);
   console.log(imageUrl);
 
+  function changeMain(e, value) {
+    e.preventDefault();
+    setPlace(() => value);
+  }
+
   return (
     <Gallery>
       <Main
@@ -85,16 +95,28 @@ function ImageGallery() {
       >
         <Side>
           {photos
-          && photos.map((photo) => (
-            <div>
-              <img
-                src={photo.thumbnail_url}
-                alt=""
+          && photos.map((photo, index) => (
+            <div index={index}>
+              <div
+                onClick={(e) => changeMain(e, index)}
+                role="presentation"
                 style={{
                   maxWidth: '30%',
                   height: 'auto',
+                  // backgroundImage: `url('${photo.thumbnail_url}')`,
+                  // backgroundRepeat: 'no-repeat',
+                  // backgroundSize: 'contain',
                 }}
-              />
+              >
+                <img
+                  src={photo.thumbnail_url}
+                  alt=""
+                  style={{
+                    width: '80%',
+                    height: '100%',
+                  }}
+                />
+              </div>
             </div>
           ))}
         </Side>
