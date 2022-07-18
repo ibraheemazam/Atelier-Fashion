@@ -29,6 +29,7 @@ export function GlobalContextProvider({ children }) {
   const [cardIndex, setCardIndex] = useState(0);
   const [outfitIndex, setOutfitIndex] = useState(0);
   const [productList, setProductList] = useState([]);
+  const [revMeta, setRevMeta] = useState({});
 
   useEffect(() => {
     setProductInfo({
@@ -37,7 +38,7 @@ export function GlobalContextProvider({ children }) {
       name: 'Heir Force Ones',
       slogan: 'A sneaker dynasty',
       description:
-        "Now where da boxes where I keep mine? You should peep mine, maybe once or twice but never three times. I'm just a sneaker pro, I love Pumas and shell toes, but can't nothin compare to a fresh crispy white pearl",
+      "Now where da boxes where I keep mine? You should peep mine, maybe once or twice but never three times. I'm just a sneaker pro, I love Pumas and shell toes, but can't nothin compare to a fresh crispy white pearl",
       category: 'Kicks',
       default_price: '99.00',
       created_at: '2021-08-13T14:38:44.509Z',
@@ -91,6 +92,8 @@ export function GlobalContextProvider({ children }) {
     setOutfitIndex,
     productList,
     setProductList,
+    revMeta,
+    setRevMeta,
   };
 
   return (

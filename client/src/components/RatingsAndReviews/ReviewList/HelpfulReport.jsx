@@ -59,6 +59,7 @@ function HelpfulReport({ review }) {
       <YesButton>|</YesButton>
       <YesButton onClick={() => handleReport()}>
         <u>Report</u>
+        {/* need to add functionality that changes this to reported once clicked */}
       </YesButton>
     </HelpfulnessDiv>
   );
@@ -83,4 +84,5 @@ const HelpfulnessDiv = styled.div`
 
 const YesButton = styled.div`
   display: flex;
+  cursor: pointer;
 `;
