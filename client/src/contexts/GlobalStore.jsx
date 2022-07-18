@@ -59,6 +59,7 @@ export function GlobalContextProvider({ children }) {
     numQuestions,
     reviews,
     outfits,
+    currOutfit,
     cardIndex,
     outfitIndex,
     productList,
