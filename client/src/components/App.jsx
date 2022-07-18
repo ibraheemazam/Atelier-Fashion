@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-has-content */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import ProductDetail from './ProductDetail/ProductDetail';
@@ -33,10 +31,10 @@ function App() {
   return (
     <ThemeProvider theme={theme === 'light' ? themeLight : themeDark}>
       <StyledContainer id="styled-container">
-        {/* <Primary>EXAMPLE</Primary>
+        <Primary>EXAMPLE</Primary>
         <Secondary>EXAMPLE</Secondary>
         <Tertiary>EXAMPLE</Tertiary>
-        <Font>EXAMPLE</Font> */}
+        <Font>EXAMPLE</Font>
         <GlobalContextProvider>
           <NavBar theme={theme} toggleTheme={toggleTheme} />
           <ProductDetail />
