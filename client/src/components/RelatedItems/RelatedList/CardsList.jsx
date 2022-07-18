@@ -92,7 +92,6 @@ function CardsList() {
 const Container = styled.div`
   display: flex;
   flex-direction: row;
-  background-color: #f1f1f1;
 `;
 
 const StyleCardList = styled.div`

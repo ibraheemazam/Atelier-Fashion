@@ -46,7 +46,6 @@ function Card({ data }) {
 
 const CardStyle = styled.div`
   display: grid;
-  border: 6px solid #f1f1f1;
   &:hover {
     opacity: 0.80;
   }
@@ -55,8 +54,6 @@ const CardStyle = styled.div`
 
 const Cards = styled.div`
   display: inline-block;
-  background: #f1f1f1;
-  border: 5px;
   margin-left: auto;
   margin-right: auto;
 `;

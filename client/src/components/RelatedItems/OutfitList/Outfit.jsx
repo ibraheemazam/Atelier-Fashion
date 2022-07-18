@@ -33,7 +33,6 @@ function Outfit(outfitObj) {
 
 const Outline = styled.div`
   display: grid;
-  border: 6px solid #f1f1f1;
   &:hover {
     opacity: 0.80;
   }
@@ -42,8 +41,6 @@ const Outline = styled.div`
 
 const Info = styled.div`
   display: inline-block;
-  background: #f1f1f1;
-  border: 5px;
   margin-left: auto;
   margin-right: auto;
 `;

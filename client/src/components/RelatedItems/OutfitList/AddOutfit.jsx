@@ -24,7 +24,6 @@ function AddOutfit() {
 }
 
 const Outline = styled.div`
-  border: 6px;
 `;
 
 const Button = styled.button`
@@ -32,7 +31,6 @@ const Button = styled.button`
   height: 225px;
   font-size: 60px;
   font-width: bold;
-  margin-top: 6px;
 `;
 
 export default AddOutfit;
