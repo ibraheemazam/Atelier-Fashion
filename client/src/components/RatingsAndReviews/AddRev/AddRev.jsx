@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 import Characteristics from './Characteristics';
@@ -27,9 +28,30 @@ function AddRev({ revMeta }) {
   const handleSubmit = function handleSubmit(event) {
     event.preventDefault();
     const newRevObj = {
-      recommendProd, charVal, revSum, revBody, nickname, email,
+      product_id: 40346,
+      rating: 2,
+      summary: 'This is a great product',
+      body: 'Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+      recommend: true,
+      name: 'ibraheeeeeem',
+      email: 'ibraheeem@gmail.com',
+      photos: ['https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/1200px-Cat03.jpg'],
+      characteristics: {
+        135223: 3,
+        135225: 3,
+        135226: 3,
+        135227: 3,
+      },
     };
-    // need to reset all vals after submitting.
+    axios.post('/reviews', newRevObj)
+      .then((result) => {
+        console.log('A new review was posted to the API:\n', result);
+      })
+      .catch((err) => {
+        console.log('there was an error posting review to API:\n', err);
+      });
+    setAddClicked(false);
+
     console.log(newRevObj);
   };
 

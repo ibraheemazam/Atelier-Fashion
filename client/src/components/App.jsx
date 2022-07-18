@@ -38,10 +38,10 @@ function App() {
         <Tertiary>EXAMPLE</Tertiary>
         <Font>EXAMPLE</Font> */}
         <GlobalContextProvider>
-          <NavBar theme={theme} toggleTheme={toggleTheme} />
+          {/* <NavBar theme={theme} toggleTheme={toggleTheme} />
           <ProductDetail />
           <RelatedItems />
-          <QuestionsAndAnswers />
+          <QuestionsAndAnswers /> */}
           <RatingsAndReviews />
         </GlobalContextProvider>
       </StyledContainer>

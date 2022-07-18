@@ -26,7 +26,14 @@ module.exports.getReviewsMeta = (req, res) => {
 };
 
 module.exports.postReview = (req, res) => {
-  res.sendStatus(501);
+  axios.post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews', req.body)
+    .then((result) => {
+      res.send(result.data);
+    })
+    .catch((err) => {
+      console.error('There was an error in the getReviews controller function:\n', err);
+      res.sendStatus(400);
+    });
 };
 
 module.exports.putReviewHelpful = (req, res) => {
