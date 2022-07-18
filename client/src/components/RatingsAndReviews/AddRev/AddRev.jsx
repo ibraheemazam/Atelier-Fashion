@@ -176,9 +176,11 @@ const AddRevBackground = styled.div`
 `;
 
 const AddRevDiv = styled.div`
+  display: flex;
+  flex-direction: column;
   padding: 1em;
   height: 45%;
-  width: 70%;
+  width: 60%;
   border: 1px solid;
   overflow: scroll;
   border-radius: 10px;
@@ -237,4 +239,5 @@ const ButtonDiv = styled.button`
   padding: 1em;
   font-size: .9em;
   font-weight: bold;
+  border-radius: 10px;
 `;
