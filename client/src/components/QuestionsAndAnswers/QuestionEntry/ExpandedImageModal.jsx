@@ -20,7 +20,7 @@ function ExpandedImageModal({ src, setShowModal }) {
         <CloseButtonDiv>
           <CloseButtonButton onClick={() => setShowModal(false)}>&#10006;</CloseButtonButton>
         </CloseButtonDiv>
-        <Image src={src} alt="" />
+        <Image src={src} alt="modal-image" />
       </ModalContainer>
     </ModalBackground>
   );

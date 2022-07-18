@@ -31,10 +31,10 @@ function App() {
   return (
     <ThemeProvider theme={theme === 'light' ? themeLight : themeDark}>
       <StyledContainer id="styled-container">
-        <Primary>EXAMPLE</Primary>
+        {/* <Primary>EXAMPLE</Primary>
         <Secondary>EXAMPLE</Secondary>
         <Tertiary>EXAMPLE</Tertiary>
-        <Font>EXAMPLE</Font>
+        <Font>EXAMPLE</Font> */}
         <GlobalContextProvider>
           <NavBar theme={theme} toggleTheme={toggleTheme} />
           <ProductDetail />

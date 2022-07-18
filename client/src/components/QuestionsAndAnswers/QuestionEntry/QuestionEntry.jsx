@@ -83,18 +83,18 @@ function QuestionEntry({ question }) {
     if (clickedReport) {
       return (
         <HelpfulReport>
-          {'Helpful? '}
+          Helpful?
           <Clickable onClick={() => helpfulQuestion()}>Yes</Clickable>
-          {`(${helpfulness}) `}
+          {`(${helpfulness})`}
           <Reported>Reported</Reported>
         </HelpfulReport>
       );
     }
     return (
       <HelpfulReport>
-        {'Helpful? '}
+        Helpful?
         <Clickable onClick={() => helpfulQuestion()}>Yes</Clickable>
-        {`(${helpfulness}) `}
+        {`(${helpfulness})`}
         <Clickable onClick={() => reportQuestion()}>Report</Clickable>
       </HelpfulReport>
     );
@@ -130,14 +130,14 @@ function QuestionEntry({ question }) {
 
   return (
     <Entry>
-      <Question>Q.</Question>
-      <QuestionBody>{question.question_body}</QuestionBody>
+      <Question id="question_header">Q.</Question>
+      <QuestionBody id="question_body">{question.question_body}</QuestionBody>
       {helpfulReport()}
       <AddAnswer>
         <Clickable onClick={() => answerQuestion()}>Add Answer</Clickable>
       </AddAnswer>
-      <Answer>A.</Answer>
-      <AnswersListContainer>
+      <Answer id="answer_header">A.</Answer>
+      <AnswersListContainer id="question_answers">
         {answersList()}
       </AnswersListContainer>
       {moreAnswers()}

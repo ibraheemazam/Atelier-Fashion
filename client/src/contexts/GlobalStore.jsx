@@ -33,13 +33,15 @@ export function GlobalContextProvider({ children }) {
 
   useEffect(() => {
     function getProductInfo() {
-      axios.get('/products', {
-        params: {
-          ID: productID,
-        },
-      }).then((results) => {
-        setProductInfo(results.data);
-      });
+      axios
+        .get('/products', {
+          params: {
+            ID: productID,
+          },
+        })
+        .then((results) => {
+          setProductInfo(results.data);
+        });
     }
 
     getProductInfo();

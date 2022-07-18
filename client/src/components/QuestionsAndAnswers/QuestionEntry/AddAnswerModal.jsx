@@ -87,7 +87,12 @@ function AddAnswerModal({ setShowModal, question }) {
 
         axios.post('/answers', postBody).then(() => {
           setShowModal(false);
+        }).catch((err) => {
+          console.log(err);
         });
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }
 
@@ -198,7 +203,7 @@ function AddAnswerModal({ setShowModal, question }) {
         </Form>
         <Footer id="footer">
           <FooterButton onClick={() => askQuestion()}>
-            Confirm
+            Submit
           </FooterButton>
           <FooterButton onClick={() => setShowModal(false)}>
             Cancel
