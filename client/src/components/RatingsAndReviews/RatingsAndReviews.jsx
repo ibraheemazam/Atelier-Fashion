@@ -34,7 +34,7 @@ function RatingsAndReviews() {
           console.log('Value of reviews after RatingsAndReviews() axios get request:\n', result.data.results);
           setReviews(
             (prevState) => {
-              if (prevState.length >= result.data.results.length - 1) {
+              if (JSON.stringify(prevState) === JSON.stringify(result.data.results)) {
                 if (prevSortOrder.current === sortOrder) {
                   noMoreReviews.current = true;
                 } else {
