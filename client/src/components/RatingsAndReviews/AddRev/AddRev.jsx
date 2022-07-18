@@ -5,11 +5,12 @@ import PropTypes from 'prop-types';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 import Characteristics from './Characteristics';
 
-function AddRev({ revMeta }) {
+function AddRev({ revMeta, productID }) {
   const { productInfo } = useGlobalContext();
   const [addClicked, setAddClicked] = useState(false);
   const [recommendProd, setRecommendProd] = useState();
   const [charVal, setCharVal] = useState({});
+  const [charObj, setCharObj] = useState({});
   const [revSum, setRevSum] = useState('');
   const [revBody, setRevBody] = useState('');
   const [nickname, setNickname] = useState('');
@@ -25,33 +26,31 @@ function AddRev({ revMeta }) {
     setAddClicked((prevAddClicked) => !prevAddClicked);
   };
 
-  const handleSubmit = function handleSubmit(event) {
-    event.preventDefault();
-    const newRevObj = {
-      product_id: 40346,
-      rating: 2,
-      summary: 'This is a great product',
-      body: 'Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-      recommend: true,
-      name: 'ibraheeeeeem',
-      email: 'ibraheeem@gmail.com',
-      photos: ['https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/1200px-Cat03.jpg'],
-      characteristics: {
-        135223: 3,
-        135225: 3,
-        135226: 3,
-        135227: 3,
-      },
-    };
-    axios.post('/reviews', newRevObj)
+  const postRev = function postRev(newReview) {
+    axios.post('/reviews', newReview)
       .then((result) => {
         console.log('A new review was posted to the API:\n', result);
       })
       .catch((err) => {
         console.log('there was an error posting review to API:\n', err);
       });
-    setAddClicked(false);
+  };
 
+  const handleSubmit = function handleSubmit(event) {
+    event.preventDefault();
+    const newRevObj = {
+      product_id: productID,
+      rating: 2,
+      summary: revSum,
+      body: revBody,
+      recommend: recommendProd,
+      name: nickname,
+      email,
+      photos: ['https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/1200px-Cat03.jpg'],
+      characteristics: charObj,
+    };
+    postRev(newRevObj);
+    setAddClicked(false);
     console.log(newRevObj);
   };
 
@@ -66,108 +65,111 @@ function AddRev({ revMeta }) {
       <AddButton type="button" onClick={() => handleAddRev()}>
         ADD A REVIEW +
       </AddButton>
-      {
-        addClicked && (
-          <AddRevBackground id="AddRevBackground" onClick={(event) => handleBackgroundClick(event)}>
-            <AddRevDiv>
-              <CloseDiv onClick={() => setAddClicked(false)}>
-                X
-              </CloseDiv>
-              <AddRevHeader>
-                <h2>Write a Review</h2>
-                <div>
-                  About the&nbsp;
-                  {productInfo.name}
-                </div>
-              </AddRevHeader>
-              <FormContainer onSubmit={(event) => handleSubmit(event)}>
-                <label htmlFor="overall rating">
-                  Overall rating*&nbsp;
-                  <select>
-                    <option>1 star</option>
-                    <option>2 star</option>
-                    <option>3 star</option>
-                    <option>4 star</option>
-                    <option>5 star</option>
-                  </select>
-                </label>
-                <br />
+      {addClicked && (
+      <AddRevBackground id="AddRevBackground" onClick={(event) => handleBackgroundClick(event)}>
+        <AddRevDiv>
+          <CloseDiv onClick={() => setAddClicked(false)}>
+            X
+          </CloseDiv>
+          <AddRevHeader>
+            <h2>Write a Review</h2>
+            <div>
+              About the&nbsp;
+              {productInfo.name}
+            </div>
+          </AddRevHeader>
+          <FormContainer onSubmit={(event) => handleSubmit(event)}>
+            <label htmlFor="overall rating">
+              Overall rating*&nbsp;
+              <select>
+                <option>1 star</option>
+                <option>2 star</option>
+                <option>3 star</option>
+                <option>4 star</option>
+                <option>5 star</option>
+              </select>
+            </label>
+            <br />
 
-                <RecommendProdLabel htmlFor="recommendProd" onChange={(event) => setRecommendProd(event.target.value === 'true')}>
-                  Do you recommend this product?*&nbsp;
-                  <div>
-                    <input type="radio" value="true" name="ovRating" />
-                    Yes
-                    <input type="radio" value="false" name="ovRating" />
-                    No
-                  </div>
-                </RecommendProdLabel>
-                <br />
+            <RecommendProdLabel htmlFor="recommendProd" onChange={(event) => setRecommendProd(event.target.value === 'true')}>
+              Do you recommend this product?*&nbsp;
+              <div>
+                <input required type="radio" value="true" name="ovRating" />
+                Yes
+                <input type="radio" value="false" name="ovRating" />
+                No
+              </div>
+            </RecommendProdLabel>
+            <br />
 
-                <Characteristics
-                  revMeta={revMeta}
-                  productInfo={productInfo}
-                  charVal={charVal}
-                  setCharVal={setCharVal}
-                />
-                <br />
+            <Characteristics
+              revMeta={revMeta}
+              productInfo={productInfo}
+              charVal={charVal}
+              setCharVal={setCharVal}
+              charObj={charObj}
+              setCharObj={setCharObj}
+            />
+            <br />
 
-                <RevSummaryDiv>
-                  <div>Review summary</div>
-                  <textarea
-                    placeholder="Example: Best purchase ever!"
-                    maxLength="60"
-                    rows="1"
-                    onChange={(event) => setRevSum(event.target.value)}
-                  />
-                </RevSummaryDiv>
-                <br />
+            <RevSummaryDiv>
+              <div>Review summary</div>
+              <textarea
+                placeholder="Example: Best purchase ever!"
+                maxLength="60"
+                rows="1"
+                onChange={(event) => setRevSum(event.target.value)}
+              />
+            </RevSummaryDiv>
+            <br />
 
-                <RevBodyDiv>
-                  <div>Review body*</div>
-                  <textarea
-                    placeholder="Why did you like the product or not?"
-                    minLength="50"
-                    maxLength="1000"
-                    rows="6"
-                    onChange={(event) => setRevBody(event.target.value)}
-                    // required
-                  />
-                </RevBodyDiv>
-                <br />
+            <RevBodyDiv>
+              <div>Review body*</div>
+              <textarea
+                placeholder="Why did you like the product or not?"
+                minLength="50"
+                maxLength="1000"
+                rows="6"
+                onChange={(event) => setRevBody(event.target.value)}
+                required
+              />
+            </RevBodyDiv>
+            <br />
 
-                <div>Upload your photos</div>
-                <input />
-                <br />
+            <div>Upload your photos</div>
+            <input />
+            <br />
 
-                What is your nickname?*
-                <textarea
-                  maxLength="60"
-                  placeholder="Example: jackson11!"
-                  rows="1"
-                  onChange={(event) => setNickname(event.target.value)}
-                />
-                <br />
+            What is your nickname?*
+            <textarea
+              maxLength="60"
+              placeholder="Example: jackson11!"
+              rows="1"
+              onChange={(event) => setNickname(event.target.value)}
+              required
+            />
+            <br />
 
-                Your email*
-                <textarea
-                  maxLength="60"
-                  placeholder="Example: jackson11@email.com"
-                  rows="1"
-                  onChange={(event) => setEmail(event.target.value)}
-                />
-                <AuthTag>For authentication reasons, you will not be emailed</AuthTag>
-                <br />
+            Your email*
+            <textarea
+              maxLength="60"
+              placeholder="Example: jackson11@email.com"
+              rows="1"
+              onChange={(event) => setEmail(event.target.value)}
+              required
+            />
+            <AuthTag>For authentication reasons, you will not be emailed</AuthTag>
+            <br />
 
-                <ButtonContainer>
-                  <ButtonDiv type="submit">Submit</ButtonDiv>
-                  <ButtonDiv type="button" onClick={() => setAddClicked(false)}> Cancel </ButtonDiv>
-                </ButtonContainer>
-              </FormContainer>
-            </AddRevDiv>
-          </AddRevBackground>
-        )
-      }
+            <ButtonContainer>
+              <ButtonDiv type="submit">Submit</ButtonDiv>
+              <ButtonDiv type="button" onClick={() => setAddClicked(false)}> Cancel </ButtonDiv>
+            </ButtonContainer>
+
+          </FormContainer>
+        </AddRevDiv>
+      </AddRevBackground>
+      )}
     </div>
   );
 }

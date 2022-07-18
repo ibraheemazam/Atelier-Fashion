@@ -118,7 +118,7 @@ function RatingsAndReviews() {
               />
             )
           }
-          <AddRev revMeta={revMeta} />
+          <AddRev revMeta={revMeta} productID={productID} />
         </MoreAddContainer>
       </ReviewListContainer>
     </Container>
