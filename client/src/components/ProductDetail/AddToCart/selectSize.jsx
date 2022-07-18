@@ -19,13 +19,14 @@ function SelectSize() {
 
   function getAvailableSizes({ skus }) {
     // could just map all the skus objects and return an option element if quantity > 0
+    // console.log('skus from getAvailableSizes', skus);
     const allSkus = Object.values(skus);
-    console.log('allSkus from getAvailableSize: ', allSkus);
+    // console.log('allSkus from getAvailableSize: ', allSkus);
     let sizeAvailable = false;
     return allSkus.map((sku, index) => (
       sku.quantity > 0
-      && <option key={sku.size} onSelect={(e) => sellSize(e, index)}>{sku.size}</option>
-    ))
+      && <option onSelect={(e) => sellSize(e, index)}>{sku.size}</option>
+    ));
 
 
     // const sizes = [];

@@ -76,10 +76,6 @@ function ImageGallery() {
   //   }
 
   //  {allThumbnails.map((thumbnail) => <img src={thumbnail} />)}
-  console.log(photos);
-  console.log(main);
-  console.log(imageUrl);
-  console.log('place:', place);
 
   function changeMain(e, value) {
     e.preventDefault();

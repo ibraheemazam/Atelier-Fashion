@@ -15,12 +15,12 @@ function ProductDetail({ href }) {
   // Works when ready to hook up API with URL
   // setProductID(window.location.pathname || 40348); // think should be in useEffect?
   useEffect(() => {
-    function getProductInfo() {
-      axios
-        .get('/products', { params: { ID: productID } })
-        .then((productResult) => { setProductInfo(productResult.data); })
-        .catch((err) => { console.log('error getting product information', err); });
-    }
+    // function getProductInfo() {
+    //   axios
+    //     .get('/products', { params: { ID: productID } })
+    //     .then((productResult) => { setProductInfo(productResult.data); })
+    //     .catch((err) => { console.log('error getting product information', err); });
+    // }
     function getStyles() {
       axios
         .get('/styles', { params: { product_id: productID } })
@@ -31,10 +31,10 @@ function ProductDetail({ href }) {
         // I'm catching two errors in one here, not great
         .catch((err) => console.log('error getting product styles', err));
     }
-    getProductInfo();
+    // getProductInfo();
     getStyles();
     //   .catch(console.log('error getting product info'), console.error);
-  }, [productID, setProductInfo, setStyles, setSelectedStyle]);
+  }, [productID, setStyles, setSelectedStyle]);
   // add setProductID above when implemented
 
   return (
