@@ -112,6 +112,7 @@ function AddRev({ revMeta }) {
                     // required
                   />
                 </RevBodyDiv>
+                <br />
 
                 <div>Upload your photos</div>
                 <input />
@@ -164,14 +165,25 @@ const AddButton = styled.button`
 `;
 
 const AddRevBackground = styled.div`
+  height: 100vw;
+  width: 100vw;
+  background: #1fe0;
+  position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vw;
-  width: 100vw;
-  position: absolute;
   top: 0; left: 0;
-  background: #1fe0;
+`;
+
+const AddRevDiv = styled.div`
+  padding: 1em;
+  height: 45%;
+  width: 70%;
+  border: 1px solid;
+  overflow: scroll;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 `;
 
 const CloseDiv = styled.div`
@@ -179,15 +191,6 @@ const CloseDiv = styled.div`
   justify-content: flex-end;
   font-size: 1.8em;
   cursor: pointer;
-`;
-
-const AddRevDiv = styled.div`
-  padding: 1em;
-  height: 45%;
-  width: 40%;
-  border: 1px solid;
-  overflow: scroll;
-  background-color: rgba(117, 190, 218, 0.97);
 `;
 
 const AddRevHeader = styled.div`
@@ -226,9 +229,12 @@ const AuthTag = styled.div`
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-around;
+  padding: 1.5em;
 `;
 
 const ButtonDiv = styled.button`
-  width 35%;
+  width 40%;
+  padding: 1em;
   font-size: .9em;
+  font-weight: bold;
 `;

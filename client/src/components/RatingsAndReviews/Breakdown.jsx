@@ -78,5 +78,6 @@ Breakdown.propTypes = {
 export default Breakdown;
 
 const RatingHeader = styled.div`
+  padding: .12em;
   font-size: 4em;
 `;
