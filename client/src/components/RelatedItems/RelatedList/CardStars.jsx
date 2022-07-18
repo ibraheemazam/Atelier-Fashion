@@ -27,7 +27,7 @@ function CardStars(stars) {
 }
 
 const Stars = styled.div`
-  background: #0ABAB5;
+  background: #f1f1f1;
   margin-left: auto;
   margin-right: auto;
 `;
