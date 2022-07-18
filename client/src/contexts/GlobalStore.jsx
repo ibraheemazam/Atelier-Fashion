@@ -15,6 +15,8 @@ export function GlobalContextProvider({ children }) {
   // will use API later to get information
   const [productID, setProductID] = useState(40348);
   const [productInfo, setProductInfo] = useState({});
+  const [styles, setStyles] = useState([]);
+  const [selectedStyle, setSelectedStyle] = useState({});
 
   const [questions, setQuestions] = useState([]);
   const [filteredQuestions, setFilteredQuestions] = useState([]);
@@ -67,6 +69,10 @@ export function GlobalContextProvider({ children }) {
     setProductID,
     productInfo,
     setProductInfo,
+    styles,
+    setStyles,
+    selectedStyle,
+    setSelectedStyle,
     questions,
     setQuestions,
     filteredQuestions,
