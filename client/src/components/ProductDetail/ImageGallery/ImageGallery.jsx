@@ -94,54 +94,60 @@ function ImageGallery() {
 
   return (
     <Gallery>
-      <Main
-        style={{
-          backgroundImage: `url('${imageUrl}')`,
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: 'contain',
-        }}
-        alt={`${productInfo.name} in ${selectedStyle.name} style`}
-      >
-        <Side>
-          {photos
-          && photos.map((photo, index) => (
-            <div
-              key={photo.url}
-              index={index}
-              style={{
-                marginLeft: '2%',
-              }}
-            >
+      {imageUrl
+        ? (
+          <Main
+            style={{
+              backgroundImage: `url('${imageUrl}')`,
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'contain',
+            }}
+            alt={`${productInfo.name} in ${selectedStyle.name} style`}
+          >
+            <Side>
+              {photos
+            && photos.map((photo, index) => (
               <div
-                onClick={(e) => changeMain(e, index)}
-                role="presentation"
+                key={photo.url}
+                index={index}
                 style={{
-                  maxWidth: '100%',
-                  height: 'auto',
+                  marginLeft: '2%',
                 }}
               >
-                <img
-                  src={photo.thumbnail_url}
-                  alt=""
+                <div
+                  onClick={(e) => changeMain(e, index)}
+                  role="presentation"
                   style={{
-                    width: '100%',
-                    height: '100%',
-                    border: '.5px black solid',
+                    maxWidth: '100%',
+                    height: 'auto',
                   }}
-                />
+                >
+                  <img
+                    src={photo.thumbnail_url}
+                    alt=""
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      border: '.5px black solid',
+                    }}
+                  />
+                </div>
               </div>
-            </div>
-          ))}
-        </Side>
-        <Back>
-          {place > 0
-          && <button type="button" onClick={handleClickBack}>back</button>}
-        </Back>
-        <Forward>
-          {place < photosLength - 1
-          && <button type="button" onClick={handleClickForward}>Forward</button>}
-        </Forward>
-      </Main>
+            ))}
+            </Side>
+            <Back>
+              {place > 0
+            && <button type="button" onClick={handleClickBack}>back</button>}
+            </Back>
+            <Forward>
+              {place < photosLength - 1
+            && <button type="button" onClick={handleClickForward}>Forward</button>}
+            </Forward>
+          </Main>
+        )
+        : (
+          <div>No Image Available</div>
+        )}
     </Gallery>
   );
 }
