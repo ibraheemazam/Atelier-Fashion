@@ -1,7 +1,7 @@
-import React, { useRef } from 'react';
-import styled from 'styled-components';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-function MoreRevs({ reviews, getReviews, noMoreReviews, setRevCount }) {
+function MoreRevs({ noMoreReviews, setRevCount }) {
   const handleMoreReviews = function handleMoreReviews() {
     setRevCount((prevRevCount) => prevRevCount + 2);
   };
@@ -19,5 +19,12 @@ function MoreRevs({ reviews, getReviews, noMoreReviews, setRevCount }) {
     </div>
   );
 }
+
+MoreRevs.propTypes = {
+  noMoreReviews: PropTypes.shape({
+    current: PropTypes.bool,
+  }).isRequired,
+  setRevCount: PropTypes.func.isRequired,
+};
 
 export default MoreRevs;

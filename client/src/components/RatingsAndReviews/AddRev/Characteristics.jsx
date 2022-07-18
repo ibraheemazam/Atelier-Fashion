@@ -91,57 +91,51 @@ function Characteristics({ revMeta, charVal, setCharVal }) {
   };
 
   return (
-    Object.keys(revMeta.characteristics).map((char) => (
-      <div key={char}>
-        <div>
-          {char}
-          :&nbsp;
-          {charVal[char]}
-        </div>
-        <div onChange={(event) => handleCharChange(event.target.value, char)}>
-          <input type="radio" value={1} name={char} />
-          1
-          <input type="radio" value={2} name={char} />
-          2
-          <input type="radio" value={3} name={char} />
-          3
-          <input type="radio" value={4} name={char} />
-          4
-          <input type="radio" value={5} name={char} />
-          5
-        </div>
-        <br />
+    <div>
+      <div>
+        Product characteristics*
       </div>
-    ))
+      <br />
+      {Object.keys(revMeta.characteristics).map((char) => (
+        <CharDiv key={char}>
+          <div>
+            {char}
+            :&nbsp;
+            {
+            !charVal[char]
+              ? 'none selected'
+              : charVal[char]
+            }
+          </div>
+          <div onChange={(event) => handleCharChange(event.target.value, char)}>
+            <input type="radio" value={1} name={char} />
+            {/* remember to make above input required */}
+            1
+            <input type="radio" value={2} name={char} />
+            2
+            <input type="radio" value={3} name={char} />
+            3
+            <input type="radio" value={4} name={char} />
+            4
+            <input type="radio" value={5} name={char} />
+            5
+          </div>
+        </CharDiv>
+      ))}
+    </div>
   );
 }
 
 Characteristics.propTypes = {
   revMeta: PropTypes.shape({
-    characteristics: PropTypes.shape({
-      Size: PropTypes.shape({
-        id: PropTypes.number,
-        value: PropTypes.string,
-      }),
-      Width: PropTypes.shape({
-        id: PropTypes.number,
-        value: PropTypes.string,
-      }),
-      Quality: PropTypes.shape({
-        id: PropTypes.number,
-        value: PropTypes.string,
-      }),
-      Comfort: PropTypes.shape({
-        id: PropTypes.number,
-        value: PropTypes.string,
-      }),
-    }),
+    characteristics: PropTypes.shape({}),
   }).isRequired,
+  charVal: PropTypes.shape({}).isRequired,
+  setCharVal: PropTypes.func.isRequired,
 };
 
 export default Characteristics;
 
-const FormContainer = styled.form`
-  display: flex;
-  flex-direction: column;
+const CharDiv = styled.div`
+  margin-left: 20px;
 `;

@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
-function Breakdown( {revMeta} ) {
+function Breakdown({ revMeta }) {
   if (!revMeta.product_id) {
     return (
       <div />
@@ -53,6 +54,18 @@ function Breakdown( {revMeta} ) {
     </div>
   );
 }
+
+Breakdown.propTypes = {
+  revMeta: PropTypes.shape({
+    characteristics: PropTypes.shape({}),
+    product_id: PropTypes.string.isRequired,
+    ratings: PropTypes.shape({}),
+    recommended: PropTypes.shape({
+      true: PropTypes.string,
+      false: PropTypes.string,
+    }),
+  }).isRequired,
+};
 
 export default Breakdown;
 

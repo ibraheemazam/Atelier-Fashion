@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 import Characteristics from './Characteristics';
 
@@ -7,20 +8,11 @@ function AddRev({ revMeta }) {
   const { productInfo } = useGlobalContext();
   const [addClicked, setAddClicked] = useState(true);
   const [recommendProd, setRecommendProd] = useState();
-  const [charVal, setCharVal] = useState({
-    Size: 'none selected',
-    sizeNum: null,
-    Width: 'none selected',
-    widthNum: null,
-    Comfort: 'none selected',
-    comfortNum: null,
-    Quality: 'none selected',
-    qualityNum: null,
-    Length: 'none selected',
-    lengthNum: null,
-    Fit: 'none selected',
-    fitNum: null,
-  });
+  const [charVal, setCharVal] = useState({});
+  const [revSum, setRevSum] = useState('');
+  const [revBody, setRevBody] = useState('');
+  const [nickname, setNickname] = useState('');
+  const [email, setEmail] = useState('');
 
   if (!revMeta.product_id) {
     return (
@@ -34,11 +26,11 @@ function AddRev({ revMeta }) {
 
   const handleSubmit = function handleSubmit(event) {
     event.preventDefault();
-    console.log('submitted pho');
-    console.log('addClicked:\n', addClicked);
-    console.log('recommendProd:\n', recommendProd);
-    console.log('revMeta:\n', revMeta);
-    console.log('charVal:\n', charVal);
+    const newRevObj = {
+      recommendProd, charVal, revSum, revBody, nickname, email,
+    };
+    // need to reset all vals after submitting.
+    console.log(newRevObj);
   };
 
   const handleBackgroundClick = function handleBackgroundClick(event) {
@@ -55,7 +47,7 @@ function AddRev({ revMeta }) {
       {
         addClicked && (
           <AddRevBackground id="AddRevBackground" onClick={(event) => handleBackgroundClick(event)}>
-            <TestDiv>
+            <AddRevDiv>
               <h2>Write a Review</h2>
               <h3>
                 About the&nbsp;
@@ -73,7 +65,8 @@ function AddRev({ revMeta }) {
                   </select>
                 </label>
                 <br />
-                <label htmlFor="recommendProd" onChange={(event) => setRecommendProd(event.target.value === 'true')}>
+
+                <RecommendProdLabel htmlFor="recommendProd" onChange={(event) => setRecommendProd(event.target.value === 'true')}>
                   Do you recommend this product?*&nbsp;
                   <div>
                     <input type="radio" value="true" name="ovRating" />
@@ -81,7 +74,7 @@ function AddRev({ revMeta }) {
                     <input type="radio" value="false" name="ovRating" />
                     No
                   </div>
-                </label>
+                </RecommendProdLabel>
                 <br />
 
                 <Characteristics
@@ -90,16 +83,69 @@ function AddRev({ revMeta }) {
                   charVal={charVal}
                   setCharVal={setCharVal}
                 />
+                <br />
+
+                <RevSummaryDiv>
+                  <div>Review summary</div>
+                  <textarea
+                    placeholder="Example: Best purchase ever!"
+                    maxLength="60"
+                    rows="1"
+                    onChange={(event) => setRevSum(event.target.value)}
+                  />
+                </RevSummaryDiv>
+                <br />
+
+                <RevBodyDiv>
+                  <div>Review body*</div>
+                  <textarea
+                    placeholder="Why did you like the product or not?"
+                    minLength="50"
+                    maxLength="1000"
+                    rows="6"
+                    onChange={(event) => setRevBody(event.target.value)}
+                    // required
+                  />
+                </RevBodyDiv>
+
+                <div>Upload your photos</div>
+                <input />
+                <br />
+
+                What is your nickname?*
+                <textarea
+                  maxLength="60"
+                  placeholder="Example: jackson11!"
+                  rows="1"
+                  onChange={(event) => setNickname(event.target.value)}
+                />
+                <br />
+
+                Your email*
+                <textarea
+                  maxLength="60"
+                  placeholder="Example: jackson11@email.com"
+                  rows="1"
+                  onChange={(event) => setEmail(event.target.value)}
+                />
+                <AuthTag>For authentication reasons, you will not be emailed</AuthTag>
+                <br />
 
                 <button type="submit">Submit</button>
               </FormContainer>
-            </TestDiv>
+            </AddRevDiv>
           </AddRevBackground>
         )
       }
     </div>
   );
 }
+
+AddRev.propTypes = {
+  revMeta: PropTypes.shape({
+    product_id: PropTypes.string,
+  }).isRequired,
+};
 
 export default AddRev;
 
@@ -114,10 +160,10 @@ const AddRevBackground = styled.div`
   background: gold;
 `;
 
-const TestDiv = styled.div`
+const AddRevDiv = styled.div`
   padding: 1em;
   background: pink;
-  height: 40%;
+  height: 80%;
   width: 50%;
   border: 1px solid;
   overflow: scroll;
@@ -126,4 +172,25 @@ const TestDiv = styled.div`
 const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
+  background: orange;
+`;
+
+const RecommendProdLabel = styled.label`
+
+`;
+
+const RevSummaryDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const RevBodyDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const AuthTag = styled.div`
+  font-size: .9em;
+  font-style: oblique;
+  font-weight: lighter;
 `;
