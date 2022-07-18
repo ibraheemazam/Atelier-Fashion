@@ -29,6 +29,7 @@ export function GlobalContextProvider({ children }) {
   const [cardIndex, setCardIndex] = useState(0);
   const [outfitIndex, setOutfitIndex] = useState(0);
   const [productList, setProductList] = useState([]);
+  const [revMeta, setRevMeta] = useState({});
 
   useEffect(() => {
     function getProductInfo() {
@@ -60,7 +61,8 @@ export function GlobalContextProvider({ children }) {
     outfits,
     cardIndex,
     outfitIndex,
-    productList];
+    productList,
+    revMeta];
 
   const value = useMemo(() => ({
     productID,
@@ -89,6 +91,8 @@ export function GlobalContextProvider({ children }) {
     setOutfitIndex,
     productList,
     setProductList,
+    revMeta,
+    setRevMeta,
   }), dependencies);
 
   return (
