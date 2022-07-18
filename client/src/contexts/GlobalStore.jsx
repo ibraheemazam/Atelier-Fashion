@@ -13,7 +13,7 @@ export function GlobalContextProvider({ children }) {
   };
 
   // will use API later to get information
-  const [productID, setProductID] = useState(40353);
+  const [productID, setProductID] = useState(40348);
   const [productInfo, setProductInfo] = useState({});
 
   const [questions, setQuestions] = useState([]);
