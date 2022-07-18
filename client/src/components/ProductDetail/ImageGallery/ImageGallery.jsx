@@ -17,7 +17,6 @@ function ImageGallery() {
   const [main, setMain] = useState({});
 
   useEffect(() => {
-    setPhotos(() => selectedStyle.photos);
     function getPhotos() {
       if (photos) {
         setMain(() => photos[0]);
@@ -28,11 +27,10 @@ function ImageGallery() {
         setImageUrl(() => main.url);
       }
     }
+    setPhotos(() => selectedStyle.photos);
     getPhotos();
     getUrl();
-    // setMain(() => photos[0]);
-    //  setImageUrl(() => main.url);
-  }, [setImageUrl, selectedStyle, photos, main, setMain, setPhotos]);
+  }, [setImageUrl, selectedStyle, setMain, setPhotos, photos, main]);
 
   // useEffect(() => {
   //   setMain(() => photos[0]);
@@ -84,7 +82,23 @@ function ImageGallery() {
           backgroundSize: 'contain',
         }}
         alt={`${productInfo.name} in ${selectedStyle.name} style`}
-      />
+      >
+        <Side>
+          {photos
+          && photos.map((photo) => (
+            <div>
+              <img
+                src={photo.thumbnail_url}
+                alt=""
+                style={{
+                  maxWidth: '30%',
+                  height: 'auto',
+                }}
+              />
+            </div>
+          ))}
+        </Side>
+      </Main>
     </Gallery>
   );
 }
@@ -103,4 +117,9 @@ const Gallery = styled.div`
 const Main = styled.div`
   width: 100%;
   height: 100%;
+`;
+
+const Side = styled.div`
+  width: 10%;
+  top: 20%
 `;
