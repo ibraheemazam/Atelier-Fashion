@@ -15,9 +15,10 @@ function QuestionAndAnswers() {
     function getQuestions() {
       axios
         .get('/questions', {
-          params: { product_id: productID, count: 100 },
+          params: { product_id: productID, count: 1000 },
         })
         .then((results) => {
+          console.log(results.data);
           setQuestions(results.data.results);
         })
         .catch((err) => {
@@ -27,8 +28,7 @@ function QuestionAndAnswers() {
     getQuestions();
 
     setNumQuestions(4);
-    console.log(Date.now());
-  }, [productID, setNumQuestions, setQuestions]);
+  }, [productID]);
 
   return (
     <Container id="question-and-answers">

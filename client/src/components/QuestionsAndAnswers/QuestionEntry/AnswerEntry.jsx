@@ -28,7 +28,7 @@ function AnswerEntry({ answer }) {
       axios
         .put('/answers/helpful', { answer_id: answer.id })
         .then(() => {
-          setHelpfulness(helpfulness + 1);
+          setHelpfulness((prevHelpfulness) => prevHelpfulness + 1);
           clickedHelpful.current = true;
         })
         .catch((err) => {

@@ -61,7 +61,7 @@ function QuestionEntry({ question }) {
       axios
         .put('/questions/helpful', { question_id: question.question_id })
         .then(() => {
-          setHelpfulness(helpfulness + 1);
+          setHelpfulness((prevHelpfulness) => prevHelpfulness + 1);
           clickedHelpful.current = true;
         })
         .catch((err) => {
@@ -82,7 +82,12 @@ function QuestionEntry({ question }) {
   function helpfulReport() {
     if (clickedReport) {
       return (
-        <Reported>Reported</Reported>
+        <HelpfulReport>
+          {'Helpful? '}
+          <Clickable onClick={() => helpfulQuestion()}>Yes</Clickable>
+          {`(${helpfulness}) `}
+          <Reported>Reported</Reported>
+        </HelpfulReport>
       );
     }
     return (
@@ -143,7 +148,7 @@ function QuestionEntry({ question }) {
 
 const Entry = styled.div`
   display: grid;
-  grid-template-columns: 5% 64% 20% 10%;
+  grid-template-columns: 5% 60% 25% 10%;
   padding-bottom: 5%;
   width: 100%;
   justify-content: center;
@@ -169,7 +174,7 @@ const AddAnswer = styled.div`
   grid-column: 4;
 `;
 
-const Reported = styled.div`
+const Reported = styled.span`
   grid-column: 3;
   font-weight: bold;
 `;

@@ -291,8 +291,6 @@ const Footer = styled.div`
   display: flex;
   flex: none;
   justify-content: center;
-  align-items: flex-end;
-  align-content: flex-end;
   margin-top: 20%;
 `;
 

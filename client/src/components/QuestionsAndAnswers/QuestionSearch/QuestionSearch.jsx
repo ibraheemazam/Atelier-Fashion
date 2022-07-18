@@ -18,7 +18,7 @@ function QuestionSearch() {
     } else if (searchTerm.length < 3) {
       setFilteredQuestions(questions.slice(0, numQuestions));
     }
-  }, [questions, searchTerm, setFilteredQuestions, numQuestions]);
+  }, [questions, searchTerm, numQuestions]);
 
   return (
     <QuestionSearchBar>
