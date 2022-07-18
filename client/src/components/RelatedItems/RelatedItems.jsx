@@ -22,7 +22,7 @@ const Text = styled.div`
   font-size: large;
   font-weight: bold;
   text-align: center;
-  background: #0ABAB5;
+  background-color: #82827d;
 `;
 
 export default RelatedItems;

@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
 function Outfit(outfitObj) {
-  // console.log('Outfit Obj:', outfitObj);
+  console.log('Outfit Obj:', outfitObj);
   // console.log('index:', data.index);
   const {
     outfits, setOutfits,
   } = useGlobalContext();
-  let outfitImage = outfitObj.outfit.imageInfo.results[0].photos[0].thumbnail_url;
+  let outfitImage = outfitObj.outfit.image.data.results[0].photos[0].thumbnail_url;
   let outfitDetails = outfitObj.outfit.details.data;
 
   function removeOutfit() {
@@ -33,12 +33,16 @@ function Outfit(outfitObj) {
 
 const Outline = styled.div`
   display: grid;
-  border: 4px solid #0ABAB5;
+  border: 6px solid #f1f1f1;
+  &:hover {
+    opacity: 0.80;
+  }
+  margin-top: auto;
 `;
 
 const Info = styled.div`
   display: inline-block;
-  background: #0ABAB5;
+  background: #f1f1f1;
   border: 5px;
   margin-left: auto;
   margin-right: auto;
@@ -49,8 +53,8 @@ const IMG = styled.img`
   position: relative;
   margin-left: auto;
   margin-right: auto;
-  width: 200px;
-  height: 200px;
+  width: 225px;
+  height: 225px;
   object-fit: fill;
 `;
 
