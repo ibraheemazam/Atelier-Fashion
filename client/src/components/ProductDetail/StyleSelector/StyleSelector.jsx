@@ -107,11 +107,18 @@ function StyleSelector() {
       <div>
         <Thumbnails>
           {styles.map((style, index) => (
-            <span key={style.style_id}>
+            <Thumbnail key={style.style_id}>
               <span index={index} onClick={(e) => onClickHandler(e, style, index)} role="presentation">
-                <img src={style.photos[0].thumbnail_url} alt="" />
+                <img
+                  src={style.photos[0].thumbnail_url}
+                  alt=""
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                  }}
+                />
               </span>
-            </span>
+            </Thumbnail>
           ))}
         </Thumbnails>
       </div>
@@ -121,9 +128,19 @@ function StyleSelector() {
 
 export default StyleSelector;
 
+// const Thumbnails = styled.div`
+//   display: flex;
+//   border: 1px
+//   padding: 1rem 1rem;
+// `;
+
 const Thumbnails = styled.div`
-  width: auto;
-  height: 50%;
-  padding-bottom: 20%;
-  padding-left: 5%;
+  display: flex;
+`;
+
+const Thumbnail = styled.span`
+  margin: 2%;
+  padding: 3% 1%;
+  text-align: center;
+  width: 20%
 `;
