@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
+import PropTypes from 'prop-types';
 
-function CardStars(stars) {
+function CardStars({ reviewID }) {
   // console.log('Star data:', stars);
   const totalStars = [];
-  let reviews = stars.reviewID.results;
+  const reviews = reviewID.results;
   let average = 0;
   for (let i = 0; i < reviews.length; i += 1) {
     average += reviews[i].rating;
@@ -25,6 +25,14 @@ function CardStars(stars) {
     </Stars>
   );
 }
+
+CardStars.propTypes = {
+  reviewID: PropTypes.shape({
+    results: PropTypes.arrayOf(PropTypes.shape({
+      rating: PropTypes.number,
+    })),
+  }).isRequired,
+};
 
 const Stars = styled.div`
   margin-left: auto;

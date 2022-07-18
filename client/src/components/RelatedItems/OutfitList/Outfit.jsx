@@ -1,20 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
-function Outfit(outfitObj) {
-  console.log('Outfit Obj:', outfitObj);
+function Outfit({ outfit, index }) {
+  // console.log('Outfit Obj:', outfitObj);
+  console.log('outfit:', outfit);
   // console.log('index:', data.index);
   const {
     outfits, setOutfits,
   } = useGlobalContext();
-  let outfitImage = outfitObj.outfit.image.data.results[0].photos[0].thumbnail_url;
-  let outfitDetails = outfitObj.outfit.details.data;
+  const outfitImage = outfit.image.data.results[0].photos[0].thumbnail_url;
+  const outfitDetails = outfit.details.data;
 
   function removeOutfit() {
     // Note: Need to use below syntax for component to re-render properly
-    let tempArray = [...outfits];
-    tempArray.splice(outfitObj.index, 1);
+    const tempArray = [...outfits];
+    tempArray.splice(index, 1);
     // console.log('OutfitArray:', tempArray);
     setOutfits(tempArray);
   }
@@ -26,10 +28,36 @@ function Outfit(outfitObj) {
       </div>
       <Info>{outfitDetails.name}</Info>
       <Info>{outfitDetails.category}</Info>
-      <Info>${outfitDetails.default_price}</Info>
+      <Info>
+        $
+        {outfitDetails.default_price}
+      </Info>
     </Outline>
   );
 }
+
+Outfit.propTypes = {
+  outfit: PropTypes.shape({
+    image: PropTypes.shape({
+      data: PropTypes.shape({
+        results: PropTypes.arrayOf(PropTypes.shape({
+          photos: PropTypes.arrayOf(PropTypes.shape({
+            thumbnail_url: PropTypes.string,
+          })),
+        })),
+      }),
+    }),
+    details: PropTypes.shape({
+      data: PropTypes.shape({
+        name: PropTypes.string,
+        category: PropTypes.string,
+        default_price: PropTypes.number,
+      }),
+
+    }),
+  }).isRequired,
+  index: PropTypes.number.isRequired,
+};
 
 const Outline = styled.div`
   display: grid;

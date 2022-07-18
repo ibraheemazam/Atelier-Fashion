@@ -1,3 +1,5 @@
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable max-len */
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
@@ -24,7 +26,7 @@ function OutfitList() {
     }
   }
   function fillEmpty() {
-    let emptyCells = [];
+    const emptyCells = [];
     for (let i = 0; i < (3 - outfits.length); i += 1) {
       emptyCells.push(<EmptyOutfit key={i} />);
     }
@@ -39,7 +41,7 @@ function OutfitList() {
           )}
       </LeftBox>
       <StyleList>
-        {(outfits.slice(outfitIndex, outfitIndex + 4)).map((outfit, index) => <Outfit outfit={outfit} key={index} />)}
+        {(outfits.slice(outfitIndex, outfitIndex + 4)).map((outfit, index) => <Outfit outfit={outfit} key={index} index={index} />)}
         {(outfits.length <= 3 || (outfits.length >= 4 && outfits.length - outfitIndex === 3))
          && <AddOutfit /> }
         {(outfits.length <= 3) && fillEmpty()}

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
 function CardImage(imageObj) {
@@ -29,7 +28,10 @@ function CardImage(imageObj) {
       <Button onClick={(e) => {
         e.stopPropagation();
         handleAdd();
-      }}>&#9733;</Button>
+      }}
+      >
+        &#9733;
+      </Button>
     </div>
   );
 }

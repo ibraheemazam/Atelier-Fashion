@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
+import PropTypes from 'prop-types';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 import CardImage from './CardImage';
 import CardStars from './CardStars';
 
 function Card({ data }) {
-  // console.log('Check Data:', data);
+  console.log('Check Data:', data);
   // Note: Can't use global variable for info/setInfo. Returns only last productID
   // Each card needs its own set of states
   const {
-    productID, setProductID, cardIndex, setCardIndex, productList,
+    setProductID, setCardIndex,
   } = useGlobalContext();
   // const [ID, setID] = useState(data);
   const [info, setInfo] = useState(data);
@@ -43,6 +43,16 @@ function Card({ data }) {
     </div>
   );
 }
+
+Card.propTypes = {
+  data: PropTypes.shape({
+    details: PropTypes.shape({
+      data: PropTypes.shape({
+        id: PropTypes.number,
+      }),
+    }),
+  }).isRequired,
+};
 
 const CardStyle = styled.div`
   display: grid;

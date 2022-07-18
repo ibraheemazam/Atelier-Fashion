@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
@@ -11,7 +12,7 @@ function CardsList() {
   // console.log('productInfo:', productInfo);
   useEffect(() => {
     setProductList([]);
-    axios.get('/related', { params: { productID: productID } })
+    axios.get('/related', { params: { productID } })
       .then((results) => {
         // Get all related product IDs
         (results.data).map((id) => {
@@ -35,8 +36,8 @@ function CardsList() {
       })
       .catch((error) => console.log('Error here:', error));
     // Get data for current product ID for user to add outfit
-    const details = axios.get('/relatedItem', { params: { productID: productID } });
-    const image = axios.get('/relatedImage', { params: { productID: productID } });
+    const details = axios.get('/relatedItem', { params: { productID } });
+    const image = axios.get('/relatedImage', { params: { productID } });
     const stars = axios.get('/relatedStars', { params: { reviewID: productID } });
     Promise.all([details, image, stars])
       .then((object) => {
@@ -50,7 +51,7 @@ function CardsList() {
       .catch((err) => {
         console.log(err);
       });
-  }, [productID]);
+  }, [productID, setProductList, setCurrOutfit]);
   // console.log('related:', relatedID);
   console.log('Current Outfit:', currOutfit);
   function clickRight() {
