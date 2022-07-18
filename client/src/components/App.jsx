@@ -10,7 +10,7 @@ import NavBar from './NavBar';
 import { GlobalContextProvider } from '../contexts/GlobalStore';
 
 function App() {
-  const [theme, setTheme] = useState('dark');
+  const [theme, setTheme] = useState('light');
 
   const themeLight = {
     backgroundColor: 'white',
