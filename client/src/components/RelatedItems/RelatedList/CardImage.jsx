@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
 function CardImage(imageObj) {
-  // console.log('CardImage', imageObj, imageObj.imageInfo);
+  // console.log('CardImage', imageObj);
   const [image, setImage] = useState(imageObj);
   const {
     outfits, setOutfits,
@@ -20,7 +20,7 @@ function CardImage(imageObj) {
     // tempArray.push(newOutfit);
     // console.log(tempArray);
     setOutfits(tempArray);
-    console.log('Outfit list', outfits);
+    // console.log('Outfit list', outfits);
   }
 
   return (
@@ -39,8 +39,8 @@ const ImageCard = styled.img`
   position: relative;
   margin-left: auto;
   margin-right: auto;
-  width: 200px;
-  height: 200px;
+  width: 225px;
+  height: 225px;
   object-fit: fill;
 `;
 
@@ -57,7 +57,7 @@ const Button = styled.button`
   font-width: bold;
   &:hover {
     background-color: trasparent;
-    opacity: 0.60;
+    opacity: 0.80;
   }
 `;
 

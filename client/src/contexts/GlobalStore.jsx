@@ -13,7 +13,7 @@ export function GlobalContextProvider({ children }) {
   };
 
   // will use API later to get information
-  const [productID, setProductID] = useState(40348);
+  const [productID, setProductID] = useState(40353);
   const [productInfo, setProductInfo] = useState({});
 
   const [questions, setQuestions] = useState([]);
@@ -23,6 +23,7 @@ export function GlobalContextProvider({ children }) {
   const [reviews, setReviews] = useState([]);
 
   const [outfits, setOutfits] = useState([]);
+  const [currOutfit, setCurrOutfit] = useState({});
   const [cardIndex, setCardIndex] = useState(0);
   const [outfitIndex, setOutfitIndex] = useState(0);
   const [productList, setProductList] = useState([]);
@@ -76,6 +77,8 @@ export function GlobalContextProvider({ children }) {
     setReviews,
     outfits,
     setOutfits,
+    currOutfit,
+    setCurrOutfit,
     cardIndex,
     setCardIndex,
     outfitIndex,

@@ -6,8 +6,9 @@ import Card from './Card';
 
 function CardsList() {
   const {
-    productID, cardIndex, setCardIndex, productList, setProductList,
+    productID, cardIndex, setCardIndex, productList, setProductList, currOutfit, setCurrOutfit,
   } = useGlobalContext();
+  // console.log('productInfo:', productInfo);
   useEffect(() => {
     setProductList([]);
     axios.get('/related', { params: { productID: productID } })
@@ -33,8 +34,25 @@ function CardsList() {
         });
       })
       .catch((error) => console.log('Error here:', error));
+    // Get data for current product ID for user to add outfit
+    const details = axios.get('/relatedItem', { params: { productID: productID } });
+    const image = axios.get('/relatedImage', { params: { productID: productID } });
+    const stars = axios.get('/relatedStars', { params: { reviewID: productID } });
+    Promise.all([details, image, stars])
+      .then((object) => {
+        const outfitObj = {
+          details: object[0],
+          image: object[1],
+          stars: object[2],
+        };
+        setCurrOutfit(outfitObj);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [productID]);
   // console.log('related:', relatedID);
+  console.log('Current Outfit:', currOutfit);
   function clickRight() {
     if (cardIndex + 4 < productList.length) {
       setCardIndex(cardIndex + 1);
@@ -51,32 +69,62 @@ function CardsList() {
   // console.log('List:', list);
   // console.log('List:', productList);
   return (
-    <div>
-      {cardIndex === 0
-        ? <div /> : <LeftButton onClick={() => clickLeft()}> &lt; </LeftButton> }
+    <Container>
+      <LeftBox>
+        {cardIndex === 0
+          ? <LeftButton /> : (
+            <LeftButton onClick={() => clickLeft()}> &lt; </LeftButton>
+          )}
+      </LeftBox>
       <StyleCardList>
-        {/* {console.log('Check List:', productList.slice(cardIndex, cardIndex+4))} */}
-        {/* {list.map((data) => console.log(data))} */}
         {productList.slice(cardIndex, cardIndex + 4).map((data, i) => <Card data={data} key={i} />)}
       </StyleCardList>
-      {cardIndex === productList.length - 4
-        ? <div /> : <RightButton onClick={() => clickRight()}> &gt; </RightButton> }
-    </div>
+      <RightBox>
+        {(cardIndex === productList.length - 4 || productList.length < 4)
+          ? <RightButton /> : (
+            <RightButton onClick={() => clickRight()}> &gt; </RightButton>
+          )}
+      </RightBox>
+    </Container>
   );
 }
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  background-color: #f1f1f1;
+`;
+
 const StyleCardList = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  background: #0ABAB5;
+  display: flex;
+  float: left;
+  flex-direction: row;
+  margin-left: auto;
+  margin-right: auto;
+  align-content: space-evenly;
+`;
+
+const LeftBox = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  float: left;
+  align-items: center;
+  flex-grow: 1;
+`;
+
+const RightBox = styled.div`
+  display: flex;
+  float: left;
+  align-items: center;
+  flex-grow: 1;
 `;
 
 const LeftButton = styled.button`
-  display: block;
+  display: flex;
+  align-self: center;
   position: absolute;
   font-width: bold;
-  font-size: 30px;
-  background: #0ABAB5;
+  font-size: 60px;
   background-color: transparent;
   border: none;
   &:hover {
@@ -85,13 +133,11 @@ const LeftButton = styled.button`
 `;
 
 const RightButton = styled.button`
-display: block;
+display: flex;
+align-self: center;
 position: absolute;
-top: 50%;
-text-align: left;
 font-width: bold;
-font-size: 30px;
-background: #0ABAB5;
+font-size: 60px;
 background-color: transparent;
 border: none;
 &:hover {
