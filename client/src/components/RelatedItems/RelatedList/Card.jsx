@@ -46,15 +46,16 @@ function Card({ data }) {
 
 const CardStyle = styled.div`
   display: grid;
-  border: 4px solid #0ABAB5;
+  border: 6px solid #f1f1f1;
   &:hover {
     opacity: 0.80;
   }
+  margin-top: auto;
 `;
 
 const Cards = styled.div`
   display: inline-block;
-  background: #0ABAB5;
+  background: #f1f1f1;
   border: 5px;
   margin-left: auto;
   margin-right: auto;

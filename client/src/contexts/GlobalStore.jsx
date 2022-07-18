@@ -25,6 +25,7 @@ export function GlobalContextProvider({ children }) {
   const [reviews, setReviews] = useState([]);
 
   const [outfits, setOutfits] = useState([]);
+  const [currOutfit, setCurrOutfit] = useState({});
   const [cardIndex, setCardIndex] = useState(0);
   const [outfitIndex, setOutfitIndex] = useState(0);
   const [productList, setProductList] = useState([]);
@@ -82,6 +83,8 @@ export function GlobalContextProvider({ children }) {
     setReviews,
     outfits,
     setOutfits,
+    currOutfit,
+    setCurrOutfit,
     cardIndex,
     setCardIndex,
     outfitIndex,
