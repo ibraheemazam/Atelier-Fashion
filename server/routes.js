@@ -4,6 +4,7 @@ const Answers = require('./controllers/Answers');
 const Questions = require('./controllers/Questions');
 const Related = require('./controllers/Related');
 const Reviews = require('./controllers/Reviews');
+const Cloudinary = require('./controllers/Cloudinary');
 
 const router = express.Router();
 
@@ -23,7 +24,8 @@ router.put('/questions/report', Questions.reportQuestion);
 router.post('/answers', Answers.postAnswer);
 router.put('/answers/helpful', Answers.helpfulAnswer);
 router.put('/answers/report', Answers.reportAnswer);
-router.post('/answers/photo', Answers.uploadFile);
+
+router.post('/cloudinary/upload', Cloudinary.uploadFile);
 
 // REVIEW ROUTES:
 router.get('/reviews', Reviews.getReviews);

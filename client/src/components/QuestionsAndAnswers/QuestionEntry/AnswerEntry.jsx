@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import axios from 'axios';
 import { format, parseISO } from 'date-fns';
+import ExpandedImageModal from './ExpandedImageModal';
 
 function AnswerEntry({ answer }) {
   AnswerEntry.propTypes = {
@@ -17,6 +18,9 @@ function AnswerEntry({ answer }) {
   };
 
   const [helpfulness, setHelpfulness] = useState(answer.helpfulness);
+  const [showModal, setShowModal] = useState(false);
+  const [source, setSource] = useState();
+
   const clickedHelpful = useRef(false);
 
   function helpfulAnswer() {
@@ -24,7 +28,7 @@ function AnswerEntry({ answer }) {
       axios
         .put('/answers/helpful', { answer_id: answer.id })
         .then(() => {
-          setHelpfulness(helpfulness + 1);
+          setHelpfulness((prevHelpfulness) => prevHelpfulness + 1);
           clickedHelpful.current = true;
         })
         .catch((err) => {
@@ -43,6 +47,11 @@ function AnswerEntry({ answer }) {
       });
   }
 
+  function handlePhotoClick(event) {
+    setShowModal(true);
+    setSource(event.target.src);
+  }
+
   return (
     <Answer key={answer.id}>
       <AnswerBody>
@@ -54,6 +63,7 @@ function AnswerEntry({ answer }) {
             src={photo}
             alt=""
             key={photo}
+            onClick={(event) => handlePhotoClick(event)}
           />
         ))}
       </AnswerPhotos>
@@ -72,6 +82,7 @@ function AnswerEntry({ answer }) {
           <Clickable onClick={() => reportAnswer()}>Report</Clickable>
         </div>
       </AnswerFooter>
+      {showModal && <ExpandedImageModal src={source} setShowModal={setShowModal} />}
     </Answer>
   );
 }
@@ -90,6 +101,7 @@ const AnswerImage = styled.img`
   width: 80px;
   height: 80px;
   padding-right: 10px;
+  cursor: pointer;
 `;
 
 const AnswerFooter = styled.div`
@@ -106,9 +118,6 @@ const AnswerBody = styled.div`
 const Clickable = styled.u`
   cursor: pointer;
   text-decoration: underline;
-  &:hover {
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  }
 `;
 
 export default AnswerEntry;

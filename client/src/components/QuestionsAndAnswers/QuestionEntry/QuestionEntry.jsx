@@ -27,13 +27,22 @@ function QuestionEntry({ question }) {
   const [helpfulness, setHelpfulness] = useState(question.question_helpfulness);
   const [clickedReport, setClickedReport] = useState(false);
 
-  const clickedHelpful = useRef(false); // can only say it was helpful once
+  const clickedHelpful = useRef(false);
 
   const { answers } = question;
   const allAnswers = Object.values(answers);
-  allAnswers.sort((a, b) => b.helpfulness - a.helpfulness);
-  const topAnswers = Object.values(allAnswers).slice(0, numAnswers);
+  function sellerFirst(a, b) {
+    if (a.answerer_name.toLowerCase() === 'seller') return -1;
+    if (b.answerer_name.toLowerCase() === 'seller') return 1;
+    return b.helpfulness - a.helpfulness;
+  }
+  function helpfulnessFirst(a, b) {
+    return b.helpfulness - a.helpfulness;
+  }
+  allAnswers.sort(helpfulnessFirst);
+  allAnswers.sort(sellerFirst);
 
+  const topAnswers = Object.values(allAnswers).slice(0, numAnswers);
   function reportQuestion() {
     if (!clickedReport) {
       axios
@@ -52,7 +61,7 @@ function QuestionEntry({ question }) {
       axios
         .put('/questions/helpful', { question_id: question.question_id })
         .then(() => {
-          setHelpfulness(helpfulness + 1);
+          setHelpfulness((prevHelpfulness) => prevHelpfulness + 1);
           clickedHelpful.current = true;
         })
         .catch((err) => {
@@ -66,28 +75,28 @@ function QuestionEntry({ question }) {
   }
 
   function changeNumAnswers(val) {
-    const count = Math.max(2, val);
+    const count = Math.max(2, numAnswers + val);
     setNumAnswers(count);
   }
 
   function helpfulReport() {
     if (clickedReport) {
       return (
-        <Reported>Reported</Reported>
-      );
-    }
-    return (
-      <>
         <HelpfulReport>
           {'Helpful? '}
           <Clickable onClick={() => helpfulQuestion()}>Yes</Clickable>
           {`(${helpfulness}) `}
-          <Clickable onClick={() => reportQuestion()}>Report</Clickable>
+          <Reported>Reported</Reported>
         </HelpfulReport>
-        <AddAnswer>
-          <Clickable onClick={() => answerQuestion()}>Add Answer</Clickable>
-        </AddAnswer>
-      </>
+      );
+    }
+    return (
+      <HelpfulReport>
+        {'Helpful? '}
+        <Clickable onClick={() => helpfulQuestion()}>Yes</Clickable>
+        {`(${helpfulness}) `}
+        <Clickable onClick={() => reportQuestion()}>Report</Clickable>
+      </HelpfulReport>
     );
   }
   function answersList() {
@@ -105,7 +114,7 @@ function QuestionEntry({ question }) {
     }
     if (topAnswers.length < allAnswers.length) {
       return (
-        <MoreAnswers onClick={() => changeNumAnswers(100)}>
+        <MoreAnswers onClick={() => changeNumAnswers(2)}>
           <i className="fa-solid fa-chevron-down" />
           <span>See More Answers</span>
         </MoreAnswers>
@@ -124,6 +133,9 @@ function QuestionEntry({ question }) {
       <Question>Q.</Question>
       <QuestionBody>{question.question_body}</QuestionBody>
       {helpfulReport()}
+      <AddAnswer>
+        <Clickable onClick={() => answerQuestion()}>Add Answer</Clickable>
+      </AddAnswer>
       <Answer>A.</Answer>
       <AnswersListContainer>
         {answersList()}
@@ -136,7 +148,7 @@ function QuestionEntry({ question }) {
 
 const Entry = styled.div`
   display: grid;
-  grid-template-columns: 5% 64% 20% 10%;
+  grid-template-columns: 5% 60% 25% 10%;
   padding-bottom: 5%;
   width: 100%;
   justify-content: center;
@@ -162,14 +174,14 @@ const AddAnswer = styled.div`
   grid-column: 4;
 `;
 
-const Reported = styled.div`
-  grid-column: 3 / 5;
+const Reported = styled.span`
+  grid-column: 3;
   font-weight: bold;
 `;
 
 const AnswersListContainer = styled.div`
   border: 1px solid;
-  background-color: #f1f1f1;
+  background-color: ${(props) => props.theme.tertiaryColor};
   max-height: 350px;
   overflow: auto;
   text-align: justify;
@@ -191,16 +203,10 @@ const MoreAnswers = styled.div`
   grid-column: 2;
   font-weight: bold;
   cursor: pointer;
-  &:hover {
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  }
 `;
 
 const Clickable = styled.u`
   cursor: pointer;
-  &:hover {
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  }
 `;
 
 export default QuestionEntry;

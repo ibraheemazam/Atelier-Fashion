@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 export const GlobalContext = React.createContext();
 
@@ -12,8 +13,7 @@ export function GlobalContextProvider({ children }) {
     children: PropTypes.node.isRequired,
   };
 
-  // will use API later to get information
-  const [productID, setProductID] = useState(40348);
+  const [productID, setProductID] = useState(40346);
   const [productInfo, setProductInfo] = useState({});
   const [styles, setStyles] = useState([]);
   const [selectedStyle, setSelectedStyle] = useState({});
@@ -32,40 +32,40 @@ export function GlobalContextProvider({ children }) {
   const [revMeta, setRevMeta] = useState({});
 
   useEffect(() => {
-    setProductInfo({
-      id: 40348,
-      campus: 'hr-rfp',
-      name: 'Heir Force Ones',
-      slogan: 'A sneaker dynasty',
-      description:
-      "Now where da boxes where I keep mine? You should peep mine, maybe once or twice but never three times. I'm just a sneaker pro, I love Pumas and shell toes, but can't nothin compare to a fresh crispy white pearl",
-      category: 'Kicks',
-      default_price: '99.00',
-      created_at: '2021-08-13T14:38:44.509Z',
-      updated_at: '2021-08-13T14:38:44.509Z',
-      features: [
-        {
-          feature: 'Sole',
-          value: 'Rubber',
+    function getProductInfo() {
+      axios.get('/products', {
+        params: {
+          ID: productID,
         },
-        {
-          feature: 'Material',
-          value: 'FullControlSkin',
-        },
-        {
-          feature: 'Mid-Sole',
-          value: 'ControlSupport Arch Bridge',
-        },
-        {
-          feature: 'Stitching',
-          value: 'Double Stitch',
-        },
-      ],
+      }).then((results) => {
+        setProductInfo(results.data);
+      });
+    }
+
+    getProductInfo();
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
     });
-    setNumQuestions(4);
   }, [productID]);
 
-  const value = {
+  const dependencies = [
+    productID,
+    productInfo,
+    styles,
+    selectedStyle,
+    questions,
+    filteredQuestions,
+    numQuestions,
+    reviews,
+    outfits,
+    currOutfit,
+    cardIndex,
+    outfitIndex,
+    productList,
+    revMeta];
+
+  const value = useMemo(() => ({
     productID,
     setProductID,
     productInfo,
@@ -94,7 +94,7 @@ export function GlobalContextProvider({ children }) {
     setProductList,
     revMeta,
     setRevMeta,
-  };
+  }), dependencies);
 
   return (
     <GlobalContext.Provider value={value}>
