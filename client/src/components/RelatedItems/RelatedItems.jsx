@@ -18,15 +18,13 @@ function RelatedItems() {
   );
 }
 
-const Outline = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
 const Text = styled.div`
   font-size: large;
   font-weight: bold;
   text-align: center;
+  margin-left: 20px;
+  margin-right: 20px;
+  border-radius: 10px;
   background-color: #82827d;
 `;
 

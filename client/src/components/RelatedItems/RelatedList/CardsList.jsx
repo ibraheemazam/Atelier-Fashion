@@ -66,19 +66,25 @@ function CardsList() {
       // console.log('CardIndex Left:', cardIndex);
     }
   }
-  // const list = [...productList].slice(cardIndex, cardIndex + 4);
-  // console.log('List:', list);
-  console.log('List:', productList);
+  function fillEmpty() {
+    const emptyCells = [];
+    for (let i = 0; i < (4 - productList.length); i += 1) {
+      emptyCells.push(<Empty key={i} />);
+    }
+    return emptyCells;
+  }
   return (
     <Container>
       <LeftBox>
-        {cardIndex === 0
+        {cardIndex === 0 || productList.length < 4
           ? <LeftButton /> : (
             <LeftButton onClick={() => clickLeft()}> &lt; </LeftButton>
           )}
       </LeftBox>
       <StyleCardList>
         {productList.slice(cardIndex, cardIndex + 4).map((data, i) => <Card data={data} key={i} />)}
+        {(productList.length < 4 && productList.length > 0) && fillEmpty()}
+        {(productList.length === 0) && <Text>No related items to show</Text>}
       </StyleCardList>
       <RightBox>
         {(cardIndex === productList.length - 4 || productList.length < 4)
@@ -103,6 +109,11 @@ const StyleCardList = styled.div`
   margin-left: auto;
   margin-right: auto;
   align-content: space-evenly;
+`;
+
+const Text = styled.div`
+  font-size: 35px;
+  font-width: bold;
 `;
 
 const LeftBox = styled.div`
@@ -144,6 +155,11 @@ border: none;
 &:hover {
   opacity: 0.60;
 }
+`;
+
+const Empty = styled.div`
+  width: 225px;
+  height: 225px;
 `;
 
 export default CardsList;
