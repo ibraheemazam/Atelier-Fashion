@@ -6,7 +6,7 @@ import SortList from './ReviewList/SortList';
 import ReviewTile from './ReviewList/ReviewTile';
 import MoreRevs from './ReviewList/MoreRevs';
 import AddRev from './AddRev/AddRev';
-import Breakdown from './Breakdown';
+import Breakdown from './Breakdown/Breakdown';
 
 // need to change how i get reviews. Just get all at once, then slice.
 // if need to change the filter, just make new get request

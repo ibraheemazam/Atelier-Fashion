@@ -43,9 +43,15 @@ function ReviewTile({ review }) {
       {review.recommend
       && <div> &#10003; I recommend this product</div>}
       <br />
-      {/* <img alt="" src={review.photos[0].url} /> */}
-      {
-        review.response
+
+      <PhotosDiv>
+        {review.photos.map((photo) => (
+          <RevImg alt="" src={photo.url} />
+        ))}
+      </PhotosDiv>
+      <br />
+
+      {review.response
         && (
         <div>
           <Response>
@@ -55,8 +61,8 @@ function ReviewTile({ review }) {
           </Response>
           <br />
         </div>
-        )
-      }
+        )}
+
       <HelpfulReport review={review} />
       <br />
     </Container>
@@ -96,6 +102,17 @@ const DateName = styled.div`
 const Response = styled.div`
   padding: 1em;
   background: lightgrey;
+`;
+
+const PhotosDiv = styled.div`
+  display: flex;
+
+`;
+
+const RevImg = styled.img`
+  height: 100px;
+  width: 100px;
+  padding: .5em;
 `;
 
 const Summary = styled.h3`

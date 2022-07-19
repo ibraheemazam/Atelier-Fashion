@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import Summary from './Summary';
 
 function Breakdown({ revMeta }) {
   if (!revMeta.product_id) {
@@ -45,11 +46,7 @@ function Breakdown({ revMeta }) {
   return (
     <div>
       RATINGS &#38; REVIEWS
-      <RatingHeader>{aveRating}</RatingHeader>
-      <p>
-        {recommendPercentage}
-        % of reviews recommend this product
-      </p>
+      <Summary revMeta={revMeta} />
       {
         Object.entries(revMeta.ratings).map((ratingEnrty) => (
           <StarRankContainer key={ratingEnrty[0]}>
@@ -69,10 +66,9 @@ function Breakdown({ revMeta }) {
           <div>
             {charEntry[0]}
             :&nbsp;
-            {/* <ProgBarHorizontal color="pink" />
-            <HorizontalProgTrack /> */}
-            <HorizontalProgFill width={(parseInt(charEntry[1].value, 10) / 5) * 100} />
-            {Math.round(charEntry[1].value * 100) / 100}
+            <HorizontalProgFill width={(parseInt(charEntry[1].value, 10) / 5) * 100}>
+              {Math.round(charEntry[1].value * 100) / 100}
+            </HorizontalProgFill>
           </div>
           <br />
         </div>
@@ -101,23 +97,7 @@ const RatingHeader = styled.div`
   font-size: 4em;
 `;
 
-const ProgBarHorizontal = styled.div`
-  float: left;
-  height: 15px;
-  width: 100%;
-  padding: 12px;
-  background: ${(props) => props.color};
-`;
-
-const HorizontalProgTrack = styled.div`
-  position: relative;
-  width: 100%;
-  height: 20px;
-  background: #ebebeb;
-`;
-
 const HorizontalProgFill = styled.div`
-  position: relative;
   background: #666;
   height: 20px;
   width: ${(props) => props.width}%;
@@ -136,14 +116,14 @@ const StarRankContainer = styled.div`
 
 const StarLabel = styled.div`
   display: flex;
-  width: 28%;
   text-decoration: underline;
+  width: 30%;
 `;
 
 const StarBarBackground = styled.div`
   background: lightgrey;
   height: 100%;
-  width: 100%;
+  width: 70%;
 `;
 
 const StarBar = styled.div`
