@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 function Summary({ revMeta }) {
-
   const recommendPercentage = Math.trunc(
     (parseInt(revMeta.recommended.true, 10)
     / (parseInt(revMeta.recommended.false, 10)

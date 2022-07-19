@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-function RatingBreakdown({ revMeta }) {
+function RatingBreakdown({ revMeta, filterReviews }) {
+  const [starFilter, setStarFilter] = useState({ });
   if (!revMeta.product_id) {
     return (
       <div />
@@ -21,13 +22,23 @@ function RatingBreakdown({ revMeta }) {
 
   const totalVotes = totalVotesCalc(revMeta.ratings);
 
+  const handleStarBarClick = (event) => {
+    //
+    console.log(event.target);
+    filterReviews([parseInt(event.target.id, 10)]);
+  };
+
   return (
-    Object.entries(revMeta.ratings).map((ratingEnrty) => (
-      <StarRankContainer key={ratingEnrty[0]}>
-        <StarLabel>{`${ratingEnrty[0]} stars`}</StarLabel>
+    Object.entries(revMeta.ratings).map((ratingEntry) => (
+      <StarRankContainer key={ratingEntry[0]}>
+        <StarLabel>{`${ratingEntry[0]} stars`}</StarLabel>
         &nbsp;
         <StarBarBackground>
-          <StarBar width={Math.round((ratingEnrty[1] / totalVotes) * 100)} />
+          <StarBar
+            id={ratingEntry[0]}
+            onClick={(event) => handleStarBarClick(event)}
+            width={Math.round((ratingEntry[1] / totalVotes) * 100)}
+          />
         </StarBarBackground>
         <br />
         <br />
@@ -62,15 +73,17 @@ const StarLabel = styled.div`
   width: 30%;
 `;
 
-const StarBarBackground = styled.div`
-  background: lightgrey;
-  height: 100%;
-  width: 70%;
-`;
-
 const StarBar = styled.div`
   background: #666;
   height: 10px;
   width: ${(props) => props.width}%;
-  color: #fff;
+  &:hover {
+    background: gold;
+  }
+`;
+
+const StarBarBackground = styled.div`
+  background: lightgrey;
+  height: 100%;
+  width: 70%;
 `;

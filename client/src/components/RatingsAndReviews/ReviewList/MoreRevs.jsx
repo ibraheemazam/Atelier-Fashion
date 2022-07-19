@@ -20,7 +20,8 @@ function MoreRevs({ productID, setRevCount, revListLength }) {
 
   return (
     <div>
-      {!noMoreReviews.current
+      {/* {!noMoreReviews.current */}
+      { true
         && (
           <MoreButton type="button" onClick={() => handleMoreReviews()}>
             MORE REVIEWS

@@ -17,6 +17,7 @@ function RatingsAndReviews() {
   } = useGlobalContext();
   const [sortOrder, setSortOrder] = useState('relevant');
   const [revCount, setRevCount] = useState(2);
+  const [filteredRevs, setFilteredRevs] = useState(reviews);
 
   const getReviews = function getReviews() {
     console.log('get reviews is run with the following revCount:\n');
@@ -30,6 +31,7 @@ function RatingsAndReviews() {
       .then((result) => {
         console.log('Value of reviews after RatingsAndReviews() axios get request:\n', result.data.results);
         setReviews(result.data.results);
+        setFilteredRevs(result.data.results);
       })
       .then(() => {})
       .catch((err) => {
@@ -62,10 +64,21 @@ function RatingsAndReviews() {
     setRevCount(2);
   }, [productID]);
 
+  const filterReviews = (starFilterArr) => {
+    const result = reviews.filter((review) => (
+      starFilterArr.includes(review.rating)
+    ));
+    setFilteredRevs(result);
+  };
+
   return (
     <Container id="ratings-and-reviews">
       <BreakdownContainer>
-        <Breakdown productID={productID} revMeta={revMeta} />
+        <Breakdown
+          productID={productID}
+          revMeta={revMeta}
+          filterReviews={(test) => filterReviews(test)}
+        />
       </BreakdownContainer>
       <ReviewListContainer>
 
@@ -77,7 +90,7 @@ function RatingsAndReviews() {
         />
 
         <ReviewTilesContainer>
-          {reviews.slice(0, revCount).map((review) => (
+          {filteredRevs.slice(0, revCount).map((review) => (
             <ReviewTile key={review.review_id} review={review} />
           ))}
         </ReviewTilesContainer>
@@ -89,7 +102,7 @@ function RatingsAndReviews() {
               <MoreRevs
                 productID={productID}
                 setRevCount={setRevCount}
-                revListLength={reviews.length}
+                revListLength={filteredRevs.length}
               />
             )
           }
