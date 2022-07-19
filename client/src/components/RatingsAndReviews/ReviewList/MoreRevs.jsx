@@ -20,22 +20,20 @@ function MoreRevs({ productID, setRevCount, revListLength }) {
 
   return (
     <div>
-      {
-        !noMoreReviews.current
+      {!noMoreReviews.current
         && (
-          <MoreButton type="button" onClick={handleMoreReviews}>
+          <MoreButton type="button" onClick={() => handleMoreReviews()}>
             MORE REVIEWS
           </MoreButton>
-        )
-      }
+        )}
     </div>
   );
 }
 
 MoreRevs.propTypes = {
-  noMoreReviews: PropTypes.shape({
-    current: PropTypes.bool,
-  }).isRequired,
+  productID: PropTypes.number.isRequired,
+  setRevCount: PropTypes.func.isRequired,
+  revListLength: PropTypes.number.isRequired,
 };
 
 export default MoreRevs;
