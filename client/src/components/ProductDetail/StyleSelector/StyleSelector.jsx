@@ -4,45 +4,10 @@ import axios from 'axios';
 
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
-function StyleSelector(props) {
+function StyleSelector() {
   const {
     styles, selectedStyle, setSelectedStyle,
   } = useGlobalContext();
-
-  // useEffect(() => {
-  //   axios
-  //     .get('/styles', { params: { product_id: productID } })
-  //     .then((stylesResult) => {
-  //       setSelectedStyle(stylesResult.data.results[0]);
-  //       setStyles(stylesResult.data.results);
-  //     })
-  //     // I'm catching two errors in one here, not great
-  //     .catch((err) => console.log('error getting product styles', err));
-  // }, [productID, setProductID, setStyles]);
-
-  // const [thumbnails, setThumbnails] = useState([]);
-  // console.log('thumbnails before useEffect: ', thumbnails);
-
-  // function getThumbnails() {
-  //   // new Promise
-  //   console.log('styles at the begiining of getThumbnails: ', styles);
-  //   const tempThumbnails = [];
-  //   styles.forEach((style) => {
-  //     let thumbnail = style.photos[0];
-  //     tempThumbnails.push(thumbnail);
-  //   });
-  //   return tempThumbnails;
-  // }
-
-  // for each style in the results away wanto to go to its photos property and grab the first element and thumbnail property of it// new promise to map thumbnails
-  // then(([allStyles]) => ( allStyles.map((style) => (
-  //   style.photos[0].thumbnail_url
-  // )
-  // [{ photos [ { thumbnail_url } ] }]
-
-  // console.log('productStyles from styleselector: ', styles);
-  // let styleTitle;
-  // let imageRows;
 
   // function handleSelectStyle(e) {
   //   e.preventDefault();
@@ -74,22 +39,10 @@ function StyleSelector(props) {
   // }
   // console.log(imageRows);
 
-  function onClickHandler(e, value, index) {
+  function onClickHandler(e, value) {
     e.preventDefault();
     if (selectedStyle.style_id !== value.style_id) {
       setSelectedStyle(() => value);
-      // setStyle(value);
-
-
-      // styles.forEach((style) => {
-      //   let dfault = style['default?']
-      // UpdateImageGallery(selectedStyle);
-//     updateStyleTitle(selectedStyle);
-//     // overlay checkmark on clicked child thumbnail
-      // }
-      //   style['default?']
-      // <checkbox onClick={handleSelectStyle} />
-//     </span>
     }
   }
 
