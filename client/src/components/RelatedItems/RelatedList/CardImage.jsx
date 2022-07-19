@@ -32,7 +32,9 @@ function CardImage({ imageInfo, details }) {
       >
         &#9733;
       </Button>
-      {modal && <ComparisonModal details={details} /> }
+      <div>
+        {modal && <ComparisonModal details={details} /> }
+      </div>
     </Outline>
   );
 }

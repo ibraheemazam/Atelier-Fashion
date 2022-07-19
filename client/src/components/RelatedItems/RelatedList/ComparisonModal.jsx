@@ -64,21 +64,22 @@ function ComparisonModal({ details }) {
 
 const Modal = styled.div`
   display: flex;
-  position: relative;
+  position: absolute;
   justify-content: center;
   width: 300px;
-  height: 200px;
-  top: -50%;
+  height: 175px;
+  top: 20%;
+  right: 20%;
   border: 2px solid black;
   background-color: gray;
 `;
 
 const Product = styled.div`
   display: flex;
+  flex-flow: column wrap;
   flex-direction: column;
-  font-size: 10px;
-  margin-left: auto;
-  margin-right: auto;
+  align-items: center;
+  font-size: 12px;
 `;
 
 export default ComparisonModal;

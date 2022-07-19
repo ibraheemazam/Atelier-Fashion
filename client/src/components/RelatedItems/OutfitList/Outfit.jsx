@@ -60,7 +60,8 @@ Outfit.propTypes = {
 };
 
 const Outline = styled.div`
-  display: grid;
+  display: flex;
+  flex-direction: column;
   &:hover {
     opacity: 0.80;
   }
