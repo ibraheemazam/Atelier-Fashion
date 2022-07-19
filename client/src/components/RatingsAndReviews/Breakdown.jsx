@@ -54,6 +54,9 @@ function Breakdown({ revMeta }) {
           <div>
             {charEntry[0]}
             :&nbsp;
+            <ProgBarHorizontal color="pink" />
+            <HorizontalProgTrack />
+            <HorizontalProgFill />
             {Math.round(charEntry[1].value * 100) / 100}
           </div>
           <br />
@@ -80,4 +83,31 @@ export default Breakdown;
 const RatingHeader = styled.div`
   padding: .12em;
   font-size: 4em;
+`;
+
+const ProgBarHorizontal = styled.div`
+  float: left;
+  height: 15px;
+  width: 100%;
+  padding: 12px;
+  background: ${(props) => props.color};
+`;
+
+const HorizontalProgTrack = styled.div`
+  position: relative;
+  width: 100%;
+  height: 20px;
+  background: #ebebeb;
+`;
+
+const HorizontalProgFill = styled.div`
+  position: relative;
+  background: #666;
+  height: 20px;
+  width: 50%;
+  color: #fff;
+  text-align: center;
+  font-family: "Lato","Verdana",sans-serif;
+  font-size: 12px;
+  line-height: 20px;
 `;

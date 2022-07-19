@@ -9,6 +9,9 @@ import MoreRevs from './ReviewList/MoreRevs';
 import AddRev from './AddRev/AddRev';
 import Breakdown from './Breakdown';
 
+// need to change how i get reviews. Just get all at once, then slice.
+// if need to change the filter, just make new get request
+
 function RatingsAndReviews() {
   const {
     productID, reviews, setReviews, revMeta, setRevMeta,
@@ -17,7 +20,6 @@ function RatingsAndReviews() {
   const [sortOrder, setSortOrder] = useState('relevant');
 
   const [revCount, setRevCount] = useState(2);
-  const prevSortOrder = useRef(sortOrder);
   const noMoreReviews = useRef(false);
 
   const getReviews = useCallback(
@@ -35,11 +37,7 @@ function RatingsAndReviews() {
           setReviews(
             (prevState) => {
               if (JSON.stringify(prevState) === JSON.stringify(result.data.results)) {
-                if (prevSortOrder.current === sortOrder) {
-                  noMoreReviews.current = true;
-                } else {
-                  prevSortOrder.current = sortOrder;
-                }
+                noMoreReviews.current = true;
               }
               return result.data.results;
             },
