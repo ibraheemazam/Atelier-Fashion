@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FaSearch } from 'react-icons/fa';
 import styled from 'styled-components';
 
 function NavBar({ toggleTheme }) {
@@ -22,7 +23,7 @@ function NavBar({ toggleTheme }) {
       <GridItem target="ratings-and-reviews" onClick={(event) => scrollTo(event)}>Ratings & Reviews</GridItem>
       <GridItem>
         <Input />
-        <i className="fa-solid fa-magnifying-glass" />
+        <FaSearch />
       </GridItem>
     </Background>
   );
