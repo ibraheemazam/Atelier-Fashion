@@ -91,7 +91,6 @@ function CardsList() {
 }
 
 const Container = styled.div`
-  absolute:
   display: flex;
   flex-direction: row;
 `;

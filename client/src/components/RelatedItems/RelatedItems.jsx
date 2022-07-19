@@ -18,6 +18,11 @@ function RelatedItems() {
   );
 }
 
+const Outline = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 const Text = styled.div`
   font-size: large;
   font-weight: bold;
