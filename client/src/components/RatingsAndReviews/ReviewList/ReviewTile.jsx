@@ -46,7 +46,7 @@ function ReviewTile({ review }) {
 
       <PhotosDiv>
         {review.photos.map((photo) => (
-          <RevImg alt="" src={photo.url} />
+          <RevImg key={photo.url} alt="" src={photo.url} />
         ))}
       </PhotosDiv>
       <br />

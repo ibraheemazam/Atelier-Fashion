@@ -1,8 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Summary from './Summary';
 import RatingBreakdown from './RatingBreakdown';
+import LengthBreakdown from './LengthBreakdown';
 
 function Breakdown({ revMeta }) {
   if (!revMeta.product_id) {
@@ -17,19 +17,7 @@ function Breakdown({ revMeta }) {
       <Summary revMeta={revMeta} />
       <RatingBreakdown revMeta={revMeta} />
       <br />
-      {Object.entries(revMeta.characteristics).map((charEntry) => (
-        <div key={charEntry[1].id}>
-          <div>
-            {charEntry[0]}
-            :&nbsp;
-            <HorizontalProgFill width={(parseInt(charEntry[1].value, 10) / 5) * 100}>
-              {Math.round(charEntry[1].value * 100) / 100}
-            </HorizontalProgFill>
-          </div>
-          <br />
-        </div>
-      ))}
-
+      <LengthBreakdown revMeta={revMeta} />
     </div>
   );
 }
@@ -47,14 +35,3 @@ Breakdown.propTypes = {
 };
 
 export default Breakdown;
-
-const HorizontalProgFill = styled.div`
-  background: #666;
-  height: 20px;
-  width: ${(props) => props.width}%;
-  color: #fff;
-  text-align: center;
-  font-family: "Lato","Verdana",sans-serif;
-  font-size: 12px;
-  line-height: 20px;
-`;
