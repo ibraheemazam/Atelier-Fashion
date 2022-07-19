@@ -5,7 +5,7 @@ import { useGlobalContext } from '../../../contexts/GlobalStore';
 
 function Outfit({ outfit, index }) {
   // console.log('Outfit Obj:', outfitObj);
-  console.log('outfit:', outfit);
+  // console.log('outfit:', outfit);
   // console.log('index:', data.index);
   const {
     outfits, setOutfits,
@@ -51,7 +51,7 @@ Outfit.propTypes = {
       data: PropTypes.shape({
         name: PropTypes.string,
         category: PropTypes.string,
-        default_price: PropTypes.number,
+        default_price: PropTypes.string,
       }),
 
     }),

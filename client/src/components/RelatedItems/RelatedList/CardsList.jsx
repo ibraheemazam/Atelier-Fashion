@@ -68,7 +68,7 @@ function CardsList() {
   }
   // const list = [...productList].slice(cardIndex, cardIndex + 4);
   // console.log('List:', list);
-  // console.log('List:', productList);
+  console.log('List:', productList);
   return (
     <Container>
       <LeftBox>

@@ -6,7 +6,7 @@ import CardImage from './CardImage';
 import CardStars from './CardStars';
 
 function Card({ data }) {
-  console.log('Check Data:', data);
+  // console.log('Check Data:', data);
   // Note: Can't use global variable for info/setInfo. Returns only last productID
   // Each card needs its own set of states
   const {
@@ -49,6 +49,9 @@ Card.propTypes = {
     details: PropTypes.shape({
       data: PropTypes.shape({
         id: PropTypes.number,
+        // name: PropTypes.string,
+        // category: PropTypes.string,
+        // default_price: PropTypes.string,
       }),
     }),
   }).isRequired,
