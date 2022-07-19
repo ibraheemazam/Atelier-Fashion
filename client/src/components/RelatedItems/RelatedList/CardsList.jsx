@@ -7,7 +7,7 @@ import Card from './Card';
 
 function CardsList() {
   const {
-    productID, cardIndex, setCardIndex, productList, setProductList, currOutfit, setCurrOutfit,
+    productID, cardIndex, setCardIndex, productList, setProductList, setCurrOutfit,
   } = useGlobalContext();
   // console.log('productInfo:', productInfo);
   useEffect(() => {
@@ -91,6 +91,7 @@ function CardsList() {
 }
 
 const Container = styled.div`
+  absolute:
   display: flex;
   flex-direction: row;
 `;

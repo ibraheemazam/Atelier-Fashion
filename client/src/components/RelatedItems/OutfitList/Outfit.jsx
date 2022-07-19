@@ -22,10 +22,10 @@ function Outfit({ outfit, index }) {
   }
   return (
     <Outline>
-      <div>
+      <ImageOutline>
         <IMG src={outfitImage} />
         <Button onClick={() => removeOutfit()}>X</Button>
-      </div>
+      </ImageOutline>
       <Info>{outfitDetails.name}</Info>
       <Info>{outfitDetails.category}</Info>
       <Info>
@@ -68,6 +68,10 @@ const Outline = styled.div`
   margin-top: auto;
 `;
 
+const ImageOutline = styled.div`
+  position: relative;
+`;
+
 const Info = styled.div`
   display: inline-block;
   margin-left: auto;
@@ -87,9 +91,8 @@ const IMG = styled.img`
 const Button = styled.button`
   display: block;
   position: absolute;
-  position: relative;
-  top: -86%;
-  right: -74%;
+  top: 0px;
+  right: 0px;
   color: red;
   background-color: transparent;
   border: none;

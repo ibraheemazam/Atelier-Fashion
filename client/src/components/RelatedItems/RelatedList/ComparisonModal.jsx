@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable max-len */
 /* eslint-disable guard-for-in */
 /* eslint-disable no-restricted-syntax */
@@ -10,10 +11,11 @@ function ComparisonModal({ details }) {
   const {
     currOutfit,
   } = useGlobalContext();
+  console.log('Details:', details);
   console.log('CurrOutfit:', currOutfit.details.data.features);
   console.log('CompareOutfit:', details.data.features);
-  let currentProduct = currOutfit.details.data.features;
-  let comparedProduct = details.data.features;
+  const currentProduct = currOutfit.details.data.features;
+  const comparedProduct = details.data.features;
   const modal = {};
   for (let i = 0; i < currentProduct.length; i += 1) {
     modal[currentProduct[i].feature] = [];
@@ -61,6 +63,18 @@ function ComparisonModal({ details }) {
     </Modal>
   );
 }
+
+ComparisonModal.propTypes = {
+  details: PropTypes.shape({
+    data: PropTypes.shape({
+      features: PropTypes.arrayOf(PropTypes.shape({
+        feature: PropTypes.string,
+        value: PropTypes.string,
+      })),
+      name: PropTypes.string,
+    }),
+  }).isRequired,
+};
 
 const Modal = styled.div`
   display: flex;
