@@ -53,9 +53,11 @@ function Breakdown({ revMeta }) {
       {
         Object.entries(revMeta.ratings).map((ratingEnrty) => (
           <StarRankContainer key={ratingEnrty[0]}>
-            <u>{`${ratingEnrty[0]} stars`}</u>
+            <StarLabel>{`${ratingEnrty[0]} stars`}</StarLabel>
             &nbsp;
-            <StarBar width={Math.round((ratingEnrty[1] / totalVotes) * 100)} />
+            <StarBarBackground>
+              <StarBar width={Math.round((ratingEnrty[1] / totalVotes) * 100)} />
+            </StarBarBackground>
             <br />
             <br />
           </StarRankContainer>
@@ -75,6 +77,7 @@ function Breakdown({ revMeta }) {
           <br />
         </div>
       ))}
+
     </div>
   );
 }
@@ -129,6 +132,18 @@ const StarRankContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+`;
+
+const StarLabel = styled.div`
+  display: flex;
+  width: 28%;
+  text-decoration: underline;
+`;
+
+const StarBarBackground = styled.div`
+  background: lightgrey;
+  height: 100%;
+  width: 100%;
 `;
 
 const StarBar = styled.div`
