@@ -58,7 +58,8 @@ Card.propTypes = {
 };
 
 const CardStyle = styled.div`
-  display: grid;
+  display: flex;
+  flex-direction: column;
   &:hover {
     opacity: 0.80;
   }

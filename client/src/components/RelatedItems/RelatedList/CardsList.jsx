@@ -53,7 +53,7 @@ function CardsList() {
       });
   }, [productID, setProductList, setCurrOutfit]);
   // console.log('related:', relatedID);
-  console.log('Current Outfit:', currOutfit);
+  // console.log('Current Outfit:', currOutfit);
   function clickRight() {
     if (cardIndex + 4 < productList.length) {
       setCardIndex(cardIndex + 1);
@@ -98,6 +98,7 @@ const Container = styled.div`
 const StyleCardList = styled.div`
   display: flex;
   float: left;
+  positive: relative;
   flex-direction: row;
   margin-left: auto;
   margin-right: auto;

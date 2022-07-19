@@ -23,7 +23,7 @@ function CardImage({ imageInfo, details }) {
   }
 
   return (
-    <div>
+    <Outline>
       <ImageCard src={image.results[0].photos[0].thumbnail_url} alt="RelatedProductImage" />
       <Button onClick={(e) => {
         e.stopPropagation();
@@ -33,7 +33,7 @@ function CardImage({ imageInfo, details }) {
         &#9733;
       </Button>
       {modal && <ComparisonModal details={details} /> }
-    </div>
+    </Outline>
   );
 }
 
@@ -42,8 +42,11 @@ CardImage.propTypes = {
   details: PropTypes.shape({}).isRequired,
 };
 
+const Outline = styled.div`
+  position: relative;
+`;
+
 const ImageCard = styled.img`
-  display: block;
   position: relative;
   margin-left: auto;
   margin-right: auto;
@@ -53,11 +56,9 @@ const ImageCard = styled.img`
 `;
 
 const Button = styled.button`
-  display: block;
   position: absolute;
-  position: relative;
-  top: -86%;
-  right: -72%;
+  top: 0px;
+  right: 0px;
   color: yellow;
   background-color: transparent;
   border: none;

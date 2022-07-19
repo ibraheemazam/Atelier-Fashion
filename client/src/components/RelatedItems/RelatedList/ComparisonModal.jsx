@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable guard-for-in */
 /* eslint-disable no-restricted-syntax */
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
@@ -47,12 +47,15 @@ function ComparisonModal({ details }) {
   return (
     <Modal>
       <Product>
+        {currOutfit.details.data.name}
         {outcome[0].map((feature, i) => (feature ? <Product key={i}>&#10003;</Product> : <div key={i}>&nbsp;</div>))}
       </Product>
       <Product>
-      {outcome[1].map((feature, i) => (feature ? <Product key={i}>{feature}</Product> : <div key={i}>&nbsp;</div>))}
+        Features
+        {outcome[1].map((feature, i) => (feature ? <Product key={i}>{feature}</Product> : <div key={i}>&nbsp;</div>))}
       </Product>
       <Product>
+        {details.data.name}
         {outcome[2].map((feature, i) => (feature ? <Product key={i}>&#10003;</Product> : <div key={i}>&nbsp;</div>))}
       </Product>
     </Modal>
@@ -61,15 +64,21 @@ function ComparisonModal({ details }) {
 
 const Modal = styled.div`
   display: flex;
-  position: absolute;
+  position: relative;
+  justify-content: center;
   width: 300px;
-  height: 300px;
-  border-radius: 2px black;
-  background-color: blue;
+  height: 200px;
+  top: -50%;
+  border: 2px solid black;
+  background-color: gray;
 `;
 
 const Product = styled.div`
+  display: flex;
+  flex-direction: column;
   font-size: 10px;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 export default ComparisonModal;
