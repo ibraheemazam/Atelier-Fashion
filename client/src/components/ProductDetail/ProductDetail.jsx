@@ -34,8 +34,12 @@ function ProductDetail({ href }) {
     // getProductInfo();
     getStyles();
     //   .catch(console.log('error getting product info'), console.error);
-  }, [productID, setStyles, setSelectedStyle]);
+  }, [productID]);
   // add setProductID above when implemented
+
+  // function setStyle(selection) {
+  //   setSelectedStyle(selection);
+  // }
 
   return (
     <div id="product-details">

@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
-function StyleSelector() {
+function StyleSelector(props) {
   const {
     styles, selectedStyle, setSelectedStyle,
   } = useGlobalContext();
@@ -78,6 +78,8 @@ function StyleSelector() {
     e.preventDefault();
     if (selectedStyle.style_id !== value.style_id) {
       setSelectedStyle(() => value);
+      // setStyle(value);
+
 
       // styles.forEach((style) => {
       //   let dfault = style['default?']
