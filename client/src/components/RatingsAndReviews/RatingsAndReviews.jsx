@@ -65,9 +65,14 @@ function RatingsAndReviews() {
   }, [productID]);
 
   const filterReviews = (starFilterArr) => {
-    const result = reviews.filter((review) => (
-      starFilterArr.includes(review.rating)
-    ));
+    let result;
+    if (starFilterArr.length === 0) {
+      result = reviews;
+    } else {
+      result = reviews.filter((review) => (
+        starFilterArr.includes(review.rating)
+      ));
+    }
     setFilteredRevs(result);
   };
 

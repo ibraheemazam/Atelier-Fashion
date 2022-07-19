@@ -4,6 +4,13 @@ import PropTypes from 'prop-types';
 
 function RatingBreakdown({ revMeta, filterReviews }) {
   const [starFilter, setStarFilter] = useState([]);
+  const [clickedBar, setClickedBar] = useState({
+    1: false,
+    2: false,
+    3: false,
+    4: false,
+    5: false,
+  });
 
   const totalVotesCalc = (ratingsObj) => {
     let totalVotes = 0;
@@ -20,10 +27,18 @@ function RatingBreakdown({ revMeta, filterReviews }) {
   const handleStarBarClick = (event) => {
     const val = parseInt(event.target.id, 10);
     const ind = starFilter.indexOf(val);
+    setClickedBar((prevClickedBar) => {
+      const copy = {};
+      Object.assign(copy, prevClickedBar);
+      copy[val] = !copy[val];
+      return copy;
+    });
+
     if (ind > -1) {
       setStarFilter((prevStarFilter) => {
-        prevStarFilter.splice(ind, 1);
-        return prevStarFilter;
+        const copy = prevStarFilter.splice(0);
+        copy.splice(ind, 1);
+        return copy;
       });
     } else {
       setStarFilter((prevStarFilter) => prevStarFilter.concat(val));
@@ -45,6 +60,7 @@ function RatingBreakdown({ revMeta, filterReviews }) {
             id={ratingEntry[0]}
             onClick={(event) => handleStarBarClick(event)}
             width={Math.round((ratingEntry[1] / totalVotes) * 100)}
+            clickedBar={clickedBar[ratingEntry[0]]}
           />
         </StarBarBackground>
         <br />
@@ -81,7 +97,7 @@ const StarLabel = styled.div`
 `;
 
 const StarBar = styled.div`
-  background: #666;
+  background: ${(props) => props.clickedBar ? 'gold' : 'grey'};
   height: 10px;
   width: ${(props) => props.width}%;
   &:hover {
