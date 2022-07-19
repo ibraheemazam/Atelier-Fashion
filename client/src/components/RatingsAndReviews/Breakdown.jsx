@@ -54,9 +54,9 @@ function Breakdown({ revMeta }) {
           <div>
             {charEntry[0]}
             :&nbsp;
-            <ProgBarHorizontal color="pink" />
-            <HorizontalProgTrack />
-            <HorizontalProgFill />
+            {/* <ProgBarHorizontal color="pink" />
+            <HorizontalProgTrack /> */}
+            <HorizontalProgFill width={(parseInt(charEntry[1].value, 10) / 5) * 100} />
             {Math.round(charEntry[1].value * 100) / 100}
           </div>
           <br />
@@ -104,7 +104,7 @@ const HorizontalProgFill = styled.div`
   position: relative;
   background: #666;
   height: 20px;
-  width: 50%;
+  width: ${(props) => props.width}%;
   color: #fff;
   text-align: center;
   font-family: "Lato","Verdana",sans-serif;
