@@ -1,14 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 function RatingBreakdown({ revMeta, filterReviews }) {
-  const [starFilter, setStarFilter] = useState({ });
-  if (!revMeta.product_id) {
-    return (
-      <div />
-    );
-  }
+  const [starFilter, setStarFilter] = useState([]);
 
   const totalVotesCalc = (ratingsObj) => {
     let totalVotes = 0;
@@ -23,10 +18,22 @@ function RatingBreakdown({ revMeta, filterReviews }) {
   const totalVotes = totalVotesCalc(revMeta.ratings);
 
   const handleStarBarClick = (event) => {
-    //
-    console.log(event.target);
-    filterReviews([parseInt(event.target.id, 10)]);
+    const val = parseInt(event.target.id, 10);
+    const ind = starFilter.indexOf(val);
+    if (ind > -1) {
+      setStarFilter((prevStarFilter) => {
+        prevStarFilter.splice(ind, 1);
+        return prevStarFilter;
+      });
+    } else {
+      setStarFilter((prevStarFilter) => prevStarFilter.concat(val));
+    }
   };
+
+  useEffect(() => {
+    filterReviews(starFilter);
+    console.log(starFilter);
+  }, [starFilter]);
 
   return (
     Object.entries(revMeta.ratings).map((ratingEntry) => (
