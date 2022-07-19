@@ -30,6 +30,18 @@ function Breakdown({ revMeta }) {
 
   const aveRating = aveRatingCalc(revMeta.ratings);
 
+  const totalVotesCalc = (ratingsObj) => {
+    let totalVotes = 0;
+    const entries = Object.entries(ratingsObj);
+    entries.forEach((entry) => {
+      const votes = parseInt(entry[1], 10);
+      totalVotes += votes;
+    });
+    return totalVotes;
+  };
+
+  const totalVotes = totalVotesCalc(revMeta.ratings);
+
   return (
     <div>
       RATINGS &#38; REVIEWS
@@ -40,12 +52,13 @@ function Breakdown({ revMeta }) {
       </p>
       {
         Object.entries(revMeta.ratings).map((ratingEnrty) => (
-          <p key={ratingEnrty[0]}>
+          <StarRankContainer key={ratingEnrty[0]}>
             <u>{`${ratingEnrty[0]} stars`}</u>
             &nbsp;
-            {ratingEnrty[1]}
+            <StarBar width={Math.round((ratingEnrty[1] / totalVotes) * 100)} />
             <br />
-          </p>
+            <br />
+          </StarRankContainer>
         ))
       }
       <br />
@@ -110,4 +123,17 @@ const HorizontalProgFill = styled.div`
   font-family: "Lato","Verdana",sans-serif;
   font-size: 12px;
   line-height: 20px;
+`;
+
+const StarRankContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const StarBar = styled.div`
+  background: #666;
+  height: 10px;
+  width: ${(props) => props.width}%;
+  color: #fff;
 `;
