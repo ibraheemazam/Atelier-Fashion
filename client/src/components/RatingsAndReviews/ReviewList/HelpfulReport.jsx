@@ -5,9 +5,6 @@ import axios from 'axios';
 
 function HelpfulReport({ review }) {
   const [helpfulness, setHelpfulness] = useState(review.helpfulness);
-  // is it good to do this? Would it be better to pass down the getReviews func from
-  // RatingsAndReviews? That would send a get request after put is sent. Rn there are
-  // two sources of truth
   const helpfulClicked = useRef(false);
   const reportClicked = useRef(false);
 

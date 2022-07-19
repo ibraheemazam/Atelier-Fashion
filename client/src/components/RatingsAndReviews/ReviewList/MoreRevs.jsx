@@ -1,11 +1,22 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-function MoreRevs({ noMoreReviews, setRevCount }) {
+function MoreRevs({ productID, setRevCount, revListLength }) {
+  const noMoreReviews = useRef(false);
   const handleMoreReviews = function handleMoreReviews() {
-    setRevCount((prevRevCount) => prevRevCount + 2);
+    setRevCount((prevRevCount) => {
+      if (prevRevCount + 2 >= revListLength) {
+        noMoreReviews.current = true;
+        return revListLength;
+      }
+      return prevRevCount + 2;
+    });
   };
+
+  useEffect(() => {
+    noMoreReviews.current = false;
+  }, [productID]);
 
   return (
     <div>
@@ -25,7 +36,6 @@ MoreRevs.propTypes = {
   noMoreReviews: PropTypes.shape({
     current: PropTypes.bool,
   }).isRequired,
-  setRevCount: PropTypes.func.isRequired,
 };
 
 export default MoreRevs;

@@ -18,64 +18,53 @@ function RatingsAndReviews() {
   } = useGlobalContext();
 
   const [sortOrder, setSortOrder] = useState('relevant');
-
   const [revCount, setRevCount] = useState(2);
-  const noMoreReviews = useRef(false);
 
-  const getReviews = useCallback(
-    () => {
-      console.log('get reviews is run with the following revCount:\n', revCount);
-      axios.get('/reviews', {
-        params: {
-          product_id: productID,
-          count: revCount,
-          sort: sortOrder,
-        },
+  const getReviews = function getReviews() {
+    console.log('get reviews is run with the following revCount:\n');
+    axios.get('/reviews', {
+      params: {
+        product_id: productID,
+        count: 100,
+        sort: sortOrder,
+      },
+    })
+      .then((result) => {
+        console.log('Value of reviews after RatingsAndReviews() axios get request:\n', result.data.results);
+        setReviews(result.data.results);
       })
-        .then((result) => {
-          console.log('Value of reviews after RatingsAndReviews() axios get request:\n', result.data.results);
-          setReviews(
-            (prevState) => {
-              if (JSON.stringify(prevState) === JSON.stringify(result.data.results)) {
-                noMoreReviews.current = true;
-              }
-              return result.data.results;
-            },
-          );
-        })
-        .then(() => {})
-        .catch((err) => {
-          console.log('Error in axios get request in client function RatingsAndRevies():\n', err);
-        });
-    },
-    [productID, setReviews, sortOrder, revCount],
-  );
+      .then(() => {})
+      .catch((err) => {
+        console.log('Error in axios get request in client function RatingsAndRevies():\n', err);
+      });
+  };
 
-  const getMetaData = useCallback(
-    () => {
-      axios.get('/reviews/meta', {
-        params: {
-          product_id: productID,
-        },
+  const getMetaData = function getMetaData() {
+    axios.get('/reviews/meta', {
+      params: {
+        product_id: productID,
+      },
+    })
+      .then((result) => {
+        console.log(result.data);
+        setRevMeta(result.data);
       })
-        .then((result) => {
-          console.log(result.data);
-          setRevMeta(result.data);
-        })
-        .catch((err) => {
-          console.log('error in getMetaData() function inside Breakdown.jsx:/n', err);
-        });
-    },
-    [productID, setRevMeta],
-  );
+      .catch((err) => {
+        console.log('error in getMetaData() function inside Breakdown.jsx:/n', err);
+      });
+  };
 
   useEffect(() => {
     getReviews();
     getMetaData();
-  }, [productID, setReviews, sortOrder, revCount, getReviews, getMetaData]);
+  }, [productID, sortOrder]);
+
+  useEffect(() => {
+    setSortOrder('relevant');
+    setRevCount(2);
+  }, [productID]);
 
   const handleSortSelect = function handleSortSelect(event) {
-    console.log(event.target.value);
     setSortOrder(event.target.value);
   };
 
@@ -87,7 +76,7 @@ function RatingsAndReviews() {
       <ReviewListContainer>
         <RevListHeader>
           &nbsp;
-          {reviews.length}
+          {revCount}
           &nbsp;
           reviews, sorted by&nbsp;
           <select onChange={handleSortSelect}>
@@ -96,23 +85,21 @@ function RatingsAndReviews() {
             <option value="helpful">Helpful</option>
           </select>
         </RevListHeader>
+
         <ReviewTilesContainer>
-          {reviews.map((review) => (
+          {reviews.slice(0, revCount).map((review) => (
             <ReviewTile key={review.review_id} review={review} />
           ))}
         </ReviewTilesContainer>
-        {/* Need to split more button and add button into
-        their own compnents and have add conitionally render
-        if there are no reviews */}
+
         <MoreAddContainer>
           {
             reviews.length >= 2
             && (
               <MoreRevs
-                reviews={reviews}
+                productID={productID}
                 setRevCount={setRevCount}
-                getReviews={(thingg) => getReviews(thingg)}
-                noMoreReviews={noMoreReviews}
+                revListLength={reviews.length}
               />
             )
           }
