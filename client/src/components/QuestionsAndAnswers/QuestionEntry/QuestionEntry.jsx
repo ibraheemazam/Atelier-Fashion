@@ -43,6 +43,7 @@ function QuestionEntry({ question }) {
   allAnswers.sort(sellerFirst);
 
   const topAnswers = Object.values(allAnswers).slice(0, numAnswers);
+
   function reportQuestion() {
     if (!clickedReport) {
       axios
@@ -79,6 +80,14 @@ function QuestionEntry({ question }) {
     setNumAnswers(count);
   }
 
+  function handleScroll(e) {
+    // within 0.9 of the bottom
+    const bottom = 0.9 * (e.target.scrollHeight - e.target.scrollTop) <= e.target.clientHeight;
+    if (bottom && allAnswers.length > numAnswers) {
+      changeNumAnswers(2);
+    }
+  }
+
   function helpfulReport() {
     if (clickedReport) {
       return (
@@ -99,32 +108,18 @@ function QuestionEntry({ question }) {
       </HelpfulReport>
     );
   }
+
   function answersList() {
     if (topAnswers.length === 0) {
       return (<AnswerNone>This question has not been answered yet!</AnswerNone>);
     }
-    return topAnswers.map((answer) => (
+    const list = topAnswers.map((answer) => (
       <AnswerEntry answer={answer} key={answer.id} />
     ));
-  }
-
-  function moreAnswers() {
-    if (allAnswers.length <= 2) {
-      return null;
-    }
-    if (topAnswers.length < allAnswers.length) {
-      return (
-        <MoreAnswers onClick={() => changeNumAnswers(2)}>
-          <i className="fa-solid fa-chevron-down" />
-          <span>See More Answers</span>
-        </MoreAnswers>
-      );
-    }
     return (
-      <MoreAnswers onClick={() => changeNumAnswers(-100)}>
-        <i className="fa-solid fa-chevron-up" />
-        <span>Collapse Answers</span>
-      </MoreAnswers>
+      <AnswersListContainer id="question_answers" onScroll={(event) => handleScroll(event)}>
+        {list}
+      </AnswersListContainer>
     );
   }
 
@@ -137,10 +132,7 @@ function QuestionEntry({ question }) {
         <Clickable onClick={() => answerQuestion()}>Add Answer</Clickable>
       </AddAnswer>
       <Answer id="answer_header">A.</Answer>
-      <AnswersListContainer id="question_answers">
-        {answersList()}
-      </AnswersListContainer>
-      {moreAnswers()}
+      {answersList()}
       {showModal && <AddAnswerModal setShowModal={setShowModal} question={question} />}
     </Entry>
   );
@@ -149,7 +141,6 @@ function QuestionEntry({ question }) {
 const Entry = styled.div`
   display: grid;
   grid-template-columns: 5% 60% 25% 10%;
-  padding-bottom: 5%;
   width: 100%;
   justify-content: center;
 `;
@@ -182,27 +173,20 @@ const Reported = styled.span`
 const AnswersListContainer = styled.div`
   border: 1px solid;
   background-color: ${(props) => props.theme.tertiaryColor};
-  max-height: 350px;
-  overflow: auto;
+  max-height: 120px;
+  overflow-x: auto;
+  overflow-y: scroll;
   text-align: justify;
-  padding: 1%;
   border-radius: 10px;
-`;
-
-const Answer = styled.div`
-  grid-column: 1;
-  font-weight: bold;
 `;
 
 const AnswerNone = styled.div`
   grid-column: 2;
 `;
 
-const MoreAnswers = styled.div`
-  display: flex;
-  grid-column: 2;
+const Answer = styled.div`
+  grid-column: 1;
   font-weight: bold;
-  cursor: pointer;
 `;
 
 const Clickable = styled.u`

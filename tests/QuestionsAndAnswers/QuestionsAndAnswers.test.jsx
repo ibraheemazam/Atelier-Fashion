@@ -1,7 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { GlobalContextProvider } from '../../client/src/contexts/GlobalStore';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom';
 import QuestionsAndAnswers from '../../client/src/components/QuestionsAndAnswers/QuestionsAndAnswers';
@@ -11,6 +11,7 @@ import AddAnswerModal from '../../client/src/components/QuestionsAndAnswers/Ques
 import ExpandedImageModal from '../../client/src/components/QuestionsAndAnswers/QuestionEntry/ExpandedImageModal';
 import AnswerEntry from '../../client/src/components/QuestionsAndAnswers/QuestionEntry/AnswerEntry';
 import QuestionSearch from '../../client/src/components/QuestionsAndAnswers/QuestionSearch/QuestionSearch';
+import ExtraButtons from '../../client/src/components/QuestionsAndAnswers/Extras/ExtraButtons';
 import { format, parseISO } from 'date-fns';
 
 window.scrollTo = jest.fn();
@@ -37,12 +38,15 @@ const exampleAnswer = {
   ]
 };
 
-describe('should render the entire section', () => {
-  render(
-    <GlobalContextProvider>
-      <QuestionsAndAnswers />
-    </GlobalContextProvider>
-  )
+describe('QA widget', () => {
+  it('should render the whole QA widget', () => {
+    render(
+      <GlobalContextProvider>
+        <QuestionsAndAnswers />
+      </GlobalContextProvider>
+    )
+  })
+
 });
 
 describe('should render a question', () => {
@@ -67,6 +71,19 @@ describe('should render a question', () => {
   })
 });
 
+describe('should render a answer entry', () => {
+  it('should render a answer', () => {
+    render(
+      <AnswerEntry answer={exampleAnswer} />
+      )
+    const sellerUserDate = screen.getByText(`by ${exampleAnswer.answerer_name} on ${format(parseISO(exampleAnswer.date), 'MMM dd, yyyy')}`);
+    expect(sellerUserDate).toBeInTheDocument();
+    expect(screen.getByText('Yes')).toBeInTheDocument();
+    expect(screen.getByText('Report')).toBeInTheDocument();
+    expect(screen.getByText(exampleAnswer.body)).toBeInTheDocument();
+  })
+});
+
 describe('should interact with a question', () => {
   it('should be able to report a question', async () => {
     const user = userEvent.setup()
@@ -74,7 +91,13 @@ describe('should interact with a question', () => {
       <QuestionEntry question={exampleQuestion} />
     );
     const report = screen.getByText('Report');
-    expect(report).toBeTruthy();
+    expect(report).toBeInTheDocument();
+
+    await user.click(report);
+
+    waitForElementToBeRemoved(report).then(() => {
+      expect(screen.findByText('Reported')).toBeInTheDocument();
+    })
   })
 
   it('should mark a question as helpful', async () => {
@@ -85,86 +108,11 @@ describe('should interact with a question', () => {
     const helpful = screen.getByText('Yes');
     expect(helpful).toBeTruthy();
   })
-});
 
-describe('should render a question entry', () => {
-  it('should render a answer', () => {
+  it('should open a modal', async () => {
+    const user = userEvent.setup()
     render(
-      <AnswerEntry answer={exampleAnswer} />
-      )
-    const sellerUserDate = screen.getByText(`by ${exampleAnswer.answerer_name} on ${format(parseISO(exampleAnswer.date), 'MMM dd, yyyy')}`);
-    expect(sellerUserDate).toBeTruthy();
-
+      <QuestionEntry question={exampleQuestion} />
+    );
   })
-});
-
-describe('should render a modal', () => {
-  describe('expanded image modal', () => {
-    it('expanded image modal', () => {
-      const exampleImage = 'https://res.cloudinary.com/drf3dli0i/image/upload/v1657490738/clezmsseo2if8kwixquh.jpg';
-      render(
-        <GlobalContextProvider>
-          <ExpandedImageModal src={exampleImage}/>
-        </GlobalContextProvider>
-      )
-      const img = screen.getByAltText('modal-image');
-      expect(img.src).toEqual(exampleImage);
-    });
-  })
-
-  describe('add question modal', () => {
-    it('add question modal', () => {
-      render(
-        <GlobalContextProvider>
-          <AddQuestionModal />
-        </GlobalContextProvider>
-      )
-
-      //fields
-      expect(screen.getByText('Username')).toBeTruthy();
-      expect(screen.getByText('Email')).toBeTruthy();
-      expect(screen.getByText('Question')).toBeTruthy();
-
-      //buttons
-      expect(screen.getByText('Submit')).toBeTruthy();
-      expect(screen.getByText('Cancel')).toBeTruthy();
-
-      expect(screen.getByText('For privacy reasons, do not use your full name or email address.')).toBeTruthy();
-      expect(screen.getByText('For authentication reasons, you will not be emailed.')).toBeTruthy();
-    });
-  });
-
-  describe('add answer modal', () => {
-    it('add answer modal', () => {
-      render(
-        <GlobalContextProvider>
-          <AddAnswerModal question={exampleQuestion}/>
-        </GlobalContextProvider>
-      )
-
-      //fields
-      expect(screen.getByText('Username')).toBeTruthy();
-      expect(screen.getByText('Email')).toBeTruthy();
-      expect(screen.getByText('Answer')).toBeTruthy();
-      expect(screen.getByText('Photos(optional)')).toBeTruthy();
-
-      expect(screen.getByText('For privacy reasons, do not use your full name or email address.')).toBeTruthy();
-      expect(screen.getByText('For authentication reasons, you will not be emailed.')).toBeTruthy();
-
-      //buttons
-      expect(screen.getByText('Submit')).toBeTruthy();
-      expect(screen.getByText('Cancel')).toBeTruthy();
-
-      expect(screen.getByRole('button', { name: 'Submit' }));
-      expect(screen.getByRole('button', { name: 'Cancel' }));
-    });
-  });
-});
-
-describe('should render a searchbar', () => {
-  render(
-    <GlobalContextProvider>
-      <QuestionSearch/>
-    </GlobalContextProvider>
-  )
 });

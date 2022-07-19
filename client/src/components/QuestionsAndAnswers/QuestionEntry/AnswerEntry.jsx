@@ -20,6 +20,7 @@ function AnswerEntry({ answer }) {
   const [helpfulness, setHelpfulness] = useState(answer.helpfulness);
   const [showModal, setShowModal] = useState(false);
   const [source, setSource] = useState();
+  const [clickedReport, setClickedReport] = useState(false);
 
   const clickedHelpful = useRef(false);
 
@@ -38,13 +39,16 @@ function AnswerEntry({ answer }) {
   }
 
   function reportAnswer() {
-    axios
-      .put('/answers/report', { answer_id: answer.id })
-      .then(() => {
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (!clickedReport) {
+      axios
+        .put('/answers/report', { answer_id: answer.id })
+        .then(() => {
+          setClickedReport(true);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }
 
   function handlePhotoClick(event) {
@@ -74,12 +78,14 @@ function AnswerEntry({ answer }) {
           {` on ${format(parseISO(answer.date), 'MMM dd, yyyy')}`}
         </div>
         <div>
-          {'Helpful? '}
+          Helpful?
           <Clickable onClick={() => helpfulAnswer()}>Yes</Clickable>
           {`(${helpfulness})`}
         </div>
         <div>
-          <Clickable onClick={() => reportAnswer()}>Report</Clickable>
+          {clickedReport ? (
+            <b>Reported</b>)
+            : (<Clickable onClick={() => reportAnswer()}>Report</Clickable>)}
         </div>
       </AnswerFooter>
       {showModal && <ExpandedImageModal src={source} setShowModal={setShowModal} />}

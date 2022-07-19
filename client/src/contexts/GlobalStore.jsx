@@ -44,11 +44,30 @@ export function GlobalContextProvider({ children }) {
         });
     }
 
+    function getQuestions() {
+      axios
+        .get('/questions', {
+          params: { product_id: productID, count: 1000 },
+        })
+        .then((results) => {
+          setQuestions(results.data.results);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }
+    getQuestions();
+
     getProductInfo();
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+    setNumQuestions(4);
+    scrollToTop();
   }, [productID]);
 
   const dependencies = [
