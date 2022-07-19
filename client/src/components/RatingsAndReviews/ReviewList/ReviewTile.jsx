@@ -43,6 +43,7 @@ function ReviewTile({ review }) {
       {review.recommend
       && <div> &#10003; I recommend this product</div>}
       <br />
+      {/* <img alt="" src={review.photos[0].url} /> */}
       {
         review.response
         && (
