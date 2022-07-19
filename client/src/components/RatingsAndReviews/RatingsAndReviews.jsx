@@ -1,9 +1,8 @@
-import React, {
-  useEffect, useRef, useState, useCallback,
-} from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { useGlobalContext } from '../../contexts/GlobalStore';
+import SortList from './ReviewList/SortList';
 import ReviewTile from './ReviewList/ReviewTile';
 import MoreRevs from './ReviewList/MoreRevs';
 import AddRev from './AddRev/AddRev';
@@ -16,7 +15,6 @@ function RatingsAndReviews() {
   const {
     productID, reviews, setReviews, revMeta, setRevMeta,
   } = useGlobalContext();
-
   const [sortOrder, setSortOrder] = useState('relevant');
   const [revCount, setRevCount] = useState(2);
 
@@ -64,27 +62,19 @@ function RatingsAndReviews() {
     setRevCount(2);
   }, [productID]);
 
-  const handleSortSelect = function handleSortSelect(event) {
-    setSortOrder(event.target.value);
-  };
-
   return (
     <Container id="ratings-and-reviews">
       <BreakdownContainer>
         <Breakdown productID={productID} revMeta={revMeta} />
       </BreakdownContainer>
       <ReviewListContainer>
-        <RevListHeader>
-          &nbsp;
-          {revCount}
-          &nbsp;
-          reviews, sorted by&nbsp;
-          <select onChange={handleSortSelect}>
-            <option value="relevant">Relevance</option>
-            <option value="newest">Newest</option>
-            <option value="helpful">Helpful</option>
-          </select>
-        </RevListHeader>
+
+        <SortList
+          productID={productID}
+          sortOrder={sortOrder}
+          setSortOrder={setSortOrder}
+          revCount={revCount}
+        />
 
         <ReviewTilesContainer>
           {reviews.slice(0, revCount).map((review) => (
@@ -116,17 +106,6 @@ const Container = styled.div`
   display: flex;
   padding: 1em;
   background: ;
-`;
-
-const RevListHeader = styled.div`
-  padding: 1em;
-  font-size: 1.3em;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-  font-weight: bold;
-  display: flex;
 `;
 
 const ReviewListContainer = styled.div`
