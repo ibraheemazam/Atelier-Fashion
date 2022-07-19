@@ -49,6 +49,18 @@ export function GlobalContextProvider({ children }) {
     });
   }, [productID]);
 
+  useEffect(() => {
+    axios.get('/styles', {
+      params: {
+        product_id: productID,
+      },
+    }).then((stylesResult) => {
+      setSelectedStyle(stylesResult.data.results[0]);
+      setStyles(stylesResult.data.results);
+    })
+      .catch((err) => console.error('error getting product styles', err));
+  }, [productID, styles]);
+
   const dependencies = [
     productID,
     productInfo,
