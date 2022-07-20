@@ -2,15 +2,9 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-function RatingBreakdown({ revMeta, filterReviews }) {
+function RatingBreakdown({ productID, revMeta, filterReviews }) {
   const [starFilter, setStarFilter] = useState([]);
-  const [clickedBar, setClickedBar] = useState({
-    1: false,
-    2: false,
-    3: false,
-    4: false,
-    5: false,
-  });
+  const [clickedBar, setClickedBar] = useState({});
 
   const totalVotesCalc = (ratingsObj) => {
     let totalVotes = 0;
@@ -49,6 +43,17 @@ function RatingBreakdown({ revMeta, filterReviews }) {
     filterReviews(starFilter);
     console.log(starFilter);
   }, [starFilter]);
+
+  useEffect(() => {
+    setClickedBar({
+      1: false,
+      2: false,
+      3: false,
+      4: false,
+      5: false,
+    });
+    setStarFilter([]);
+  }, [productID]);
 
   return (
     Object.entries(revMeta.ratings).map((ratingEntry) => (
