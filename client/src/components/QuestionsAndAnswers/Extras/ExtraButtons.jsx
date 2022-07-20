@@ -17,22 +17,19 @@ function ExtraButtons() {
     }, 0);
   }
 
-  function displayMoreQuestionsButton() {
-    if (numQuestions < questions.length) {
-      return (
+  return (
+    <ButtonContainer>
+      <Button type="submit" onClick={() => setShowModal(true)}>
+        Ask a Question
+      </Button>
+      {numQuestions < questions.length ? (
         <Button type="submit" onClick={() => increaseQuestions()}>
           More Answered Questions
         </Button>
-      );
-    }
-    return null;
-  }
-
-  return (
-    <ButtonContainer>
-      <Button type="submit" onClick={() => setShowModal(true)}>Ask a Question</Button>
-      {displayMoreQuestionsButton()}
-      {showModal && <AddQuestionModal setShowModal={setShowModal} />}
+      ) : null}
+      {showModal ? (
+        <AddQuestionModal setShowModal={setShowModal} />
+      ) : null}
     </ButtonContainer>
   );
 }
@@ -52,7 +49,7 @@ const Button = styled.button`
   height: 50px;
   width: 250px;
   border-radius: 10px;
-  cursor:pointer;
+  cursor: pointer;
   &:hover {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   }
