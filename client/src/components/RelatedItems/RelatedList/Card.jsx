@@ -6,20 +6,15 @@ import CardImage from './CardImage';
 import CardStars from './CardStars';
 
 function Card({ data }) {
-  // console.log('Check Data:', data);
-  // Note: Can't use global variable for info/setInfo. Returns only last productID
-  // Each card needs its own set of states
   const {
     setProductID, setCardIndex,
   } = useGlobalContext();
-  // const [ID, setID] = useState(data);
   const [info, setInfo] = useState(data);
   useEffect(() => {
     setInfo(data);
   }, [data]);
 
   function changeItem() {
-    // console.log('Info id:', ID);
     setProductID(data.details.data.id);
     // Reset card index when clicking on new item
     setCardIndex(0);

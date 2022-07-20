@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-// import { useGlobalContext } from '../../../contexts/GlobalStore';
 import ComparisonModal from './ComparisonModal';
 
 function CardImage({ imageInfo, details }) {
-  // console.log('CardImage', imageObj);
   const [image, setImage] = useState(imageInfo);
   const [modal, setModal] = useState(false);
-  // const {
-  //   outfits, setOutfits,
-  // } = useGlobalContext();
+  const defaultImage = 'https://www.escapeauthority.com/wp-content/uploads/2116/11/No-image-found.jpg';
   useEffect(() => {
     setImage(imageInfo);
   }, [imageInfo]);
@@ -24,7 +20,7 @@ function CardImage({ imageInfo, details }) {
 
   return (
     <Outline>
-      <ImageCard src={image.results[0].photos[0].thumbnail_url} alt="RelatedProductImage" />
+      <ImageCard src={image.results[0].photos[0].thumbnail_url ? image.results[0].photos[0].thumbnail_url : defaultImage} alt="RelatedProductImage" />
       <Button onClick={(e) => {
         e.stopPropagation();
         handleModal();

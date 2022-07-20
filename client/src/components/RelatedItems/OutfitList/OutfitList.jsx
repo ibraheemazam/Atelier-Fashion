@@ -10,10 +10,8 @@ function OutfitList() {
   const {
     outfits, setOutfits, outfitIndex, setOutfitIndex,
   } = useGlobalContext();
-  // const [list, setList] = useState(outfits);
   useEffect(() => {
     setOutfits(outfits);
-    // console.log('In Outfits:', outfits.length);
   }, [outfits, setOutfits]);
   function clickRight() {
     if (outfitIndex + 3 < outfits.length) {

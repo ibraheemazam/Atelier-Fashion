@@ -4,9 +4,6 @@ import PropTypes from 'prop-types';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
 function Outfit({ outfit, index }) {
-  // console.log('Outfit Obj:', outfitObj);
-  // console.log('outfit:', outfit);
-  // console.log('index:', data.index);
   const {
     outfits, setOutfits,
   } = useGlobalContext();
@@ -17,7 +14,6 @@ function Outfit({ outfit, index }) {
     // Note: Need to use below syntax for component to re-render properly
     const tempArray = [...outfits];
     tempArray.splice(index, 1);
-    // console.log('OutfitArray:', tempArray);
     setOutfits(tempArray);
   }
   return (

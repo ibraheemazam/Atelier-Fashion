@@ -33,9 +33,6 @@ function ComparisonModal({ details }) {
   outcome[1] = [];
   outcome[2] = [];
   for (const key in modal) {
-    // console.log(key);
-    console.log('First prod:', modal[key][0]);
-    console.log('Second prod:', modal[key][1]);
     outcome[0].push(modal[key][0]);
     if (modal[key][0] !== undefined) {
       outcome[1].push(modal[key][0]);

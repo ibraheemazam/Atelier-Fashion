@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 function CardStars({ reviewID }) {
-  // console.log('Star data:', stars);
   const baseStars = [];
   const filledStars = [];
   const reviews = reviewID.results;
@@ -48,11 +47,6 @@ const Stars = styled.div`
   font-size: 25px;
   color: gray;
 `;
-
-// const Overlay = styled.div`
-//   display: flex;
-//   flex-direction: row;
-// `;
 
 const BaseStar = styled.span`
   position: relative;

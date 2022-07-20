@@ -9,7 +9,6 @@ function CardsList() {
   const {
     productID, cardIndex, setCardIndex, productList, setProductList, setCurrOutfit,
   } = useGlobalContext();
-  // console.log('productInfo:', productInfo);
   useEffect(() => {
     setProductList([]);
     axios.get('/related', { params: { productID } })
@@ -21,7 +20,6 @@ function CardsList() {
           const stars = axios.get('/relatedStars', { params: { reviewID: id } });
           return Promise.all([details, image, stars])
             .then((object) => {
-              // console.log(object);
               const tempObj = {
                 details: object[0],
                 image: object[1],
@@ -52,18 +50,14 @@ function CardsList() {
         console.log(err);
       });
   }, [productID, setProductList, setCurrOutfit]);
-  // console.log('related:', relatedID);
-  // console.log('Current Outfit:', currOutfit);
   function clickRight() {
     if (cardIndex + 4 < productList.length) {
       setCardIndex(cardIndex + 1);
-      // console.log('CardIndex Right:', cardIndex);
     }
   }
   function clickLeft() {
     if (cardIndex > 0) {
       setCardIndex(cardIndex - 1);
-      // console.log('CardIndex Left:', cardIndex);
     }
   }
   function fillEmpty() {
