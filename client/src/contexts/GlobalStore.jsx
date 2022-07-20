@@ -33,20 +33,41 @@ export function GlobalContextProvider({ children }) {
 
   useEffect(() => {
     function getProductInfo() {
-      axios.get('/products', {
-        params: {
-          ID: productID,
-        },
-      }).then((results) => {
-        setProductInfo(results.data);
-      });
+      axios
+        .get('/products', {
+          params: {
+            ID: productID,
+          },
+        })
+        .then((results) => {
+          setProductInfo(results.data);
+        });
     }
 
+    function getQuestions() {
+      axios
+        .get('/questions', {
+          params: { product_id: productID, count: 1000 },
+        })
+        .then((results) => {
+          setQuestions(results.data.results);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }
+    getQuestions();
+
     getProductInfo();
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+    setNumQuestions(2);
+    scrollToTop();
   }, [productID]);
 
   const dependencies = [

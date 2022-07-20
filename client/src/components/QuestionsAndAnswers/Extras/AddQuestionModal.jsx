@@ -32,18 +32,6 @@ function AddQuestionModal({ setShowModal }) {
     return true;
   }
 
-  function input() {
-    if (!validInput) {
-      return (
-        <Disclaimer>
-          <div>1. Not all fields have been provided.</div>
-          <div>2. Email is not in the correct email format.</div>
-        </Disclaimer>
-      );
-    }
-    return null;
-  }
-
   function askQuestion() {
     if (!validateInput()) {
       setValidInput(false);
@@ -72,33 +60,48 @@ function AddQuestionModal({ setShowModal }) {
   }
 
   return (
-    <ModalBackground id="background" onClick={(event) => closeModal(event)}>
+    <ModalBackground
+      id="background"
+      onClick={(event) => closeModal(event)}
+    >
       <ModalContainer>
         <CloseButtonDiv>
-          <CloseButtonButton onClick={() => setShowModal(false)}>&#10006;</CloseButtonButton>
+          <CloseButtonButton onClick={() => setShowModal(false)}>
+            &#10006;
+          </CloseButtonButton>
         </CloseButtonDiv>
         <Header>
-          <div>
-            Ask Your Question
-          </div>
-          <div>
-            {`About the ${productInfo.name}`}
-          </div>
+          <div>Ask Your Question</div>
+          <div>{`About the ${productInfo.name}`}</div>
         </Header>
         <Form>
           <FormField htmlFor="name">
             Username
             <Required>*</Required>
           </FormField>
-          <FormEntry onChange={(event) => setName(event.target.value)} maxLength="60" type="text" id="name" name="name" placeholder="Example: jackson11!" />
+          <FormEntry
+            onChange={(event) => setName(event.target.value)}
+            maxLength="60"
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Example: jackson11!"
+          />
           <Disclaimer>
-            For privacy reasons, do not use your full name or email address.
+            For privacy reasons, do not use your full name or email
+            address.
           </Disclaimer>
           <FormField htmlFor="email">
             Email
             <Required>*</Required>
           </FormField>
-          <FormEntry onChange={(event) => setEmail(event.target.value)} maxLength="60" type="text" id="email" placeholder="jack@email.com" />
+          <FormEntry
+            onChange={(event) => setEmail(event.target.value)}
+            maxLength="60"
+            type="text"
+            id="email"
+            placeholder="jack@email.com"
+          />
           <Disclaimer>
             For authentication reasons, you will not be emailed.
           </Disclaimer>
@@ -106,12 +109,25 @@ function AddQuestionModal({ setShowModal }) {
             Question
             <Required>*</Required>
           </FormField>
-          <InputQuestion onChange={(event) => setBody(event.target.value)} maxLength="1000" placeholder="Ask your question" />
-          {input()}
+          <InputQuestion
+            onChange={(event) => setBody(event.target.value)}
+            maxLength="1000"
+            placeholder="Ask your question"
+          />
+          {!validInput ? (
+            <Disclaimer>
+              <div>1. Not all fields have been provided.</div>
+              <div>2. Email is not in the correct email format.</div>
+            </Disclaimer>
+          ) : null}
         </Form>
         <Footer>
-          <FooterButton onClick={() => askQuestion()}>Submit</FooterButton>
-          <FooterButton onClick={() => setShowModal(false)}>Cancel</FooterButton>
+          <FooterButton onClick={() => askQuestion()}>
+            Submit
+          </FooterButton>
+          <FooterButton onClick={() => setShowModal(false)}>
+            Cancel
+          </FooterButton>
         </Footer>
       </ModalContainer>
     </ModalBackground>
@@ -144,7 +160,7 @@ const ModalContainer = styled.div`
 
 const CloseButtonDiv = styled.div`
   display: flex;
-  justify-content:flex-end;
+  justify-content: flex-end;
 `;
 
 const CloseButtonButton = styled.button`
@@ -177,7 +193,7 @@ const FormEntry = styled.input`
     color: ${(props) => props.theme.fontColor};
   }
   :-ms-input-placeholder {
-     color: ${(props) => props.theme.fontColor};
+    color: ${(props) => props.theme.fontColor};
   }
 `;
 
@@ -193,7 +209,7 @@ const InputQuestion = styled.textarea`
     color: ${(props) => props.theme.fontColor};
   }
   :-ms-input-placeholder {
-     color: ${(props) => props.theme.fontColor};
+    color: ${(props) => props.theme.fontColor};
   }
 `;
 
