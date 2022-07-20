@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
-import StyleSelector from '../StyleSelector/StyleSelector';
+// import StyleSelector from '../StyleSelector/StyleSelector';
 
 // eslint-disable-next-line react/prop-types
 function ImageGallery() {
@@ -184,3 +184,15 @@ const Forward = styled.span`
   vertical-align: top;
   horizontal-align: middle;
 `;
+
+
+// scroll into view
+
+// function scrollTo(event) {
+//   var scrollTarget = event.target.getAttribute('target');
+//   var target = document.getElementById(scrollTarget);
+//   target.scrollIntoView({
+//     block: 'center',
+//     behavior: 'smooth'
+//   });
+// }

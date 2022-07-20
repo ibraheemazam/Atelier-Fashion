@@ -120,9 +120,7 @@ function SelectSize({ sku, stock }) {
 }
 
 
-function makeDropDowns(availableSizes) {
-  // array is required PropTypes
-    // and validate property in object in array
+
 
 
   return(
@@ -136,7 +134,7 @@ function makeDropDowns(availableSizes) {
 
 }
 
-export default SelectSize;
+// export default SelectSize;
 
 //       "skus": {
 //                 "37": {

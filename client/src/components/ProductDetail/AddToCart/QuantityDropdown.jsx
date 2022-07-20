@@ -3,13 +3,13 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
-function SizeDropdown({index, stock, size, quantity}) {
+function QuantityDropdown({ index, stock, size, quantity }) {
   return (
-    <option value={stock} index={index} size={size} quantity={quantity}></option>
+    <option value={stock} index={index} size={size} quantity={quantity}>Placeholder</option>
   );
 }
 
-// SizeDropdown.propTypes = {
+// QuantityDropdown.propTypes = {
 //   // key: PropTypes.number.isRequired,
 //   index: PropTypes.number.isRequired,
 //   stock: PropTypes.shape({
@@ -24,4 +24,4 @@ function SizeDropdown({index, stock, size, quantity}) {
 //   quantity: PropTypes.number.isRequired,
 // };
 
-export default SizeDropdown;
+export default QuantityDropdown;

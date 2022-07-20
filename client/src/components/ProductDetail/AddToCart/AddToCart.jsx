@@ -1,8 +1,8 @@
-import React, { useState, useReducer, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-// import SelectSize from './SelectSize';
 import PropTypes from 'prop-types';
 import SizeDropdown from './SizeDropdown';
+import QuantityDropdown from './QuantityDropdown';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
 function AddToCart() {
@@ -10,63 +10,75 @@ function AddToCart() {
 
   const [sizeSelected, setSizeSelected] = useState(false);
 
-  const initialState = {
-    //     style: () => selectedStyle.style_id,
-    //     stock: () => selectedStyle.skus,
-    stockCount: (() => getStockCount(stock)),
-    selectedSku: 1394805,
-    selectedSize: null,
-    quantity: null,
-    sizeDisplay: 'Select Size',
-    quantityDisplay: '-',
-    sizeSelected: false,
-    quantityDropdownDisabled: true,
-    // selectedSku: null,
-    //     selectedQuantity: null,
-    cart: {
-      style: selectedStyle.style_id,
-      size: null,
-      quantity: null,
-    },
-    //     styleDropdownCollapsed: true,
-    //     quantityDropdownCollapsed: true,
-  };
+  // set state to be formatted like prototype
+  // or maybe not because don't know how long the initial stock array will be and not necessary to set formatted state?
+  // esp if add proptypes later
+  // const [stock, setStock] = useState([]);
+  // const [stock, updateStock] = useState([...{..}, {..},...]);
 
-  const reducer = function (state, action) {
-    switch (action.type) {
-      case 'selectSize':
-        return {
-          ...state,
-          //         selectSizeDisplay: payload.size,
-          quantityDisplay: 1,
-          sizeSelected: true,
-          quantityDropdownDisabled: false,
-          //         stock: payload,
-          selectedSku: key,
-        };
-//     case 'selectQuantity':
-//       return {
-//         ...state,
-//         selectQuantityDisplay: payload.quantity,
-//       };
-//     case 'addToCart':
-//       return {
-//         ...state,
-//       };
-//     default:
-//       return state;
-    }
-  };
+  const [currentSku, setCurrentSku] = useState({});
 
-  const [state, dispatch] = useReducer(reducer, initialState);
+  // const initialState = {
+  //   //     style: () => selectedStyle.style_id,
+  //   //     stock: () => selectedStyle.skus,
+  //   stockCount: (() => getStockCount(stock)),
+  //   selectedSku: 1394805,
+  //   selectedSize: null,
+  //   quantity: null,
+  //   sizedisplay: 'Select Size',
+  //   quantitydisplay: '-',
+  //   sizeselected: false,
+  //   quantitydropdowndisabled: true,
+  //   // selectedSku: null,
+  //   //     selectedQuantity: null,
+  //   cart: {
+  //     style: selectedStyle.style_id,
+  //     size: null,
+  //     quantity: null,
+  //   },
+  //   //     styleDropdownCollapsed: true,
+  //   //     quantityDropdownCollapsed: true,
+  // };
 
-  // // const [stock, setStock] = useState({});
-  // const [skus, setSkus] = useState({});
+  // const reducer = function (state, action) {
+  //   switch (action.type) {
+  //     case 'selectSize':
+  //       return {
+  //         ...state,
+  //         selectSizeDisplay: payload.size,
+  //         quantitydisplay: 1,
+  //         sizeSelected: true,
+  //         quantitydropdowndisabled: false,
+  //         stock: payload,
+  //         selectedSku: key,
+  //         quantity: payload.quantity,
+  //       };
+  //       //     case 'selectQuantity':
+  //       //       return {
+  //       //         ...state,
+  //       //         selectQuantityDisplay: payload.quantity,
+  //       //       };
+  //       //     case 'addToCart':
+  //       //       return {
+  //       //         ...state,
+  //       //       };
+  //     default:
+  //       return state;
+  //   }
+  // };
+
+  // const [state, dispatch] = useReducer(reducer, initialState);
+
+  // const [stock, setStock] = useState({});
+  // const [currentSkus, setCurrentSkus] = useState({});
 
   const initialStock = [];
 
-  console.log('selectedStyle: ', selectedStyle);
-  console.log('skus: ', selectedStyle.skus);
+  // proptypes for initialStock
+  // [{1394805 : {quantity: 8, size: 'XS', sku: '1394805'}}, {1394806 : {quantity: 10, size: 'S', sku: '1394806'}}, ....]
+
+  // console.log('selectedStyle: ', selectedStyle);
+  // console.log('skus: ', selectedStyle.skus);
 
   if (selectedStyle.skus) {
     const { skus } = selectedStyle;
@@ -76,141 +88,103 @@ function AddToCart() {
       skus[sku].sku = sku;
       initialStock.push(skus[sku]);
     });
+
+    // const [stock, updateStock] = useState(() => initialStock);
+    // setStock(initialStock);
+
+    // function getStockCount() {
+    //   const count = 0;
+    //   for (const key in obj) {
+    //     count = +obj[key].quantity;
+    //   }
+    //   return count;
+    // }
+    // getStockCount();
   }
+  // const [stock, updateStock] = useState(() => initialStock);
+  //  setStock(() => initialStock);
+  //  console.log('initialStock: ', initialStock);
+  // console.log('stockState: ', stock);
 
-  console.log('initialStock: ', initialStock);
+  // could make a separate state for each sku (inside useEffect passed with an empty array so only runs once upon rendering) --- I think I can do this because not making the states conditionally, or so that they will be set/ created at a different time
+  // but would have to make sure all the skus have finishing fetching and loading/uploading before doing so
 
-  function handleSelectSize(e, value) {
+
+
+  function handleChangeSize(value) {
     e.preventDefault();
-    // setState(initialStock[value][quantity]
+    setCurrentSku(() => value);
   }
 
-  // useEffect(() => {
-  //   function getSkus() {
-  //     const test = (selectedStyle.skus == true);
-  //     console.log(test);
-  //     if (typeof skus === "object") {
-  //       console.log(skus);
-  //       const { skus } = selectedStyle;
-  //       const allSkus = Object.keys(skus);
-  //       const sortedSkus = allSkus.sort((a, b) => a - b);
-  //       sortedSkus.forEach((sku) => {
-  //         skus[sku].sku = sku;
-  //         initialStock.push(skus[sku]);
-  //       // if (index) {
-  //       // setMain(() => photos[index]);
-  //       // } else {
-  //       //setMain(() => photos[place]);
-  //       //setPhotosLength(() => photos.length);
-  //       // }
-  //       });
-  //     }
-  //   };
-
-  //   setSkus(() => selectedStyle.skus);
-  //   getSkus();
-
-  //   // else {
-  //   //   return (<></>)
-  //   // }
-  // }, [selectedStyle, setSkus, skus]);
-
-  // function getStock() {
-  //   if (selectedStyle.skus) {
-  //     const { skus } = selectedStyle;
-  //     const allSkus = Object.keys(skus);
-  //     const sortedSkus = allSkus.sort((a, b) => a - b);
-  //     sortedSkus.forEach((sku) => {
-  //       skus[sku].sku = sku;
-  //       initialStock.push(skus[sku]);
-  //     });
-  //   }
-  //   console.log('initialStock', initialStock);
-  //   setStock(initialStock);
-  // }
-  // getStock();
-
-  // useEffect(() => {
-  //   getStock();
-  // }
-
-  function getStockCount() {
-    const count = 0;
-    for (const key in obj) {
-      count = +obj[key].quantity;
-    }
-    return count;
+  function handleChangeQuantity() {
+    e.preventDefault();
+    setCurrentSku(() => value);
   }
 
-  //           return state.map((stock) => {
-  //             if (stock.sku === action.sku) {
-  //               if (stock.quantity === 1) {
-  //                 return { ...stock, quantity };
-  //               }
-  //               return { ...prevState, quantity: ((prevQuantity) => prevQuantity - 1) };
-  //             }
-  //             return stock;
+  function handleClickAddToCart(product_id, style_id, sku, quantity) {
+    const sellAmount = quantity;
 
-  //             return { ...preState };
-  //           });
-  //       }
-  //   }
-  // };
-  // !stock
-  // ? return 'Pending...';
-  // :
+    // update quantity state locally
+    // there might be some errors with this array (i.e., no array, array, outside array?)
+    // updateStock([...stock, { sku : { 'quantity' : (quantity => quantity - sellAmount) } } ] )
+    // {({sku: {sku: sku, quantity: quantity}}))
+
+    // update quantity in api
+    // edit request
+
+    // handle sell out of one size
+    // if ()
+  }
+
+  function handleSoldOutofAllSizes() {
+    // let noSizesAvailable = true;
+
+    //     for (let i = 0; i < sizes.length; i++) {
+    //       if (sizes[i].quantity > 0) {
+    //         noSizesAvailable = false;
+    //       }
+    //     }
+    //     if (noSizesAvailable) {
+    //       // disableSelectSize();
+    //     }
+    //     return sizes;
+    //   }
+
+  }
 
   return (
     <Cart>
       <span>
         <SelectSizeContainer>
           <div>
-            {(!sizeSelected)
-              ? (
-                <select>
-                  {initialState.sizeDisplay}
-                  {initialStock.map((productStock, index) => (
-                    <SizeDropdown
-                      key={productStock[sku]}
-                      index={index}
-                      stock={productStock}
-                      size={productStock.size}
-                      quantity={productStock.quantity}
-                      onClick={(e) => handleClick(quantity, e)}
-                      state={state}
-                      dispatch={dispatch}
-                    />
-                  ))}
-                </select>
-              )
-              : (
-                <select>
-                  Select Size
-                  {initialStock.map((productStock) => (
-                    <option
-                      key={productStock.sku}
-                      stock={productStock}
-                      size={productStock.size}
-                      quantity={productStock.quantity}
-                    />
-                  ))}
-                </select>
-              )}
-
+            <select onChange={(e) => handleChangeSize(e.target.value)}>
+              <option>Select Size</option>
+              {initialStock.map((productStock, index) => (
+                <SizeDropdown key={productStock.sku} index={index} stock={productStock}>{productStock.size}</SizeDropdown>
+              ))}
+            </select>
           </div>
         </SelectSizeContainer>
         <SelectQuantityContainer>
-          <select>
-            Choose Quantity
-            <option
-              key={initialState.selectedSku}
-              stock={initialState.skus}
+          <select onChange={(e) => handleChangeQuantity(e.target.value)}>
+            <option>-</option>
+            <QuantityDropdown />
+            {/* {initialStock.map((productStock, index) => (
+              <SizeDropdown
+                key={productStock.sku}
+                index={index}
+                stock={productStock}
+                size={productStock.size}
+                quantity={productStock.quantity}
+                />
+              ))} */}
+            {/* // key={initialState.selectedSku}
+              // stock={initialState.skus}
                  // quantity={initialState.selectedsku.quantity}
                 // state={}
                   // dispatch={dispatch}
                 // stockCount={state.stockCount}
-              quantityDropdownDisabled={initialState.quantityDropdownDisabled}
-            />
+              // quantityDropdownDisabled={initialState.quantityDropdownDisabled} */}
           </select>
         </SelectQuantityContainer>
       </span>
@@ -218,7 +192,7 @@ function AddToCart() {
         <AddtoBag>
           <button type="submit">Add to Cart</button>
         </AddtoBag>
-        <addStars />
+        <AddStars />
       </span>
     </Cart>
   );
@@ -235,7 +209,7 @@ function AddToCart() {
 //       PropTypes.shape({
 //         size: PropTypes.string.isRequired,
 //         quantity: PropTypes.number.isRequired,
-//         sku: PropTypes.number.isRequired,
+//         sku: PropTypes.string.isRequired,
 //       }).isRequired,
 //     ]).isRequired,
 //     // key: PropTypes.number.isRequired,
@@ -250,7 +224,7 @@ function AddToCart() {
 //         PropTypes.objectOf(PropTypes.shape({
 //           size: PropTypes.string.isRequired,
 //           quantity: PropTypes.number.isRequired,
-//           sku: PropTypes.number.isRequired,
+//           sku: PropTypes.string.isRequired,
 //         }).isRequired),
 //       ]).isRequired,
 //     }).isRequired,
@@ -295,19 +269,23 @@ const Cart = styled.div`
 const SelectSizeContainer = styled.div`
 `;
 
-const Size = styled.div`
-`;
+// const SizeCoverDD = styled.option`
+//   aria-label="Select size";
+// `;
 
 const SelectQuantityContainer = styled.div`
 `;
 
+// const QuantityCoverDD = styled.option`
+// `;
+
 const AddtoBag = styled.div`
 `;
 
-const addStars = styled.div`
+const AddStars = styled.div`
 `;
 
-// export default AddToCart;
+export default AddToCart;
 
 //   }selectedSku: payload.sku}
 //     return state.map((stock) => {
@@ -321,6 +299,4 @@ const addStars = styled.div`
 //       }
 //       return {...}
 //     }
-// }
-
-export default AddToCart;
+// };

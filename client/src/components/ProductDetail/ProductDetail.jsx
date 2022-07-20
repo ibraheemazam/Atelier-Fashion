@@ -10,31 +10,31 @@ import { useGlobalContext } from '../../contexts/GlobalStore';
 
 function ProductDetail({ href }) {
   const {
-    productID, setProductInfo, productInfo, setSelectedStyle, setStyles,
+    productID, productInfo,
   } = useGlobalContext();
   // Works when ready to hook up API with URL
   // setProductID(window.location.pathname || 40348); // think should be in useEffect?
-  useEffect(() => {
+  // useEffect(() => {
     // function getProductInfo() {
     //   axios
     //     .get('/products', { params: { ID: productID } })
     //     .then((productResult) => { setProductInfo(productResult.data); })
     //     .catch((err) => { console.log('error getting product information', err); });
     // }
-    function getStyles() {
-      axios
-        .get('/styles', { params: { product_id: productID } })
-        .then((stylesResult) => {
-          setSelectedStyle(stylesResult.data.results[0]);
-          setStyles(stylesResult.data.results);
-        })
-        // I'm catching two errors in one here, not great
-        .catch((err) => console.log('error getting product styles', err));
-    }
-    // getProductInfo();
-    getStyles();
+    // function getStyles() {
+    //   axios
+    //     .get('/styles', { params: { product_id: productID } })
+    //     .then((stylesResult) => {
+    //       setSelectedStyle(stylesResult.data.results[0]);
+    //       setStyles(stylesResult.data.results);
+    //     })
+    //     // I'm catching two errors in one here, not great
+    //     .catch((err) => console.log('error getting product styles', err));
+    // }
+    // // getProductInfo();
+    // getStyles();
     //   .catch(console.log('error getting product info'), console.error);
-  }, [productID]);
+  // }, [productID]);
   // add setProductID above when implemented
 
   // function setStyle(selection) {

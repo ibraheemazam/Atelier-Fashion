@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 // import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import axios from 'axios';
+// import axios from 'axios';
 
-import StyleSelector from '../StyleSelector/StyleSelector';
+// import StyleSelector from '../StyleSelector/StyleSelector';
 import RatingsAndReviews from '../../RatingsAndReviews/RatingsAndReviews';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
