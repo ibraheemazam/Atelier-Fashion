@@ -5,7 +5,7 @@ import OutfitList from './OutfitList/OutfitList';
 
 function RelatedItems() {
   return (
-    <div>
+    <div id="related-items">
       <Text>
         Related Items
       </Text>

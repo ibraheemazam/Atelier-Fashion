@@ -1,12 +1,4 @@
 const axios = require('axios');
-const cloudinary = require('cloudinary').v2;
-require('dotenv').config();
-
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
 
 axios.defaults.headers.common.Authorization = process.env.AUTH_TOKEN;
 
@@ -64,16 +56,4 @@ module.exports.reportAnswer = (req, res) => {
     .catch((err) => {
       res.status(400).send(err);
     });
-};
-
-module.exports.uploadFile = async (req, res) => {
-  try {
-    const file = req.body.image;
-    const uploadedResponse = await cloudinary.uploader.upload(file, {
-      upload_preset: 'retail-app',
-    });
-    res.status(201).send(uploadedResponse);
-  } catch (err) {
-    console.log(err);
-  }
 };

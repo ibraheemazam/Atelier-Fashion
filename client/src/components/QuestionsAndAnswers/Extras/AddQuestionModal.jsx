@@ -8,6 +8,7 @@ function AddQuestionModal({ setShowModal }) {
   AddQuestionModal.propTypes = {
     setShowModal: PropTypes.func.isRequired,
   };
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [body, setBody] = useState('');
@@ -29,18 +30,6 @@ function AddQuestionModal({ setShowModal }) {
       return false;
     }
     return true;
-  }
-
-  function input() {
-    if (!validInput) {
-      return (
-        <Disclaimer>
-          <div>1. Not all fields have been provided.</div>
-          <div>2. Email is not in the correct email format.</div>
-        </Disclaimer>
-      );
-    }
-    return null;
   }
 
   function askQuestion() {
@@ -71,28 +60,48 @@ function AddQuestionModal({ setShowModal }) {
   }
 
   return (
-    <ModalBackground id="background" onClick={(event) => closeModal(event)}>
+    <ModalBackground
+      id="background"
+      onClick={(event) => closeModal(event)}
+    >
       <ModalContainer>
         <CloseButtonDiv>
-          <CloseButtonButton onClick={() => setShowModal(false)}>&#10006;</CloseButtonButton>
+          <CloseButtonButton onClick={() => setShowModal(false)}>
+            &#10006;
+          </CloseButtonButton>
         </CloseButtonDiv>
-        <h3>
-          {`About the ${productInfo.name}`}
-        </h3>
+        <Header>
+          <div>Ask Your Question</div>
+          <div>{`About the ${productInfo.name}`}</div>
+        </Header>
         <Form>
           <FormField htmlFor="name">
             Username
             <Required>*</Required>
           </FormField>
-          <FormEntry onChange={(event) => setName(event.target.value)} maxLength="60" type="text" id="name" name="name" placeholder="Example: jackson11!" />
+          <FormEntry
+            onChange={(event) => setName(event.target.value)}
+            maxLength="60"
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Example: jackson11!"
+          />
           <Disclaimer>
-            For privacy reasons, do not use your full name or email address.
+            For privacy reasons, do not use your full name or email
+            address.
           </Disclaimer>
           <FormField htmlFor="email">
             Email
             <Required>*</Required>
           </FormField>
-          <FormEntry onChange={(event) => setEmail(event.target.value)} maxLength="60" type="text" id="email" placeholder="jack@email.com" />
+          <FormEntry
+            onChange={(event) => setEmail(event.target.value)}
+            maxLength="60"
+            type="text"
+            id="email"
+            placeholder="jack@email.com"
+          />
           <Disclaimer>
             For authentication reasons, you will not be emailed.
           </Disclaimer>
@@ -100,13 +109,26 @@ function AddQuestionModal({ setShowModal }) {
             Question
             <Required>*</Required>
           </FormField>
-          <InputQuestion onChange={(event) => setBody(event.target.value)} maxLength="1000" placeholder="Ask your question" />
-          {input()}
-          <Footer>
-            <FooterButton onClick={() => askQuestion()}>Submit</FooterButton>
-            <FooterButton onClick={() => setShowModal(false)}>Cancel</FooterButton>
-          </Footer>
+          <InputQuestion
+            onChange={(event) => setBody(event.target.value)}
+            maxLength="1000"
+            placeholder="Ask your question"
+          />
+          {!validInput ? (
+            <Disclaimer>
+              <div>1. Not all fields have been provided.</div>
+              <div>2. Email is not in the correct email format.</div>
+            </Disclaimer>
+          ) : null}
         </Form>
+        <Footer>
+          <FooterButton onClick={() => askQuestion()}>
+            Submit
+          </FooterButton>
+          <FooterButton onClick={() => setShowModal(false)}>
+            Cancel
+          </FooterButton>
+        </Footer>
       </ModalContainer>
     </ModalBackground>
   );
@@ -125,25 +147,27 @@ const ModalBackground = styled.div`
 `;
 
 const ModalContainer = styled.div`
-  width: 60%;
-  height: 500px;
+  width: 60vw;
+  max-height: 90vh;
   border-radius: 10px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   display: flex;
   flex-direction: column;
   padding: 25px;
+  background-color: ${(props) => props.theme.secondaryColor};
 `;
 
 const CloseButtonDiv = styled.div`
   display: flex;
-  justify-content:flex-end;
+  justify-content: flex-end;
 `;
 
 const CloseButtonButton = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
+  color: ${(props) => props.theme.fontColor};
 `;
 
 const Form = styled.div`
@@ -161,19 +185,39 @@ const FormField = styled.label`
 const FormEntry = styled.input`
   grid-column: 2;
   cursor: initial;
+  color: ${(props) => props.theme.fontColor};
+  background-color: ${(props) => props.theme.tertiaryColor};
+  ::placeholder,
+  ::-webkit-input-placeholder {
+    opacity: 0.2;
+    color: ${(props) => props.theme.fontColor};
+  }
+  :-ms-input-placeholder {
+    color: ${(props) => props.theme.fontColor};
+  }
 `;
 
 const InputQuestion = styled.textarea`
   resize: none;
   height: 125px;
   font-family: Arial;
+  color: ${(props) => props.theme.fontColor};
+  background-color: ${(props) => props.theme.tertiaryColor};
+  ::placeholder,
+  ::-webkit-input-placeholder {
+    opacity: 0.2;
+    color: ${(props) => props.theme.fontColor};
+  }
+  :-ms-input-placeholder {
+    color: ${(props) => props.theme.fontColor};
+  }
 `;
 
 const Footer = styled.div`
   display: flex;
+  flex: none;
   justify-content: center;
-  align-items: center;
-  grid-column: 1 / 3;
+  margin-top: 20%;
 `;
 
 const FooterButton = styled.button`
@@ -181,8 +225,8 @@ const FooterButton = styled.button`
   height: 45px;
   margin: 10px;
   border: none;
-  color: white;
-  background-color: grey;
+  color: ${(props) => props.theme.fontColor};
+  background-color: ${(props) => props.theme.tertiaryColor};
   border-radius: 10px;
   font-size: 20px;
   cursor: pointer;
@@ -199,6 +243,10 @@ const Disclaimer = styled.div`
   font-size: 12px;
   color: #ff0000;
   grid-column: 2;
+`;
+
+const Header = styled.header`
+  margin-bottom: 10px;
 `;
 
 export default AddQuestionModal;

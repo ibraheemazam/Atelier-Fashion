@@ -82,7 +82,7 @@ function RatingsAndReviews() {
   };
 
   return (
-    <Container>
+    <Container id="ratings-and-reviews">
       <BreakdownContainer>
         <Breakdown productID={productID} revMeta={revMeta} />
       </BreakdownContainer>

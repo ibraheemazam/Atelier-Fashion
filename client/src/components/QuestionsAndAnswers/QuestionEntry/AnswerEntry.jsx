@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import axios from 'axios';
 import { format, parseISO } from 'date-fns';
+import ExpandedImageModal from './ExpandedImageModal';
 
 function AnswerEntry({ answer }) {
   AnswerEntry.propTypes = {
@@ -17,68 +18,93 @@ function AnswerEntry({ answer }) {
   };
 
   const [helpfulness, setHelpfulness] = useState(answer.helpfulness);
+  const [showModal, setShowModal] = useState(false);
+  const [source, setSource] = useState();
+  const [clickedReport, setClickedReport] = useState(false);
+
   const clickedHelpful = useRef(false);
 
   function helpfulAnswer() {
-    if (!clickedHelpful.current) {
-      axios
-        .put('/answers/helpful', { answer_id: answer.id })
-        .then(() => {
-          setHelpfulness(helpfulness + 1);
-          clickedHelpful.current = true;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }
-
-  function reportAnswer() {
+    if (clickedHelpful.current) return;
     axios
-      .put('/answers/report', { answer_id: answer.id })
+      .put('/answers/helpful', { answer_id: answer.id })
       .then(() => {
+        setHelpfulness((prevHelpfulness) => prevHelpfulness + 1);
+        clickedHelpful.current = true;
       })
       .catch((err) => {
         console.log(err);
       });
   }
 
+  function reportAnswer() {
+    if (clickedReport) return;
+    axios
+      .put('/answers/report', { answer_id: answer.id })
+      .then(() => {
+        setClickedReport(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  function handlePhotoClick(event) {
+    setShowModal(true);
+    setSource(event.target.src);
+  }
+
   return (
     <Answer key={answer.id}>
-      <AnswerBody>
-        {answer.body}
-      </AnswerBody>
+      <AnswerBody>{answer.body}</AnswerBody>
       <AnswerPhotos>
         {answer.photos.map((photo) => (
           <AnswerImage
             src={photo}
             alt=""
             key={photo}
+            onClick={(event) => handlePhotoClick(event)}
           />
         ))}
       </AnswerPhotos>
       <AnswerFooter>
         <div>
           {'by '}
-          {answer.answerer_name.toLowerCase() === 'seller' ? <b>{answer.answerer_name}</b> : answer.answerer_name}
+          {answer.answerer_name.toLowerCase() === 'seller' ? (
+            <b>{answer.answerer_name}</b>
+          ) : (
+            answer.answerer_name
+          )}
           {` on ${format(parseISO(answer.date), 'MMM dd, yyyy')}`}
         </div>
         <div>
-          {'Helpful? '}
+          Helpful?
           <Clickable onClick={() => helpfulAnswer()}>Yes</Clickable>
           {`(${helpfulness})`}
         </div>
         <div>
-          <Clickable onClick={() => reportAnswer()}>Report</Clickable>
+          {clickedReport ? (
+            <b>Reported</b>
+          ) : (
+            <Clickable onClick={() => reportAnswer()}>
+              Report
+            </Clickable>
+          )}
         </div>
       </AnswerFooter>
+      {showModal && (
+        <ExpandedImageModal
+          src={source}
+          setShowModal={setShowModal}
+        />
+      )}
     </Answer>
   );
 }
 
 const Answer = styled.div`
   grid-column: 2 / 3;
-  padding-bottom: 1%;
+  padding-left: 1%;
 `;
 
 const AnswerPhotos = styled.span`
@@ -90,6 +116,7 @@ const AnswerImage = styled.img`
   width: 80px;
   height: 80px;
   padding-right: 10px;
+  cursor: pointer;
 `;
 
 const AnswerFooter = styled.div`
@@ -106,9 +133,6 @@ const AnswerBody = styled.div`
 const Clickable = styled.u`
   cursor: pointer;
   text-decoration: underline;
-  &:hover {
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  }
 `;
 
 export default AnswerEntry;
