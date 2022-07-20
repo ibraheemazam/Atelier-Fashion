@@ -49,7 +49,7 @@ function CardsList() {
       .catch((err) => {
         console.log(err);
       });
-  }, [productID, setProductList, setCurrOutfit]);
+  }, [productID]);
   function clickRight() {
     if (cardIndex + 4 < productList.length) {
       setCardIndex(cardIndex + 1);
@@ -154,6 +154,7 @@ border: none;
 const Empty = styled.div`
   width: 225px;
   height: 225px;
+  border: 15px solid transparent;
 `;
 
 export default CardsList;

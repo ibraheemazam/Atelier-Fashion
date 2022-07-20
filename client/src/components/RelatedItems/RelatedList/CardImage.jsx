@@ -17,9 +17,12 @@ function CardImage({ imageInfo, details }) {
       setModal(true);
     }
   }
+  function closeModal() {
+    setModal(false);
+  }
 
   return (
-    <Outline onClick={(e) => { if (modal) { e.stopPropagation(); handleModal(); } }}>
+    <Outline>
       <ImageCard src={image.results[0].photos[0].thumbnail_url ? image.results[0].photos[0].thumbnail_url : defaultImage} alt="RelatedProductImage" />
       <Button onClick={(e) => {
         e.stopPropagation();
@@ -28,9 +31,13 @@ function CardImage({ imageInfo, details }) {
       >
         &#9733;
       </Button>
-      <div>
-        {modal && <ComparisonModal details={details} /> }
-      </div>
+      {modal
+      && (
+        <div>
+          <ComparisonModal details={details} />
+          <ModalBackground onClick={(e) => { e.stopPropagation(); closeModal(); }} />
+        </div>
+      )}
     </Outline>
   );
 }
@@ -69,6 +76,17 @@ const Button = styled.button`
     background-color: trasparent;
     opacity: 0.80;
   }
+`;
+
+const ModalBackground = styled.div`
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 0%;
+  top: 0%;
 `;
 
 export default CardImage;
