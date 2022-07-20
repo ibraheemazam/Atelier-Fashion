@@ -5,7 +5,7 @@ import { useGlobalContext } from '../../../contexts/GlobalStore';
 
 function SizeDropdown({index, stock, size, quantity}) {
   return (
-    <option value={stock} index={index} size={size} quantity={quantity}></option>
+    <option value={stock.size} index={index} size={size} quantity={quantity}></option>
   );
 }
 

@@ -112,12 +112,12 @@ function AddToCart() {
 
 
   function handleChangeSize(value) {
-    e.preventDefault();
+    event.preventDefault();
     setCurrentSku(() => value);
   }
 
-  function handleChangeQuantity() {
-    e.preventDefault();
+  function handleChangeQuantity(value) {
+    event.preventDefault();
     setCurrentSku(() => value);
   }
 
@@ -157,7 +157,7 @@ function AddToCart() {
       <span>
         <SelectSizeContainer>
           <div>
-            <select onChange={(e) => handleChangeSize(e.target.value)}>
+            <select defaultValue="Select Size" onChange={(e) => handleChangeSize(null, e.target.value)}>
               <option>Select Size</option>
               {initialStock.map((productStock, index) => (
                 <SizeDropdown key={productStock.sku} index={index} stock={productStock}>{productStock.size}</SizeDropdown>

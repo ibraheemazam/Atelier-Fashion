@@ -40,9 +40,9 @@ function App() {
         <GlobalContextProvider>
           <NavBar theme={theme} toggleTheme={toggleTheme} />
           <ProductDetail />
-          {/* <RelatedItems /> */}
-          {/* <QuestionsAndAnswers /> */}
-          {/* <RatingsAndReviews /> */}
+          <RelatedItems />
+          <QuestionsAndAnswers />
+          <RatingsAndReviews />
         </GlobalContextProvider>
       </StyledContainer>
     </ThemeProvider>
