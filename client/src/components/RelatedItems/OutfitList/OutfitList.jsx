@@ -111,6 +111,7 @@ const RightButton = styled.button`
 const EmptyOutfit = styled.div`
   width: 225px;
   height: 225px;
+  border: 15px solid transparent;
 `;
 
 export default OutfitList;

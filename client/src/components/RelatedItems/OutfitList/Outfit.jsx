@@ -62,6 +62,7 @@ const Outline = styled.div`
     opacity: 0.80;
   }
   margin-top: auto;
+  border: 15px solid transparent;
 `;
 
 const ImageOutline = styled.div`

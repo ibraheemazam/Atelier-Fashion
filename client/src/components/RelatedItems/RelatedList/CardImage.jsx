@@ -19,7 +19,7 @@ function CardImage({ imageInfo, details }) {
   }
 
   return (
-    <Outline>
+    <Outline onClick={(e) => { if (modal) { e.stopPropagation(); handleModal(); } }}>
       <ImageCard src={image.results[0].photos[0].thumbnail_url ? image.results[0].photos[0].thumbnail_url : defaultImage} alt="RelatedProductImage" />
       <Button onClick={(e) => {
         e.stopPropagation();
@@ -51,6 +51,9 @@ const ImageCard = styled.img`
   width: 225px;
   height: 225px;
   object-fit: fill;
+  &:hover {
+    opacity: 0.80;
+  }
 `;
 
 const Button = styled.button`

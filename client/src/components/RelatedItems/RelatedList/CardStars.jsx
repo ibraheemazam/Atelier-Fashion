@@ -12,17 +12,12 @@ function CardStars({ reviewID }) {
   }
   average /= reviews.length;
   const partial = average * 20;
-  console.log('Partial star:', partial);
   for (let i = 0; i < 5; i += 1) {
     baseStars.push(<span className="empty-star" key={i}>&#9734;</span>);
   }
   for (let i = 0; i < 5; i += 1) {
     filledStars.push(<span className="filled-star" key={i}>&#9733;</span>);
   }
-  console.log('Average:', average);
-  console.log('Partial:', partial);
-  console.log(baseStars);
-  console.log(filledStars);
 
   return (
     <Stars>

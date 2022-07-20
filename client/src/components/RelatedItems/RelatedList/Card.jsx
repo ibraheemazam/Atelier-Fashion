@@ -25,12 +25,14 @@ function Card({ data }) {
         ? (
           <CardStyle onClick={() => changeItem()}>
             <CardImage imageInfo={info.image.data} details={info.details} />
-            <Cards>{info.details.data.name}</Cards>
-            <Cards>{info.details.data.category}</Cards>
-            <Cards>
-              $
-              {info.details.data.default_price}
-            </Cards>
+            <Text>
+              <Cards>{info.details.data.name}</Cards>
+              <Cards>{info.details.data.category}</Cards>
+              <Cards>
+                $
+                {info.details.data.default_price}
+              </Cards>
+            </Text>
             <CardStars reviewID={info.stars.data} />
           </CardStyle>
         )
@@ -55,16 +57,21 @@ Card.propTypes = {
 const CardStyle = styled.div`
   display: flex;
   flex-direction: column;
-  &:hover {
-    opacity: 0.80;
-  }
   margin-top: auto;
+  border: 15px solid transparent;
 `;
 
 const Cards = styled.div`
-  display: inline-block;
   margin-left: auto;
   margin-right: auto;
+`;
+
+const Text = styled.div`
+display: flex;
+flex-direction: column;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 export default Card;

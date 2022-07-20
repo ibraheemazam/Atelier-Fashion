@@ -24,6 +24,7 @@ function AddOutfit() {
 }
 
 const Outline = styled.div`
+  border: 15px solid transparent;
 `;
 
 const Button = styled.button`

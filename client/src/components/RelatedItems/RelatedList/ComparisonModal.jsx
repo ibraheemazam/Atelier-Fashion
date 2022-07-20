@@ -11,9 +11,6 @@ function ComparisonModal({ details }) {
   const {
     currOutfit,
   } = useGlobalContext();
-  console.log('Details:', details);
-  console.log('CurrOutfit:', currOutfit.details.data.features);
-  console.log('CompareOutfit:', details.data.features);
   const currentProduct = currOutfit.details.data.features;
   const comparedProduct = details.data.features;
   const modal = {};
@@ -32,17 +29,18 @@ function ComparisonModal({ details }) {
   outcome[0] = [];
   outcome[1] = [];
   outcome[2] = [];
+  console.log(modal);
   for (const key in modal) {
-    outcome[0].push(modal[key][0]);
-    if (modal[key][0] !== undefined) {
-      outcome[1].push(modal[key][0]);
-    } else {
-      outcome[1].push(modal[key][1]);
+    if (!((modal[key][0] === undefined || modal[key][0] === null) && (modal[key][1] === undefined || modal[key][1] === null))) {
+      outcome[0].push(modal[key][0]);
+      if (modal[key][0] !== undefined) {
+        outcome[1].push(modal[key][0]);
+      } else {
+        outcome[1].push(modal[key][1]);
+      }
+      outcome[2].push(modal[key][1]);
     }
-    outcome[2].push(modal[key][1]);
-    console.log('Outcome:', outcome);
   }
-  console.log('Modal:', modal);
   return (
     <Modal>
       <Product>
@@ -77,20 +75,21 @@ const Modal = styled.div`
   display: flex;
   position: absolute;
   justify-content: center;
-  width: 300px;
-  height: 175px;
-  top: 20%;
-  right: 20%;
+  width: 400px;
+  height: 100px;
+  top: 25%;
+  right: -30%;
   border: 2px solid black;
   background-color: gray;
+  overflow: auto;
+  z-index: 1;
 `;
 
 const Product = styled.div`
   display: flex;
-  flex-flow: column wrap;
   flex-direction: column;
   align-items: center;
-  font-size: 12px;
+  font-size: 13px;
 `;
 
 export default ComparisonModal;
