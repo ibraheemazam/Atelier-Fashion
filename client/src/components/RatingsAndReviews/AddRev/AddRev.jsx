@@ -3,11 +3,16 @@ import styled from 'styled-components';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
+import StarRating from './StarRating';
 import Characteristics from './Characteristics';
 
 function AddRev({ revMeta, productID }) {
   const { productInfo } = useGlobalContext();
   const [addClicked, setAddClicked] = useState(false);
+  const [starRating, setStarRating] = useState({
+    meaning: '',
+    numVal: 0,
+  });
   const [recommendProd, setRecommendProd] = useState();
   const [charVal, setCharVal] = useState({});
   const [charObj, setCharObj] = useState({});
@@ -40,13 +45,13 @@ function AddRev({ revMeta, productID }) {
     event.preventDefault();
     const newRevObj = {
       product_id: productID,
-      rating: 2,
+      rating: starRating,
       summary: revSum,
       body: revBody,
       recommend: recommendProd,
       name: nickname,
       email,
-      photos: ['https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/1200px-Cat03.jpg'],
+      photos: [],
       characteristics: charObj,
     };
     postRev(newRevObj);
@@ -79,16 +84,8 @@ function AddRev({ revMeta, productID }) {
             </div>
           </AddRevHeader>
           <FormContainer onSubmit={(event) => handleSubmit(event)}>
-            <label htmlFor="overall rating">
-              Overall rating*&nbsp;
-              <select>
-                <option>1 star</option>
-                <option>2 star</option>
-                <option>3 star</option>
-                <option>4 star</option>
-                <option>5 star</option>
-              </select>
-            </label>
+
+            <StarRating starRating={starRating} setStarRating={setStarRating} />
             <br />
 
             <RecommendProdLabel htmlFor="recommendProd" onChange={(event) => setRecommendProd(event.target.value === 'true')}>
