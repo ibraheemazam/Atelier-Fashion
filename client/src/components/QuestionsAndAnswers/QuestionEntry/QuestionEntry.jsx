@@ -11,20 +11,24 @@ function QuestionEntry({ question }) {
       question_id: PropTypes.number.isRequired,
       question_helpfulness: PropTypes.number.isRequired,
       question_body: PropTypes.string.isRequired,
-      answers: PropTypes.objectOf(PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        helpfulness: PropTypes.number.isRequired,
-        body: PropTypes.string.isRequired,
-        answerer_name: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
-        photos: PropTypes.arrayOf(PropTypes.string).isRequired,
-      })).isRequired,
+      answers: PropTypes.objectOf(
+        PropTypes.shape({
+          id: PropTypes.number.isRequired,
+          helpfulness: PropTypes.number.isRequired,
+          body: PropTypes.string.isRequired,
+          answerer_name: PropTypes.string.isRequired,
+          date: PropTypes.string.isRequired,
+          photos: PropTypes.arrayOf(PropTypes.string).isRequired,
+        }),
+      ).isRequired,
     }).isRequired,
   };
 
   const [numAnswers, setNumAnswers] = useState(2);
   const [showModal, setShowModal] = useState(false);
-  const [helpfulness, setHelpfulness] = useState(question.question_helpfulness);
+  const [helpfulness, setHelpfulness] = useState(
+    question.question_helpfulness,
+  );
   const [clickedReport, setClickedReport] = useState(false);
 
   const clickedHelpful = useRef(false);
@@ -43,31 +47,34 @@ function QuestionEntry({ question }) {
   allAnswers.sort(sellerFirst);
 
   const topAnswers = Object.values(allAnswers).slice(0, numAnswers);
+
   function reportQuestion() {
-    if (!clickedReport) {
-      axios
-        .put('/questions/report', { question_id: question.question_id })
-        .then(() => {
-          setClickedReport(true);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    if (clickedReport) return;
+    axios
+      .put('/questions/report', {
+        question_id: question.question_id,
+      })
+      .then(() => {
+        setClickedReport(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   function helpfulQuestion() {
-    if (!clickedHelpful.current) {
-      axios
-        .put('/questions/helpful', { question_id: question.question_id })
-        .then(() => {
-          setHelpfulness((prevHelpfulness) => prevHelpfulness + 1);
-          clickedHelpful.current = true;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    if (clickedHelpful.current) return;
+    axios
+      .put('/questions/helpful', {
+        question_id: question.question_id,
+      })
+      .then(() => {
+        setHelpfulness((prevHelpfulness) => prevHelpfulness + 1);
+        clickedHelpful.current = true;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   function answerQuestion() {
@@ -79,79 +86,76 @@ function QuestionEntry({ question }) {
     setNumAnswers(count);
   }
 
-  function helpfulReport() {
-    if (clickedReport) {
-      return (
-        <HelpfulReport>
-          {'Helpful? '}
-          <Clickable onClick={() => helpfulQuestion()}>Yes</Clickable>
-          {`(${helpfulness}) `}
-          <Reported>Reported</Reported>
-        </HelpfulReport>
-      );
+  function handleScroll(e) {
+    // within 0.9 of the bottom
+    const bottom = 0.9 * (e.target.scrollHeight - e.target.scrollTop) <= e.target.clientHeight;
+    if (bottom && allAnswers.length > numAnswers) {
+      changeNumAnswers(2);
     }
-    return (
-      <HelpfulReport>
-        {'Helpful? '}
-        <Clickable onClick={() => helpfulQuestion()}>Yes</Clickable>
-        {`(${helpfulness}) `}
-        <Clickable onClick={() => reportQuestion()}>Report</Clickable>
-      </HelpfulReport>
-    );
-  }
-  function answersList() {
-    if (topAnswers.length === 0) {
-      return (<AnswerNone>This question has not been answered yet!</AnswerNone>);
-    }
-    return topAnswers.map((answer) => (
-      <AnswerEntry answer={answer} key={answer.id} />
-    ));
   }
 
-  function moreAnswers() {
-    if (allAnswers.length <= 2) {
-      return null;
-    }
-    if (topAnswers.length < allAnswers.length) {
+  function answersList() {
+    if (topAnswers.length === 0) {
       return (
-        <MoreAnswers onClick={() => changeNumAnswers(2)}>
-          <i className="fa-solid fa-chevron-down" />
-          <span>See More Answers</span>
-        </MoreAnswers>
+        <AnswerNone>
+          This question has not been answered yet!
+        </AnswerNone>
       );
     }
+    const list = topAnswers.map((answer) => (
+      <AnswerEntry answer={answer} key={answer.id} />
+    ));
     return (
-      <MoreAnswers onClick={() => changeNumAnswers(-100)}>
-        <i className="fa-solid fa-chevron-up" />
-        <span>Collapse Answers</span>
-      </MoreAnswers>
+      <AnswersListContainer
+        id="question_answers"
+        onScroll={(event) => handleScroll(event)}
+      >
+        {list}
+      </AnswersListContainer>
     );
   }
 
   return (
     <Entry>
-      <Question>Q.</Question>
-      <QuestionBody>{question.question_body}</QuestionBody>
-      {helpfulReport()}
+      <Question id="question_header">Question.</Question>
+      <QuestionBody id="question_body">
+        {question.question_body}
+      </QuestionBody>
+      <HelpfulReport>
+        Helpful?
+        <Clickable onClick={() => helpfulQuestion()}>Yes</Clickable>
+        {`(${helpfulness})`}
+        {clickedReport ? (
+          <Reported>Reported</Reported>
+        ) : (
+          <Clickable onClick={() => reportQuestion()}>
+            Report
+          </Clickable>
+        )}
+      </HelpfulReport>
       <AddAnswer>
-        <Clickable onClick={() => answerQuestion()}>Add Answer</Clickable>
+        <Clickable onClick={() => answerQuestion()}>
+          Add Answer
+        </Clickable>
       </AddAnswer>
-      <Answer>A.</Answer>
-      <AnswersListContainer>
-        {answersList()}
-      </AnswersListContainer>
-      {moreAnswers()}
-      {showModal && <AddAnswerModal setShowModal={setShowModal} question={question} />}
+      <Answer id="answer_header">Answer.</Answer>
+      {answersList()}
+      {showModal && (
+        <AddAnswerModal
+          setShowModal={setShowModal}
+          question={question}
+        />
+      )}
     </Entry>
   );
 }
 
 const Entry = styled.div`
   display: grid;
-  grid-template-columns: 5% 60% 25% 10%;
-  padding-bottom: 5%;
+  grid-template-columns: 8% 57% 25% 10%;
   width: 100%;
   justify-content: center;
+  margin-bottom: 10px;
 `;
 
 const Question = styled.div`
@@ -182,27 +186,21 @@ const Reported = styled.span`
 const AnswersListContainer = styled.div`
   border: 1px solid;
   background-color: ${(props) => props.theme.tertiaryColor};
-  max-height: 350px;
-  overflow: auto;
+  max-height: 90px;
+  overflow-x: auto;
+  overflow-y: scroll;
   text-align: justify;
-  padding: 1%;
   border-radius: 10px;
-`;
-
-const Answer = styled.div`
-  grid-column: 1;
-  font-weight: bold;
+  grid-column: 2;
 `;
 
 const AnswerNone = styled.div`
   grid-column: 2;
 `;
 
-const MoreAnswers = styled.div`
-  display: flex;
-  grid-column: 2;
+const Answer = styled.div`
+  grid-column: 1;
   font-weight: bold;
-  cursor: pointer;
 `;
 
 const Clickable = styled.u`

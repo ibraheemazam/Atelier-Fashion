@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FaSearch } from 'react-icons/fa';
 import styled from 'styled-components';
 
 function NavBar({ toggleTheme }) {
@@ -8,21 +9,44 @@ function NavBar({ toggleTheme }) {
   };
 
   function scrollTo(event) {
-    const scrollTarget = event.target.getAttribute('target');
+    const scrollTarget = event.target.getAttribute('data-target');
     const target = document.getElementById(scrollTarget);
     target.scrollIntoView({ block: 'center', behavior: 'smooth' });
   }
 
   return (
     <Background id="navbar">
-      <GridItem onClick={() => toggleTheme()}>Toggle Dark Mode</GridItem>
-      <GridItem target="product-details" onClick={(event) => scrollTo(event)}>Product Details</GridItem>
-      <GridItem target="related-items" onClick={(event) => scrollTo(event)}>Related Items</GridItem>
-      <GridItem target="question-and-answers" onClick={(event) => scrollTo(event)}>Questions & Answers</GridItem>
-      <GridItem target="ratings-and-reviews" onClick={(event) => scrollTo(event)}>Ratings & Reviews</GridItem>
+      <GridItem onClick={() => toggleTheme()}>
+        Toggle Dark Mode
+      </GridItem>
+      <GridItem
+        data-target="product-details"
+        onClick={(event) => scrollTo(event)}
+        value="ProductDetails"
+      >
+        Product Details
+      </GridItem>
+      <GridItem
+        data-target="related-items"
+        onClick={(event) => scrollTo(event)}
+      >
+        Related Items
+      </GridItem>
+      <GridItem
+        data-target="question-and-answers"
+        onClick={(event) => scrollTo(event)}
+      >
+        Questions & Answers
+      </GridItem>
+      <GridItem
+        data-target="ratings-and-reviews"
+        onClick={(event) => scrollTo(event)}
+      >
+        Ratings & Reviews
+      </GridItem>
       <GridItem>
         <Input />
-        <i className="fa-solid fa-magnifying-glass" />
+        <FaSearch />
       </GridItem>
     </Background>
   );
