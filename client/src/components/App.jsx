@@ -33,9 +33,9 @@ function App() {
       <StyledContainer id="styled-container">
         <GlobalContextProvider>
           <NavBar theme={theme} toggleTheme={toggleTheme} />
-          {/* <ProductDetail /> */}
+          <ProductDetail />
           <RelatedItems />
-          {/* <QuestionsAndAnswers /> */}
+          <QuestionsAndAnswers />
           <RatingsAndReviews />
         </GlobalContextProvider>
       </StyledContainer>

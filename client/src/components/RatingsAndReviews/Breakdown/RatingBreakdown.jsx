@@ -97,7 +97,6 @@ const StarRankContainer = styled.div`
 
 const StarLabel = styled.div`
   display: flex;
-  text-decoration: underline;
   width: 30%;
 `;
 
