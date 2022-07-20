@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { FaSearch } from 'react-icons/fa';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
 function QuestionSearch() {
@@ -28,7 +29,7 @@ function QuestionSearch() {
         placeholder="HAVE A QUESTION? SEARCH FOR ANSWERS..."
       />
       <Button type="submit">
-        <i className="fa-solid fa-magnifying-glass" />
+        <FaSearch />
       </Button>
     </QuestionSearchBar>
   );
@@ -71,6 +72,7 @@ const Button = styled.button`
   border-bottom-right-radius: 10px;
   margin-left: -1%;
   background-color: ${(props) => props.theme.secondaryColor};
+  cursor: pointer;
 `;
 
 export default QuestionSearch;
