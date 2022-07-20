@@ -5,12 +5,9 @@ import styled from 'styled-components';
 function MoreRevs({ productID, setRevCount, revListLength }) {
   const noMoreReviews = useRef(false);
   const handleMoreReviews = function handleMoreReviews() {
-    setRevCount((prevRevCount) => {
-      if (prevRevCount + 2 >= revListLength) {
-        noMoreReviews.current = true;
-        return revListLength;
-      }
-      return prevRevCount + 2;
+    setRevCount(() => {
+      noMoreReviews.current = true;
+      return revListLength;
     });
   };
 
@@ -20,8 +17,7 @@ function MoreRevs({ productID, setRevCount, revListLength }) {
 
   return (
     <div>
-      {/* {!noMoreReviews.current */}
-      { true
+      {!noMoreReviews.current
         && (
           <MoreButton type="button" onClick={() => handleMoreReviews()}>
             MORE REVIEWS

@@ -15,7 +15,11 @@ function Breakdown({ productID, revMeta, filterReviews }) {
     <div>
       RATINGS &#38; REVIEWS
       <Summary revMeta={revMeta} />
-      <RatingBreakdown revMeta={revMeta} filterReviews={filterReviews} productID={productID} />
+      <RatingBreakdown
+        revMeta={revMeta}
+        filterReviews={filterReviews}
+        productID={productID}
+      />
       <br />
       <LengthBreakdown revMeta={revMeta} />
     </div>

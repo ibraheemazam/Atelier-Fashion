@@ -57,12 +57,14 @@ function RatingsAndReviews() {
   useEffect(() => {
     getReviews();
     getMetaData();
-  }, [productID, sortOrder]);
-
-  useEffect(() => {
     setSortOrder('relevant');
     setRevCount(2);
   }, [productID]);
+
+  useEffect(() => {
+    getReviews();
+    getMetaData();
+  }, [sortOrder]);
 
   const filterReviews = (starFilterArr) => {
     let result;
@@ -92,6 +94,7 @@ function RatingsAndReviews() {
           sortOrder={sortOrder}
           setSortOrder={setSortOrder}
           revCount={revCount}
+          filteredRevsLength={filteredRevs.length}
         />
 
         <ReviewTilesContainer>

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-function SortList({ sortOrder, setSortOrder, revCount }) {
+function SortList({ sortOrder, setSortOrder, revCount, filteredRevsLength }) {
   const handleSortSelect = function handleSortSelect(event) {
     setSortOrder(event.target.value);
   };
@@ -10,7 +10,7 @@ function SortList({ sortOrder, setSortOrder, revCount }) {
   return (
     <RevListHeader>
       &nbsp;
-      {revCount}
+      {revCount === 2 ? 2 : filteredRevsLength}
       &nbsp;
       reviews, sorted by&nbsp;
       <select onChange={handleSortSelect} value={sortOrder}>
