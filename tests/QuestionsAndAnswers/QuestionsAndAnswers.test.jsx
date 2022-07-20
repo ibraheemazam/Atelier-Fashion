@@ -1,7 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { GlobalContextProvider } from '../../client/src/contexts/GlobalStore';
-import { render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom';
 import QuestionsAndAnswers from '../../client/src/components/QuestionsAndAnswers/QuestionsAndAnswers';
@@ -13,8 +13,10 @@ import AnswerEntry from '../../client/src/components/QuestionsAndAnswers/Questio
 import QuestionSearch from '../../client/src/components/QuestionsAndAnswers/QuestionSearch/QuestionSearch';
 import ExtraButtons from '../../client/src/components/QuestionsAndAnswers/Extras/ExtraButtons';
 import { format, parseISO } from 'date-fns';
+import axios from 'axios';
 
 window.scrollTo = jest.fn();
+jest.mock("axios");
 
 const exampleQuestion = {
   "question_id": 641780,
@@ -38,8 +40,32 @@ const exampleAnswer = {
   ]
 };
 
+const exampleInfo = {
+  "id": 40344,
+  "campus": "hr-rfp",
+  "name": "Camo Onesie",
+  "slogan": "Blend in to your crowd",
+  "description": "The So Fatigues will wake you up and fit you in. This high energy camo will have you blending in to even the wildest surroundings.",
+  "category": "Jackets",
+  "default_price": "140.00",
+  "created_at": "2021-08-13T14:38:44.509Z",
+  "updated_at": "2021-08-13T14:38:44.509Z",
+  "features": [
+      {
+          "feature": "Fabric",
+          "value": "Canvas"
+      },
+      {
+          "feature": "Buttons",
+          "value": "Brass"
+      }
+  ]
+}
+
 describe('QA widget', () => {
   it('should render the whole QA widget', () => {
+    const user = userEvent.setup;
+    axios.get.mockResolvedValue(exampleInfo);
     render(
       <GlobalContextProvider>
         <QuestionsAndAnswers />
@@ -47,28 +73,6 @@ describe('QA widget', () => {
     )
   })
 
-});
-
-describe('should render a question', () => {
-  it('A question should render', () => {
-    render(
-      <QuestionEntry question={exampleQuestion} />
-    );
-    expect(screen.getByText('Q.')).toBeTruthy();
-    expect(screen.getByText(exampleQuestion.question_body)).toBeTruthy();
-
-    expect(screen.getByText('A.')).toBeTruthy();
-    expect(screen.getByText('This question has not been answered yet!')).toBeTruthy();
-  });
-  it('Should have additional functionality', () => {
-    render(
-      <QuestionEntry question={exampleQuestion} />
-    );
-
-    expect(screen.getByText('Add Answer')).toBeTruthy();
-    expect(screen.getByText('Yes')).toBeTruthy();
-    expect(screen.getByText('Report')).toBeTruthy();
-  })
 });
 
 describe('should render a answer entry', () => {
@@ -90,14 +94,14 @@ describe('should interact with a question', () => {
     render(
       <QuestionEntry question={exampleQuestion} />
     );
-    const report = screen.getByText('Report');
-    expect(report).toBeInTheDocument();
+    expect(screen.getByText('Report')).toBeInTheDocument();
 
-    await user.click(report);
+    axios.post.mockResolvedValueOnce('success');
+    user.click(screen.getByText('Report'));
 
-    waitForElementToBeRemoved(report).then(() => {
-      expect(screen.findByText('Reported')).toBeInTheDocument();
-    })
+    waitForElementToBeRemoved(screen.getByText('Report')).then(async () => {
+      expect(await screen.findByText('Reported')).toBeInTheDocument();
+    }, {timeout: 10000})
   })
 
   it('should mark a question as helpful', async () => {
@@ -105,14 +109,16 @@ describe('should interact with a question', () => {
     render(
       <QuestionEntry question={exampleQuestion} />
     );
-    const helpful = screen.getByText('Yes');
-    expect(helpful).toBeTruthy();
+    expect(screen.getByText('Yes')).toBeTruthy();
+
+    axios.post.mockResolvedValueOnce('success');
+    user.click(screen.getByText('Yes'));
   })
 
-  it('should open a modal', async () => {
-    const user = userEvent.setup()
-    render(
-      <QuestionEntry question={exampleQuestion} />
-    );
-  })
+  // it('should open a modal', async () => {
+  //   const user = userEvent.setup()
+  //   render(
+  //     <QuestionEntry question={exampleQuestion} />
+  //   );
+  // })
 });

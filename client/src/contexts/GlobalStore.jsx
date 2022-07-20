@@ -66,7 +66,7 @@ export function GlobalContextProvider({ children }) {
     getQuestions();
 
     getProductInfo();
-    setNumQuestions(4);
+    setNumQuestions(2);
     scrollToTop();
   }, [productID]);
 

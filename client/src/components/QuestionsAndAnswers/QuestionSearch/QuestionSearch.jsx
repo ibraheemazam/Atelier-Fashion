@@ -72,6 +72,7 @@ const Button = styled.button`
   border-bottom-right-radius: 10px;
   margin-left: -1%;
   background-color: ${(props) => props.theme.secondaryColor};
+  cursor: pointer;
 `;
 
 export default QuestionSearch;

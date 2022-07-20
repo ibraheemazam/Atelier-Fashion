@@ -22,25 +22,6 @@ function AddAnswerModal({ setShowModal, question }) {
 
   const { productInfo } = useGlobalContext();
 
-  function input() {
-    if (!validInput) {
-      return (
-        <Disclaimer>
-          <div>
-            1. Not all mandatory fields have been provided.
-          </div>
-          <div>
-            2. Email is not in the correct email format.
-          </div>
-          <div>
-            3. The images selected are invalid or unable to be uploaded.
-          </div>
-        </Disclaimer>
-      );
-    }
-    return null;
-  }
-
   function validateInput() {
     function validateEmail(emailName) {
       const regex = /\S+@\S+\.\S+/;
@@ -85,11 +66,14 @@ function AddAnswerModal({ setShowModal, question }) {
           postBody.photos.push(result.data.url);
         });
 
-        axios.post('/answers', postBody).then(() => {
-          setShowModal(false);
-        }).catch((err) => {
-          console.log(err);
-        });
+        axios
+          .post('/answers', postBody)
+          .then(() => {
+            setShowModal(false);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
       .catch((err) => {
         console.log(err);
@@ -106,26 +90,6 @@ function AddAnswerModal({ setShowModal, question }) {
       const base64image = reader.result;
       setPreview([...preview, base64image]);
     };
-  }
-
-  function displayUpload() {
-    if (preview.length >= 5) {
-      return null;
-    }
-    return (
-      <>
-        <FormField>
-          <div>Photos(optional)</div>
-          <div>Max 5</div>
-        </FormField>
-        <FileInput
-          onChange={(event) => handlePreviews(event)}
-          type="file"
-          id="photos"
-          accept="image/png, image/jpeg"
-        />
-      </>
-    );
   }
 
   function closeModal(event) {
@@ -193,13 +157,37 @@ function AddAnswerModal({ setShowModal, question }) {
             maxLength="1000"
             placeholder="Enter your answer"
           />
-          {displayUpload()}
+          {preview.length < 5 ? (
+            <>
+              <FormField>
+                <div>Photos(optional)</div>
+                <div>Max 5</div>
+              </FormField>
+              <FileInput
+                onChange={(event) => handlePreviews(event)}
+                type="file"
+                id="photos"
+                accept="image/png, image/jpeg"
+              />
+            </>
+          ) : null}
           <PhotoPreviews>
             {preview.map((photo) => (
               <ImagePreview src={photo} alt="" key={photo} />
             ))}
           </PhotoPreviews>
-          {input()}
+          {!validInput ? (
+            <Disclaimer>
+              <div>
+                1. Not all mandatory fields have been provided.
+              </div>
+              <div>2. Email is not in the correct email format.</div>
+              <div>
+                3. The images selected are invalid or unable to be
+                uploaded.
+              </div>
+            </Disclaimer>
+          ) : null}
         </Form>
         <Footer id="footer">
           <FooterButton onClick={() => askQuestion()}>
@@ -272,7 +260,7 @@ const FormEntry = styled.input`
     color: ${(props) => props.theme.fontColor};
   }
   :-ms-input-placeholder {
-     color: ${(props) => props.theme.fontColor};
+    color: ${(props) => props.theme.fontColor};
   }
 `;
 
@@ -288,7 +276,7 @@ const InputAnswer = styled.textarea`
     color: ${(props) => props.theme.fontColor};
   }
   :-ms-input-placeholder {
-     color: ${(props) => props.theme.fontColor};
+    color: ${(props) => props.theme.fontColor};
   }
 `;
 

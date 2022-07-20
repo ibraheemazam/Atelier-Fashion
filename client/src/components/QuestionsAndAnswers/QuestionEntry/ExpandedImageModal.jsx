@@ -15,10 +15,15 @@ function ExpandedImageModal({ src, setShowModal }) {
   }
 
   return (
-    <ModalBackground id="background" onClick={(event) => closeModal(event)}>
+    <ModalBackground
+      id="background"
+      onClick={(event) => closeModal(event)}
+    >
       <ModalContainer>
         <CloseButtonDiv>
-          <CloseButtonButton onClick={() => setShowModal(false)}>&#10006;</CloseButtonButton>
+          <CloseButtonButton onClick={() => setShowModal(false)}>
+            &#10006;
+          </CloseButtonButton>
         </CloseButtonDiv>
         <Image src={src} alt="modal-image" />
       </ModalContainer>
@@ -53,7 +58,7 @@ const ModalContainer = styled.div`
 
 const CloseButtonDiv = styled.div`
   display: flex;
-  justify-content:flex-end;
+  justify-content: flex-end;
 `;
 
 const CloseButtonButton = styled.button`
