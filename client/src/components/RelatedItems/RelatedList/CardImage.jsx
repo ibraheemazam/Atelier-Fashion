@@ -10,12 +10,8 @@ function CardImage({ imageInfo, details }) {
   useEffect(() => {
     setImage(imageInfo);
   }, [imageInfo]);
-  function handleModal() {
-    if (modal) {
-      setModal(false);
-    } else {
-      setModal(true);
-    }
+  function openModal() {
+    setModal(true);
   }
   function closeModal() {
     setModal(false);
@@ -26,7 +22,7 @@ function CardImage({ imageInfo, details }) {
       <ImageCard src={image.results[0].photos[0].thumbnail_url ? image.results[0].photos[0].thumbnail_url : defaultImage} alt="RelatedProductImage" />
       <Button onClick={(e) => {
         e.stopPropagation();
-        handleModal();
+        openModal();
       }}
       >
         &#9733;
@@ -34,8 +30,8 @@ function CardImage({ imageInfo, details }) {
       {modal
       && (
         <div>
-          <ComparisonModal details={details} />
           <ModalBackground onClick={(e) => { e.stopPropagation(); closeModal(); }} />
+          <ComparisonModal onClick={(e) => { e.stopPropagation(); }} details={details} />
         </div>
       )}
     </Outline>
@@ -87,6 +83,7 @@ const ModalBackground = styled.div`
   align-items: center;
   left: 0%;
   top: 0%;
+  z-index: 2;
 `;
 
 export default CardImage;
