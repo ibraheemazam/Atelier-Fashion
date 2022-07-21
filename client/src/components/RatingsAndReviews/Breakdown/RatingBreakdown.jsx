@@ -41,7 +41,7 @@ function RatingBreakdown({ productID, revMeta, filterReviews }) {
 
   useEffect(() => {
     filterReviews(starFilter);
-    console.log(starFilter);
+    // console.log(starFilter);
   }, [starFilter]);
 
   useEffect(() => {

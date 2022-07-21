@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { format, parseISO } from 'date-fns';
 import HelpfulReport from './HelpfulReport';
+import StarCount from './StarCount';
 
 function ReviewTile({ review }) {
   const starCount = [];
@@ -15,14 +16,7 @@ function ReviewTile({ review }) {
     <Container>
       <br />
       <StarsDateName>
-        <div>
-          Star count:
-          {review.rating}
-        </div>
-        {/* {starCount.map((star) => (
-          <RevDiv key={star} />
-        ))}
-        <br /> */}
+        <StarCount review={review} />
         <DateName>
           <div>
             {`${review.reviewer_name},`}
@@ -46,7 +40,7 @@ function ReviewTile({ review }) {
 
       <PhotosDiv>
         {review.photos.map((photo) => (
-          <RevImg key={photo.url} alt="" src={photo.url} />
+          <RevImg key={photo.id} alt="" src={photo.url} />
         ))}
       </PhotosDiv>
       <br />
@@ -122,45 +116,4 @@ const Summary = styled.h3`
 
 const Body = styled.h3`
   display: flex;
-;
 `;
-
-// const RevDiv = styled.div`
-//   margin: 50px 0;
-//   position: relative;
-//   display: block;
-//   color: red;
-//   width: 0px;
-//   height: 0px;
-//   border-right: 100px solid transparent;
-//   border-bottom: 70px solid red;
-//   border-left: 100px solid transparent;
-//   transform: rotate(35deg);
-//   &:before {
-//     border-bottom: 80px solid red;
-//     border-left: 30px solid transparent;
-//     border-right: 30px solid transparent;
-//     position: absolute;
-//     height: 0;
-//     width: 0;
-//     top: -45px;
-//     left: -65px;
-//     display: block;
-//     content: '';
-//     transform: rotate(-35deg);
-//   };
-//   &:after {
-//     position: absolute;
-//     display: block;
-//     color: red;
-//     top: 3px;
-//     left: -105px;
-//     width: 0px;
-//     height: 0px;
-//     border-right: 100px solid transparent;
-//     border-bottom: 70px solid red;
-//     border-left: 100px solid transparent;
-//     transform: rotate(-70deg);
-//     content: '';
-//   };
-// `;
