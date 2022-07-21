@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import { useGlobalContext } from '../../../contexts/GlobalStore';
 import StarRating from './StarRating';
 import Characteristics from './Characteristics';
+import AddPhotos from './AddPhotos';
 
 function AddRev({ revMeta, productID, productInfo }) {
   const [addClicked, setAddClicked] = useState(false);
@@ -132,8 +132,7 @@ function AddRev({ revMeta, productID, productInfo }) {
             </RevBodyDiv>
             <br />
 
-            <div>Upload your photos</div>
-            <input />
+            <AddPhotos />
             <br />
 
             What is your nickname?*
@@ -186,13 +185,13 @@ const AddButton = styled.button`
 `;
 
 const AddRevBackground = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 100vw;
   width: 100vw;
   background: #1fe0;
   position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   top: 0; left: 0;
 `;
 
@@ -205,10 +204,9 @@ const AddRevDiv = styled.div`
   border: 1px solid;
   overflow: scroll;
   border-radius: 10px;
-  background-color: ${(props) => props.theme.backgroundColor};
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  filter: drop-shadow(2px 4px 6px black);
-  position: sticky;
+  background-color: ${(props) => props.theme.secondaryColor};
+  position: relative;
+  top: -20%;
 `;
 
 const CloseDiv = styled.div`
@@ -229,6 +227,7 @@ const FormContainer = styled.form`
   display: flex;
   padding: 1em;
   flex-direction: column;
+  position: relative;
 `;
 
 const RecommendProdLabel = styled.label`
@@ -266,3 +265,5 @@ const ButtonDiv = styled.button`
 `;
 
 // &#9733;
+// box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+// filter: drop-shadow(2px 4px 6px black);
