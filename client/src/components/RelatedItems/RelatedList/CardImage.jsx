@@ -83,7 +83,7 @@ const ModalBackground = styled.div`
   align-items: center;
   left: 0%;
   top: 0%;
-  z-index: 1;
+  z-index: 10;
 `;
 
 export default CardImage;

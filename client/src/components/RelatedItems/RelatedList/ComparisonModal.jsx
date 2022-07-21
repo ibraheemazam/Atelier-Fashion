@@ -82,7 +82,7 @@ const Modal = styled.div`
   border: 2px solid black;
   background-color: gray;
   overflow: auto;
-  z-index: 2;
+  z-index: 9;
 `;
 
 const Product = styled.div`
