@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -115,7 +116,8 @@ function AnswerEntry({ answer }) {
 
 const Answer = styled.div`
   grid-column: 2 / 3;
-  padding-bottom: 1%;
+  padding-bottom: 10px;
+  padding-left: 10px;
 `;
 
 const AnswerPhotos = styled.span`

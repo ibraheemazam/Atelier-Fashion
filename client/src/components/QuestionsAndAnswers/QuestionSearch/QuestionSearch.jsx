@@ -25,7 +25,7 @@ function QuestionSearch() {
       <Input
         onChange={(event) => setSearchTerm(event.target.value)}
         type="text"
-        placeholder="HAVE A QUESTION? SEARCH FOR ANSWERS..."
+        placeholder="Have a Question? Search For Answers..."
       />
     </QuestionSearchBar>
   );
@@ -35,7 +35,6 @@ const QuestionSearchBar = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
-  background-color: ${(props) => props.theme.secondaryColor};
   padding: 10px;
   margin-left: 20px;
   margin-right: 20px;
