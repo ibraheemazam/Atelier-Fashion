@@ -55,7 +55,7 @@ function AddRev({ revMeta, productID, productInfo }) {
     };
     postRev(newRevObj);
     setAddClicked(false);
-    console.log(newRevObj);
+    // console.log(newRevObj);
   };
 
   const handleBackgroundClick = function handleBackgroundClick(event) {
@@ -67,7 +67,7 @@ function AddRev({ revMeta, productID, productInfo }) {
   return (
     <div>
       <AddButton type="button" onClick={() => handleAddRev()}>
-        ADD A REVIEW +
+        Add a Review +
       </AddButton>
       {addClicked && (
       <AddRevBackground id="AddRevBackground" onClick={(event) => handleBackgroundClick(event)}>

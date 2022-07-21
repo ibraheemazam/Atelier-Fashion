@@ -28,7 +28,8 @@ function RatingsAndReviews() {
       },
     })
       .then((result) => {
-        console.log('Value of reviews after RatingsAndReviews() axios get request:\n', result.data.results);
+        /* console.log('Value of reviews after RatingsAndReviews()
+        axios get request:\n', result.data.results); */
         setReviews(result.data.results);
         setFilteredRevs(result.data.results);
       })
@@ -45,7 +46,7 @@ function RatingsAndReviews() {
       },
     })
       .then((result) => {
-        console.log('review meta data returned:\n', result.data);
+        // console.log('review meta data returned:\n', result.data);
         setRevMeta(result.data);
       })
       .catch((err) => {

@@ -20,7 +20,7 @@ function MoreRevs({ productID, setRevCount, revListLength }) {
       {!noMoreReviews.current
         && (
           <MoreButton type="button" onClick={() => handleMoreReviews()}>
-            MORE REVIEWS
+            More Reviews
           </MoreButton>
         )}
     </div>
