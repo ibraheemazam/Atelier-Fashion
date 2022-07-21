@@ -52,11 +52,15 @@ function NavBar({ toggleTheme }) {
   );
 }
 
+// navColor: '#3a4b53',
+// navBarFont: '#fff',
+
 const Background = styled.div`
   z-index: 1;
   position: sticky;
   top: 0;
-  background-color: ${(props) => props.theme.tertiaryColor};
+  background-color: ${(props) => props.theme.navColor};
+  color: ${(props) => props.theme.navBarFont};
   background-size: 100% 100%;
   background-repeat: no-repeat;
   display: grid;
@@ -71,7 +75,10 @@ const GridItem = styled.div`
   align-items: center;
   justify-content: space-evenly;
   cursor: pointer;
-  color: ${(props) => props.theme.fontColor};
+  border-right: 1px solid;
+  &:hover {
+    font-weight: bold;
+  }
 `;
 
 const Input = styled.input`

@@ -102,8 +102,13 @@ function QuestionEntry({ question }) {
         </AnswerNone>
       );
     }
-    const list = topAnswers.map((answer) => (
-      <AnswerEntry answer={answer} key={answer.id} />
+    const list = topAnswers.map((answer, idx) => (
+      <>
+        <AnswerEntry answer={answer} key={answer.id} />
+        {idx !== topAnswers.length - 1 ? (
+          <hr style={{ width: '90%' }} />) : (
+          null) }
+      </>
     ));
     return (
       <AnswersListContainer
@@ -115,6 +120,26 @@ function QuestionEntry({ question }) {
     );
   }
 
+  function moreAnswers() {
+    if (allAnswers.length <= 2) {
+      return null;
+    }
+    if (topAnswers.length < allAnswers.length) {
+      return (
+        <MoreAnswers onClick={() => changeNumAnswers(2)}>
+          <i className="fa-solid fa-chevron-down" />
+          <span>See More Answers</span>
+        </MoreAnswers>
+      );
+    }
+    return (
+      <MoreAnswers onClick={() => changeNumAnswers(-100)}>
+        <i className="fa-solid fa-chevron-up" />
+        <span>Collapse Answers</span>
+      </MoreAnswers>
+    );
+  }
+
   return (
     <Entry>
       <Question id="question_header">Question.</Question>
@@ -123,8 +148,29 @@ function QuestionEntry({ question }) {
       </QuestionBody>
       <HelpfulReport>
         Helpful?
-        <Clickable onClick={() => helpfulQuestion()}>Yes</Clickable>
-        {`(${helpfulness})`}
+        {' '}
+        {clickedHelpful.current ? (
+          <b>Yes</b>
+        ) : (
+          <Clickable onClick={() => helpfulQuestion()}>Yes</Clickable>
+        )}
+        {clickedHelpful.current ? (
+          <b>
+            {' '}
+            (
+            {helpfulness}
+            )
+            {' '}
+          </b>
+        ) : (
+          <span>
+            {' '}
+            (
+            {helpfulness}
+            )
+            {' '}
+          </span>
+        )}
         {clickedReport ? (
           <Reported>Reported</Reported>
         ) : (
@@ -140,6 +186,7 @@ function QuestionEntry({ question }) {
       </AddAnswer>
       <Answer id="answer_header">Answer.</Answer>
       {answersList()}
+      {moreAnswers()}
       {showModal && (
         <AddAnswerModal
           setShowModal={setShowModal}
@@ -155,7 +202,7 @@ const Entry = styled.div`
   grid-template-columns: 8% 57% 25% 10%;
   width: 100%;
   justify-content: center;
-  margin-bottom: 10px;
+  padding-bottom: 10px;
 `;
 
 const Question = styled.div`
@@ -186,11 +233,10 @@ const Reported = styled.span`
 const AnswersListContainer = styled.div`
   border: 1px solid;
   background-color: ${(props) => props.theme.tertiaryColor};
-  max-height: 90px;
+  max-height: 150px;
   overflow-x: auto;
-  overflow-y: scroll;
+  overflow-y: auto;
   text-align: justify;
-  border-radius: 10px;
   grid-column: 2;
 `;
 
@@ -204,6 +250,13 @@ const Answer = styled.div`
 `;
 
 const Clickable = styled.u`
+  cursor: pointer;
+`;
+
+const MoreAnswers = styled.div`
+  display: flex;
+  grid-column: 2;
+  font-weight: bold;
   cursor: pointer;
 `;
 

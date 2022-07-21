@@ -1,124 +1,121 @@
-import React, {
-  useEffect, useRef, useState, useCallback,
-} from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { useGlobalContext } from '../../contexts/GlobalStore';
+import SortList from './ReviewList/SortList';
 import ReviewTile from './ReviewList/ReviewTile';
 import MoreRevs from './ReviewList/MoreRevs';
 import AddRev from './AddRev/AddRev';
-import Breakdown from './Breakdown';
+import Breakdown from './Breakdown/Breakdown';
+
+// need to change how i get reviews. Just get all at once, then slice.
+// if need to change the filter, just make new get request
 
 function RatingsAndReviews() {
   const {
-    productID, reviews, setReviews, revMeta, setRevMeta,
+    productID, productInfo, reviews, setReviews, revMeta, setRevMeta,
   } = useGlobalContext();
-
   const [sortOrder, setSortOrder] = useState('relevant');
-
   const [revCount, setRevCount] = useState(2);
-  const prevSortOrder = useRef(sortOrder);
-  const noMoreReviews = useRef(false);
+  const [filteredRevs, setFilteredRevs] = useState(reviews);
 
-  const getReviews = useCallback(
-    () => {
-      console.log('get reviews is run with the following revCount:\n', revCount);
-      axios.get('/reviews', {
-        params: {
-          product_id: productID,
-          count: revCount,
-          sort: sortOrder,
-        },
+  const getReviews = function getReviews() {
+    axios.get('/reviews', {
+      params: {
+        product_id: productID,
+        count: 100,
+        sort: sortOrder,
+      },
+    })
+      .then((result) => {
+        /* console.log('Value of reviews after RatingsAndReviews()
+        axios get request:\n', result.data.results); */
+        setReviews(result.data.results);
+        setFilteredRevs(result.data.results);
       })
-        .then((result) => {
-          console.log('Value of reviews after RatingsAndReviews() axios get request:\n', result.data.results);
-          setReviews(
-            (prevState) => {
-              if (JSON.stringify(prevState) === JSON.stringify(result.data.results)) {
-                if (prevSortOrder.current === sortOrder) {
-                  noMoreReviews.current = true;
-                } else {
-                  prevSortOrder.current = sortOrder;
-                }
-              }
-              return result.data.results;
-            },
-          );
-        })
-        .then(() => {})
-        .catch((err) => {
-          console.log('Error in axios get request in client function RatingsAndRevies():\n', err);
-        });
-    },
-    [productID, setReviews, sortOrder, revCount],
-  );
+      .then(() => {})
+      .catch((err) => {
+        console.log('Error in axios get request in client function RatingsAndRevies():\n', err);
+      });
+  };
 
-  const getMetaData = useCallback(
-    () => {
-      axios.get('/reviews/meta', {
-        params: {
-          product_id: productID,
-        },
+  const getMetaData = function getMetaData() {
+    axios.get('/reviews/meta', {
+      params: {
+        product_id: productID,
+      },
+    })
+      .then((result) => {
+        // console.log('review meta data returned:\n', result.data);
+        setRevMeta(result.data);
       })
-        .then((result) => {
-          console.log(result.data);
-          setRevMeta(result.data);
-        })
-        .catch((err) => {
-          console.log('error in getMetaData() function inside Breakdown.jsx:/n', err);
-        });
-    },
-    [productID, setRevMeta],
-  );
+      .catch((err) => {
+        console.log('error in getMetaData() function inside Breakdown.jsx:/n', err);
+      });
+  };
 
   useEffect(() => {
     getReviews();
     getMetaData();
-  }, [productID, setReviews, sortOrder, revCount, getReviews, getMetaData]);
+    setSortOrder('relevant');
+    setRevCount(2);
+  }, [productID]);
 
-  const handleSortSelect = function handleSortSelect(event) {
-    console.log(event.target.value);
-    setSortOrder(event.target.value);
+  useEffect(() => {
+    getReviews();
+    getMetaData();
+  }, [sortOrder]);
+
+  const filterReviews = (starFilterArr) => {
+    let result;
+    if (starFilterArr.length === 0) {
+      result = reviews;
+    } else {
+      result = reviews.filter((review) => (
+        starFilterArr.includes(review.rating)
+      ));
+    }
+    setFilteredRevs(result);
   };
 
   return (
     <Container id="ratings-and-reviews">
       <BreakdownContainer>
-        <Breakdown productID={productID} revMeta={revMeta} />
+        <Breakdown
+          productID={productID}
+          productInfo={productInfo}
+          revMeta={revMeta}
+          filterReviews={(test) => filterReviews(test)}
+        />
       </BreakdownContainer>
       <ReviewListContainer>
-        <RevListHeader>
-          &nbsp;
-          {reviews.length}
-          &nbsp;
-          reviews, sorted by&nbsp;
-          <select onChange={handleSortSelect}>
-            <option value="relevant">Relevance</option>
-            <option value="newest">Newest</option>
-            <option value="helpful">Helpful</option>
-          </select>
-        </RevListHeader>
+
+        <SortList
+          productID={productID}
+          sortOrder={sortOrder}
+          setSortOrder={setSortOrder}
+          revCount={revCount}
+          filteredRevsLength={filteredRevs.length}
+        />
+
         <ReviewTilesContainer>
-          {reviews.map((review) => (
+          {filteredRevs.slice(0, revCount).map((review) => (
             <ReviewTile key={review.review_id} review={review} />
           ))}
         </ReviewTilesContainer>
-        {/* Need to split more button and add button into
-        their own compnents and have add conitionally render
-        if there are no reviews */}
+
         <MoreAddContainer>
           {
             reviews.length >= 2
             && (
               <MoreRevs
-                reviews={reviews}
+                productID={productID}
                 setRevCount={setRevCount}
-                getReviews={(thingg) => getReviews(thingg)}
-                noMoreReviews={noMoreReviews}
+                revListLength={filteredRevs.length}
               />
             )
           }
-          <AddRev revMeta={revMeta} />
+          <AddRev revMeta={revMeta} productID={productID} productInfo={productInfo} />
         </MoreAddContainer>
       </ReviewListContainer>
     </Container>
@@ -133,17 +130,6 @@ const Container = styled.div`
   background: ;
 `;
 
-const RevListHeader = styled.div`
-  padding: 1em;
-  font-size: 1.3em;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-  font-weight: bold;
-  display: flex;
-`;
-
 const ReviewListContainer = styled.div`
   padding: 1em;
   background: ;
@@ -153,7 +139,7 @@ const ReviewListContainer = styled.div`
 const ReviewTilesContainer = styled.div`
   padding: 1em;
   background: ;
-  max-height: 25em;
+  max-height: 31em;
   overflow: auto;
 `;
 
