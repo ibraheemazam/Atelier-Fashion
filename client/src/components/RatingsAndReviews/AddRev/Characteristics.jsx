@@ -2,10 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-function Characteristics({ revMeta, charVal, setCharVal }) {
+function Characteristics({ revMeta, charVal, setCharVal, charObj, setCharObj }) {
   const handleCharChange = function handleCharChange(numInput, curChar) {
     const numVal = parseInt(numInput, 10);
     if (curChar === 'Size') {
+      setCharObj((prevCharObj) => ({ ...prevCharObj, 135232: numVal }));
       if (numVal === 1) {
         setCharVal((prevCharVal) => ({ ...prevCharVal, Size: 'A size too small', sizeNum: numVal }));
       } else if (numVal === 2) {
@@ -20,6 +21,7 @@ function Characteristics({ revMeta, charVal, setCharVal }) {
     }
 
     if (curChar === 'Width') {
+      setCharObj((prevCharObj) => ({ ...prevCharObj, 135233: numVal }));
       if (numVal === 1) {
         setCharVal((prevCharVal) => ({ ...prevCharVal, Width: 'Too narrow', widthNum: numVal }));
       } else if (numVal === 2) {
@@ -34,6 +36,7 @@ function Characteristics({ revMeta, charVal, setCharVal }) {
     }
 
     if (curChar === 'Comfort') {
+      setCharObj((prevCharObj) => ({ ...prevCharObj, 135230: numVal }));
       if (numVal === 1) {
         setCharVal((prevCharVal) => ({ ...prevCharVal, Comfort: 'Uncomfortable', comfortNum: numVal }));
       } else if (numVal === 2) {
@@ -48,6 +51,7 @@ function Characteristics({ revMeta, charVal, setCharVal }) {
     }
 
     if (curChar === 'Quality') {
+      setCharObj((prevCharObj) => ({ ...prevCharObj, 135231: numVal }));
       if (numVal === 1) {
         setCharVal((prevCharVal) => ({ ...prevCharVal, Quality: 'Poor', qualityNum: numVal }));
       } else if (numVal === 2) {
@@ -62,6 +66,7 @@ function Characteristics({ revMeta, charVal, setCharVal }) {
     }
 
     if (curChar === 'Length') {
+      setCharObj((prevCharObj) => ({ ...prevCharObj, 135229: numVal }));
       if (numVal === 1) {
         setCharVal((prevCharVal) => ({ ...prevCharVal, Length: 'Runs Short', lengthNum: numVal }));
       } else if (numVal === 2) {
@@ -76,6 +81,7 @@ function Characteristics({ revMeta, charVal, setCharVal }) {
     }
 
     if (curChar === 'Fit') {
+      setCharObj((prevCharObj) => ({ ...prevCharObj, 135228: numVal }));
       if (numVal === 1) {
         setCharVal((prevCharVal) => ({ ...prevCharVal, Fit: 'Runs Short', fitNum: numVal }));
       } else if (numVal === 2) {

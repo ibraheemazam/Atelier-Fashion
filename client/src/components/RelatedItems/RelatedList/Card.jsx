@@ -1,25 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
+import PropTypes from 'prop-types';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 import CardImage from './CardImage';
 import CardStars from './CardStars';
 
 function Card({ data }) {
-  // console.log('Check Data:', data);
-  // Note: Can't use global variable for info/setInfo. Returns only last productID
-  // Each card needs its own set of states
   const {
-    productID, setProductID, cardIndex, setCardIndex, productList,
+    setProductID, setCardIndex,
   } = useGlobalContext();
-  // const [ID, setID] = useState(data);
   const [info, setInfo] = useState(data);
   useEffect(() => {
     setInfo(data);
   }, [data]);
 
   function changeItem() {
-    // console.log('Info id:', ID);
     setProductID(data.details.data.id);
     // Reset card index when clicking on new item
     setCardIndex(0);
@@ -30,12 +25,14 @@ function Card({ data }) {
         ? (
           <CardStyle onClick={() => changeItem()}>
             <CardImage imageInfo={info.image.data} details={info.details} />
-            <Cards>{info.details.data.name}</Cards>
-            <Cards>{info.details.data.category}</Cards>
-            <Cards>
-              $
-              {info.details.data.default_price}
-            </Cards>
+            <Text>
+              <Cards>{info.details.data.name}</Cards>
+              <Cards>{info.details.data.category}</Cards>
+              <Cards>
+                $
+                {info.details.data.default_price}
+              </Cards>
+            </Text>
             <CardStars reviewID={info.stars.data} />
           </CardStyle>
         )
@@ -44,21 +41,37 @@ function Card({ data }) {
   );
 }
 
+Card.propTypes = {
+  data: PropTypes.shape({
+    details: PropTypes.shape({
+      data: PropTypes.shape({
+        id: PropTypes.number,
+        // name: PropTypes.string,
+        // category: PropTypes.string,
+        // default_price: PropTypes.string,
+      }),
+    }),
+  }).isRequired,
+};
+
 const CardStyle = styled.div`
-  display: grid;
-  border: 6px solid #f1f1f1;
-  &:hover {
-    opacity: 0.80;
-  }
+  display: flex;
+  flex-direction: column;
   margin-top: auto;
+  border: 15px solid transparent;
 `;
 
 const Cards = styled.div`
-  display: inline-block;
-  background: #f1f1f1;
-  border: 5px;
   margin-left: auto;
   margin-right: auto;
+`;
+
+const Text = styled.div`
+display: flex;
+flex-direction: column;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 export default Card;

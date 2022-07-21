@@ -2,13 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-function Breakdown({ revMeta }) {
-  if (!revMeta.product_id) {
-    return (
-      <div />
-    );
-  }
-
+function Summary({ revMeta }) {
   const recommendPercentage = Math.trunc(
     (parseInt(revMeta.recommended.true, 10)
     / (parseInt(revMeta.recommended.false, 10)
@@ -32,38 +26,16 @@ function Breakdown({ revMeta }) {
 
   return (
     <div>
-      RATINGS &#38; REVIEWS
       <RatingHeader>{aveRating}</RatingHeader>
       <p>
         {recommendPercentage}
         % of reviews recommend this product
       </p>
-      {
-        Object.entries(revMeta.ratings).map((ratingEnrty) => (
-          <p key={ratingEnrty[0]}>
-            <u>{`${ratingEnrty[0]} stars`}</u>
-            &nbsp;
-            {ratingEnrty[1]}
-            <br />
-          </p>
-        ))
-      }
-      <br />
-      {Object.entries(revMeta.characteristics).map((charEntry) => (
-        <div key={charEntry[1].id}>
-          <div>
-            {charEntry[0]}
-            :&nbsp;
-            {Math.round(charEntry[1].value * 100) / 100}
-          </div>
-          <br />
-        </div>
-      ))}
     </div>
   );
 }
 
-Breakdown.propTypes = {
+Summary.propTypes = {
   revMeta: PropTypes.shape({
     characteristics: PropTypes.shape({}),
     product_id: PropTypes.string,
@@ -75,7 +47,7 @@ Breakdown.propTypes = {
   }).isRequired,
 };
 
-export default Breakdown;
+export default Summary;
 
 const RatingHeader = styled.div`
   padding: .12em;
