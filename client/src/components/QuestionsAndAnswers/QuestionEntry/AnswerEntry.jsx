@@ -115,7 +115,8 @@ function AnswerEntry({ answer }) {
 
 const Answer = styled.div`
   grid-column: 2 / 3;
-  padding-bottom: 1%;
+  padding-bottom: 10px;
+  padding-left: 10px;
 `;
 
 const AnswerPhotos = styled.span`

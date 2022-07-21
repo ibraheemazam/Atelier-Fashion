@@ -11,16 +11,20 @@ function App() {
   const [theme, setTheme] = useState('light');
 
   const themeLight = {
-    backgroundColor: 'white',
-    secondaryColor: '#f0f5f1',
-    tertiaryColor: '#e0e0e0',
-    fontColor: 'black',
+    backgroundColor: '#f5f7f8',
+    secondaryColor: '#becbd2',
+    tertiaryColor: '#becbd2',
+    navColor: '#becbd2',
+    navBarFont: '#000000',
+    fontColor: '#000000',
   };
 
   const themeDark = {
-    backgroundColor: 'black',
-    secondaryColor: '#82827d',
-    tertiaryColor: '#706d6d',
+    backgroundColor: '#4d636f',
+    secondaryColor: '#3a4b53',
+    tertiaryColor: '#3a4b53',
+    navColor: '#3a4b53',
+    navBarFont: '#fff',
     fontColor: 'white',
   };
 
@@ -33,7 +37,7 @@ function App() {
       <StyledContainer id="styled-container">
         <GlobalContextProvider>
           <NavBar theme={theme} toggleTheme={toggleTheme} />
-          <ProductDetail />
+          {/* <ProductDetail /> */}
           <RelatedItems />
           <QuestionsAndAnswers />
           <RatingsAndReviews />

@@ -241,8 +241,8 @@ const Required = styled.sup`
 
 const Disclaimer = styled.div`
   font-size: 12px;
-  color: #ff0000;
   grid-column: 2;
+  font-style: italic;
 `;
 
 const Header = styled.header`

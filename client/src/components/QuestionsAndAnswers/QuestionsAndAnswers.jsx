@@ -24,10 +24,13 @@ function QuestionAndAnswers() {
           <div>Be the first to ask a question!</div>
         ) : (
           filteredQuestions.map((question) => (
-            <QuestionEntry
-              question={question}
-              key={question.question_id}
-            />
+            <>
+              <QuestionEntry
+                question={question}
+                key={question.question_id}
+              />
+              <hr style={{ width: '90%' }} />
+            </>
           ))
         )}
       </QuestionListContainer>
@@ -44,7 +47,6 @@ const Container = styled.div`
 `;
 
 const QuestionListContainer = styled.div`
-  background-color: ${(props) => props.theme.backgroundColor};
   max-height: 75vh;
   overflow: auto;
   margin-left: 20px;
