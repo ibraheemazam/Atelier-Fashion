@@ -5,7 +5,7 @@ import { useGlobalContext } from '../../../contexts/GlobalStore';
 import CardImage from './CardImage';
 import CardStars from './CardStars';
 
-function Card({ data }) {
+function Card({ data, show }) {
   const {
     setProductID, setCardIndex,
   } = useGlobalContext();
@@ -23,17 +23,21 @@ function Card({ data }) {
     <div>
       { info.details
         ? (
-          <CardStyle onClick={() => changeItem()}>
-            <CardImage imageInfo={info.image.data} details={info.details} />
-            <Text>
-              <Cards>{info.details.data.name}</Cards>
-              <Cards>{info.details.data.category}</Cards>
-              <Cards>
-                $
-                {info.details.data.default_price}
-              </Cards>
-            </Text>
-            <CardStars reviewID={info.stars.data} />
+          <CardStyle className={show}>
+            {show === 'show' && (
+            <CardStyle onClick={() => changeItem()}>
+              <CardImage imageInfo={info.image.data} details={info.details} />
+              <Text>
+                <Cards>{info.details.data.name}</Cards>
+                <Cards>{info.details.data.category}</Cards>
+                <Cards>
+                  $
+                  {info.details.data.default_price}
+                </Cards>
+              </Text>
+              <CardStars reviewID={info.stars.data} />
+            </CardStyle>
+            )}
           </CardStyle>
         )
         : <div /> }
@@ -52,13 +56,26 @@ Card.propTypes = {
       }),
     }),
   }).isRequired,
+  show: PropTypes.string.isRequired,
 };
+
+// const Outline = styled.div`
+
+// `;
 
 const CardStyle = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: auto;
-  border: 15px solid transparent;
+  border: 7px solid transparent;
+  &.show {
+    opacity: 1;
+    transition-duration: 1s;
+    transform: scale(1.08);
+  }
+  &.noshow {
+    opacity: 0;
+    transition-duration: 1s ease;
+  }
 `;
 
 const Cards = styled.div`

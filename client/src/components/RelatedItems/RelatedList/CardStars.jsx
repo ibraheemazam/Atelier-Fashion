@@ -19,8 +19,8 @@ function CardStars({ reviewID }) {
 
   return (
     <Stars>
-      <BaseStar className="star">{baseStars}</BaseStar>
       <FilledStar className="star" size={partial}>{filledStars}</FilledStar>
+      <BaseStar className="star">{baseStars}</BaseStar>
     </Stars>
   );
 }
@@ -53,7 +53,7 @@ const FilledStar = styled.div`
   width: ${(props) => props.size}%;
   overflow:hidden;
   flex-direction: row;
-  color: yellow;
+  color: gold;
   font-size: bold;
 `;
 
