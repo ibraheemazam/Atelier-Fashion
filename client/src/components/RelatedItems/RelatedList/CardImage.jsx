@@ -30,8 +30,8 @@ function CardImage({ imageInfo, details }) {
       {modal
       && (
         <div>
-          <ModalBackground onClick={(e) => { e.stopPropagation(); closeModal(); }} />
           <ComparisonModal onClick={(e) => { e.stopPropagation(); }} details={details} />
+          <ModalBackground onClick={(e) => { e.stopPropagation(); closeModal(); }} />
         </div>
       )}
     </Outline>
@@ -57,6 +57,8 @@ const ImageCard = styled.img`
   &:hover {
     opacity: 0.80;
   }
+  border-radius: 10px;
+  cursor: pointer;
 `;
 
 const Button = styled.button`
@@ -72,6 +74,7 @@ const Button = styled.button`
     background-color: trasparent;
     opacity: 0.80;
   }
+  cursor: pointer;
 `;
 
 const ModalBackground = styled.div`
@@ -83,7 +86,7 @@ const ModalBackground = styled.div`
   align-items: center;
   left: 0%;
   top: 0%;
-  z-index: 1;
+  z-index: 10;
 `;
 
 export default CardImage;

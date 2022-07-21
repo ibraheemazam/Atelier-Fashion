@@ -39,7 +39,7 @@ function OutfitList() {
           )}
       </LeftBox>
       <StyleList>
-        {(outfits.slice(outfitIndex, outfitIndex + 4)).map((outfit, index) => <Outfit outfit={outfit} key={index} index={index} />)}
+        {(outfits.slice(outfitIndex, outfitIndex + 4)).map((outfit, i) => <Outfit outfit={outfit} key={i} index={i} />)}
         {(outfits.length <= 3 || (outfits.length >= 4 && outfits.length - outfitIndex === 3))
          && <AddOutfit /> }
         {(outfits.length <= 3) && fillEmpty()}
