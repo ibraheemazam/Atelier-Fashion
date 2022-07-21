@@ -262,7 +262,7 @@ function AddToCart() {
               >
                 <option value={null}>Select Size</option>
               {selectedStyle.skus
-              // && (
+              && (
               //   Object.entries(selectedStyle.skus).map((sku) =>
               //   sku)
               // )
@@ -279,7 +279,7 @@ function AddToCart() {
                 //   {selectedStyle[sku].size}
 
                 // </option>
-              ))}
+              )))}
 
 
 
