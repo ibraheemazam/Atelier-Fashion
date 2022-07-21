@@ -1,3 +1,5 @@
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable max-len */
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
@@ -8,10 +10,8 @@ function OutfitList() {
   const {
     outfits, setOutfits, outfitIndex, setOutfitIndex,
   } = useGlobalContext();
-  // const [list, setList] = useState(outfits);
   useEffect(() => {
     setOutfits(outfits);
-    // console.log('In Outfits:', outfits.length);
   }, [outfits, setOutfits]);
   function clickRight() {
     if (outfitIndex + 3 < outfits.length) {
@@ -24,7 +24,7 @@ function OutfitList() {
     }
   }
   function fillEmpty() {
-    let emptyCells = [];
+    const emptyCells = [];
     for (let i = 0; i < (3 - outfits.length); i += 1) {
       emptyCells.push(<EmptyOutfit key={i} />);
     }
@@ -39,7 +39,7 @@ function OutfitList() {
           )}
       </LeftBox>
       <StyleList>
-        {(outfits.slice(outfitIndex, outfitIndex + 4)).map((outfit, index) => <Outfit outfit={outfit} key={index} />)}
+        {(outfits.slice(outfitIndex, outfitIndex + 4)).map((outfit, index) => <Outfit outfit={outfit} key={index} index={index} />)}
         {(outfits.length <= 3 || (outfits.length >= 4 && outfits.length - outfitIndex === 3))
          && <AddOutfit /> }
         {(outfits.length <= 3) && fillEmpty()}
@@ -56,7 +56,7 @@ function OutfitList() {
 const Outline = styled.div`
   display: flex;
   flex-direction: row;
-  background-color: #f1f1f1;
+  background-color: ${(props) => props.theme.backgroundColor};
 `;
 
 const StyleList = styled.div`
@@ -94,6 +94,7 @@ const LeftButton = styled.button`
   &:hover {
     opacity: 0.60;
   }
+  color: ${(props) => props.theme.fontColor};
 `;
 
 const RightButton = styled.button`
@@ -107,11 +108,13 @@ const RightButton = styled.button`
   &:hover {
     opacity: 0.60;
   }
+  color: ${(props) => props.theme.fontColor};
 `;
 
 const EmptyOutfit = styled.div`
   width: 225px;
   height: 225px;
+  border: 15px solid transparent;
 `;
 
 export default OutfitList;

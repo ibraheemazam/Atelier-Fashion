@@ -1,55 +1,68 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
-import { useGlobalContext } from '../../../contexts/GlobalStore';
+import PropTypes from 'prop-types';
+import ComparisonModal from './ComparisonModal';
 
-function CardImage(imageObj) {
-  // console.log('CardImage', imageObj);
-  const [image, setImage] = useState(imageObj);
-  const {
-    outfits, setOutfits,
-  } = useGlobalContext();
+function CardImage({ imageInfo, details }) {
+  const [image, setImage] = useState(imageInfo);
+  const [modal, setModal] = useState(false);
+  const defaultImage = 'https://www.escapeauthority.com/wp-content/uploads/2116/11/No-image-found.jpg';
   useEffect(() => {
-    setImage(imageObj);
-  }, [imageObj]);
-  function handleAdd() {
-    const newOutfit = imageObj;
-    // newOutfit.thumbnail = image;
-    // Note: Need to use below syntax for component to re-render properly
-    const tempArray = [...outfits, newOutfit];
-    // tempArray.push(newOutfit);
-    // console.log(tempArray);
-    setOutfits(tempArray);
-    // console.log('Outfit list', outfits);
+    setImage(imageInfo);
+  }, [imageInfo]);
+  function openModal() {
+    setModal(true);
+  }
+  function closeModal() {
+    setModal(false);
   }
 
   return (
-    <div>
-      <ImageCard src={image.imageInfo.results[0].photos[0].thumbnail_url} alt="RelatedProductImage" />
+    <Outline>
+      <ImageCard src={image.results[0].photos[0].thumbnail_url ? image.results[0].photos[0].thumbnail_url : defaultImage} alt="RelatedProductImage" />
       <Button onClick={(e) => {
         e.stopPropagation();
-        handleAdd();
-      }}>&#9733;</Button>
-    </div>
+        openModal();
+      }}
+      >
+        &#9733;
+      </Button>
+      {modal
+      && (
+        <div>
+          <ModalBackground onClick={(e) => { e.stopPropagation(); closeModal(); }} />
+          <ComparisonModal onClick={(e) => { e.stopPropagation(); }} details={details} />
+        </div>
+      )}
+    </Outline>
   );
 }
 
+CardImage.propTypes = {
+  imageInfo: PropTypes.shape({}).isRequired,
+  details: PropTypes.shape({}).isRequired,
+};
+
+const Outline = styled.div`
+  position: relative;
+`;
+
 const ImageCard = styled.img`
-  display: block;
   position: relative;
   margin-left: auto;
   margin-right: auto;
   width: 225px;
   height: 225px;
   object-fit: fill;
+  &:hover {
+    opacity: 0.80;
+  }
 `;
 
 const Button = styled.button`
-  display: block;
   position: absolute;
-  position: relative;
-  top: -86%;
-  right: -72%;
+  top: 0px;
+  right: 0px;
   color: yellow;
   background-color: transparent;
   border: none;
@@ -59,6 +72,18 @@ const Button = styled.button`
     background-color: trasparent;
     opacity: 0.80;
   }
+`;
+
+const ModalBackground = styled.div`
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 0%;
+  top: 0%;
+  z-index: 1;
 `;
 
 export default CardImage;
