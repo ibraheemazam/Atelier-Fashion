@@ -1,35 +1,60 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
+import PropTypes from 'prop-types';
 
-function CardStars(stars) {
-  // console.log('Star data:', stars);
-  const totalStars = [];
-  let reviews = stars.reviewID.results;
+function CardStars({ reviewID }) {
+  const baseStars = [];
+  const filledStars = [];
+  const reviews = reviewID.results;
   let average = 0;
   for (let i = 0; i < reviews.length; i += 1) {
     average += reviews[i].rating;
   }
   average /= reviews.length;
-  for (let i = 0; i < Math.round(average); i += 1) {
-    totalStars.push(<span className="star" key={i}>&#9733;</span>);
-  }
-  for (let i = 0; i < (5 - Math.round(average)); i += 1) {
-    totalStars.push(<span className="star" key={Math.round(average) + i}>&#9734;</span>);
+  const partial = average * 20;
+  for (let i = 0; i < 5; i += 1) {
+    baseStars.push(<span className="empty-star" key={i}>&#9734;</span>);
+    filledStars.push(<span className="filled-star" key={i}>&#9733;</span>);
   }
 
   return (
     <Stars>
-      {/* <span className="star">&#9733;</span> */}
-      <span className="star">{totalStars}</span>
+      <BaseStar className="star">{baseStars}</BaseStar>
+      <FilledStar className="star" size={partial}>{filledStars}</FilledStar>
     </Stars>
   );
 }
 
+CardStars.propTypes = {
+  reviewID: PropTypes.shape({
+    results: PropTypes.arrayOf(PropTypes.shape({
+      rating: PropTypes.number,
+    })),
+  }).isRequired,
+};
+
 const Stars = styled.div`
-  background: #f1f1f1;
+  position: relative;
   margin-left: auto;
   margin-right: auto;
+  font-size: 25px;
+  color: gray;
+`;
+
+const BaseStar = styled.span`
+  position: relative;
+`;
+
+const FilledStar = styled.div`
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  display: flex;
+  width: ${(props) => props.size}%;
+  overflow:hidden;
+  flex-direction: row;
+  color: yellow;
+  font-size: bold;
 `;
 
 export default CardStars;

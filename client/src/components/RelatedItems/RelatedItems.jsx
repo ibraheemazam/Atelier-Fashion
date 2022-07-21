@@ -22,7 +22,10 @@ const Text = styled.div`
   font-size: large;
   font-weight: bold;
   text-align: center;
-  background-color: #82827d;
+  margin-left: 20px;
+  margin-right: 20px;
+  border-radius: 10px;
+  background-color: ${(props) => props.theme.tertiaryColor};
 `;
 
 export default RelatedItems;
