@@ -4,42 +4,20 @@ import styled from 'styled-components';
 
 // import StyleSelector from '../StyleSelector/StyleSelector';
 import RatingsAndReviews from '../../RatingsAndReviews/RatingsAndReviews';
-import Breakdown from '../../RatingsAndReviews/Breakdown';
-import CardStars from '../../RelatedItems/RelatedList/CardStars';
+//import Breakdown from '../../RatingsAndReviews/Breakdown';
+//import CardStars from '../../RelatedItems/RelatedList/CardStars';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
-function ProductOverview({ productInfo, href }) {
+var k = 0;
+
+function ProductOverview(props) {
   const {
-    reviews, selectedStyle, setSelectedStyle,
+    productID, productInfo, reviews, selectedStyle, setSelectedStyle, styles, setStyles,
   } = useGlobalContext();
 
-  const [price, setPrice] = useState('');
-  const [salePrice, setSalePrice] = useState('');
-  // const [descriptionLength, setDescriptionLength] = useState(0);
-  const [description, setDescription] = useState('');
-
-  useEffect(() => {
-    // setReviews([{ no: 1 }, { no: 2 }, { no: 3 }]);
-    setPrice(() => selectedStyle.original_price);
-    setSalePrice(() => selectedStyle.sale_price);
-    setDescription(() => productInfo.description);
-   // setDescriptionLength(() => productInfo['description'].length);
-  }, [selectedStyle, setSelectedStyle, selectedStyle.original_price, selectedStyle.sale_price]);
-
-  // useEffect(() => {
-  //   // const productId = window.location.pathname;
-  //   // setProductID(productId);
-  //   axios
-  //     .get('/products', { params: { ID: productID } })
-  //     .then((results) => setProductInfo(results.data))
-  //     // alert client when error
-  //     .catch((err) => console.log(err));
-  // }, [productID, setProductInfo]);
-
-  // need to calculate average score
-  // use reviews metadata
-  // or see if Ibraheem already did
-
+  // correct review count
+  //stars
+  // average review score
   // need to make href work. use id on component, may need to pass that id as props tho so does not get lost in child components
 
   return (
@@ -53,7 +31,7 @@ function ProductOverview({ productInfo, href }) {
                   Seeing Stars
                 </span>
                 <span className="readReviews">
-                  <a href={href}>{`Read all ${reviews.length} reviews`}</a>
+                  <a>{`Read all ${reviews.length} reviews`}</a>
                 </span>
               </div>
             )
@@ -66,30 +44,23 @@ function ProductOverview({ productInfo, href }) {
             )}
         </div>
         <h5>{productInfo.category}</h5>
-        {salePrice
+          {selectedStyle.sale_price
           ? (
-            <h6>
-              <span style={{ color: 'red' }}>
-                {`${salePrice}   `}
+            <h5>
+              <span style={{color: 'red '}}>
+                {`${selectedStyle.sale_price}    `}
               </span>
-              <s>{price}</s>
-            </h6>
+              <s>{selectedStyle.original_price}</s>
+            </h5>
           )
           : (
-            <h6>{price}</h6>
+            <h5>{selectedStyle.original_price}</h5>
           )}
         <div />
         <h2>{productInfo.name}</h2>
         <div>
-          {description
-          && (
-            <div>
-              <h4>{productInfo.slogan}</h4>
-              <p>
-                {productInfo.description}
-              </p>
-            </div>
-          )}
+          <h4>{productInfo.slogan}</h4>
+          <p>{productInfo.description}</p>
         </div>
         <div>
           <div>
@@ -105,10 +76,11 @@ function ProductOverview({ productInfo, href }) {
   );
 }
 
-export function ProductOverview;
-
 const ShareSocial = styled.div`
   height: 50%;
   width: auto;
   border: .5rem solid black;
 `;
+
+
+export default ProductOverview;

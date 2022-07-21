@@ -34,7 +34,7 @@ function App() {
         <GlobalContextProvider>
           <NavBar theme={theme} toggleTheme={toggleTheme} />
           <ProductDetail />
-          <RelatedItems />
+          {/* <RelatedItems /> */}
           <QuestionsAndAnswers />
           <RatingsAndReviews />
         </GlobalContextProvider>

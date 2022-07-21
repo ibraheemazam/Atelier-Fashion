@@ -4,12 +4,12 @@ import axios from 'axios';
 
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
-// import StyleSelector from '../StyleSelector/StyleSelector';
+import StyleSelector from '../StyleSelector/StyleSelector';
 
 // eslint-disable-next-line react/prop-types
 function ImageGallery() {
   const {
-    productID, setProductID, selectedStyle, productInfo,
+    productID, setProductID, selectedStyle, productInfo, setProductInfo, styles, setStyles, setSelectedStyle,
   } = useGlobalContext();
 
   const [imageUrl, setImageUrl] = useState('');
@@ -37,7 +37,7 @@ function ImageGallery() {
     setPhotos(() => selectedStyle.photos);
     getPhotos();
     getUrl();
-  }, [setImageUrl, selectedStyle, setMain, setPhotos, photos, main, place, setPhotosLength]);
+  }, [selectedStyle, photos, main, place]);
 
   // useEffect(() => {
   //   setMain(() => photos[0]);
@@ -174,9 +174,8 @@ const Side = styled.div`
   justify-content: left;
   text-align: left;
   padding-right: 2%;
-  content-distribution: space-between, stretch;
-  //clippped
-  positioning: relative
+  content-distribution: space-between, stretch, clippped;
+  positioning: relative;
 `;
 
 const Back = styled.span`

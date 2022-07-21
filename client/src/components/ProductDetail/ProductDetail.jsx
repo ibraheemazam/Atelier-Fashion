@@ -6,10 +6,13 @@ import StyleSelector from './StyleSelector/StyleSelector';
 import ImageGallery from './ImageGallery/ImageGallery';
 import AddToCart from './AddToCart/AddToCart';
 
+import { useGlobalContext } from '../../contexts/GlobalStore';
+
 // Works when ready to hook up API with URL
 // setProductID(window.location.pathname || 40348);
 
 function ProductDetail() {
+  const { productID, productInfo, setProductID, setProductInfo, styles, selectedStyle, setSelectedStyle } = useGlobalContext();
   return (
     <div id="product-details">
       <div>
@@ -18,9 +21,9 @@ function ProductDetail() {
             <ImageGallery />
           </Column1>
           <Column2>
-            {/* <ProductOverview href={id} /> */}
+            <ProductOverview />
             <StyleSelector />
-            {/* <AddToCart /> */}
+            <AddToCart />
           </Column2>
         </ColumnParent>
       </div>

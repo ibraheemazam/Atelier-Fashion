@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
-import { Icon } from '@rneui/themed';
+//import { View, Text } from 'react-native';
+//import { Icon } from '@rneui/themed';
 import styled from 'styled-components';
-import {IoCheckmarkCircleOutline} from 'react-icon/Io';
+//import { IoCheckmarkCircleOutline } from 'react-icon';
 
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
 function StyleSelector(props) {
-  const { styles, selectedStyle, setSelectedStyle } = useGlobalContext();
+  const { styles, selectedStyle, setSelectedStyle, productID, productInfo } = useGlobalContext();
 
   return (
     <div>
@@ -17,8 +17,8 @@ function StyleSelector(props) {
       </h4>
       <div>
         <Thumbnails props={props}>
-          {styles.map((style, index) => (
-            <Thumbnail key={style.style_id} index={index} style={style} props={props}/>
+          {styles.map((style, i) => (
+            <Thumbnail key={style.style_id} i={i} value={style} style={style} props={props}/>
           ))}
         </Thumbnails>
       </div>
@@ -33,35 +33,14 @@ function StyleSelector(props) {
   // whether it's open property is set to true (so re-rendering less?)
   //  and make it somewhat transparent
 
-function Thumbnail(props) {
-  const { styles, selectedStyle, setSelectedStyle } = useGlobalContext();
-  const { index, setIndex } = useState(0);
-  const { selected, select} = useState(false);
-
-  function SelectStyle(e) {
-    e.preventDefault();
-    setSelectedStyle((e, i) =>
-    got converted in the proess here to lol (selectedStyle.style_id !== event.target.value.style_id) {
-        setSelectedStyle(() => value);
-      }
-  }
-  // function handleSelectStyle(e) {
-  //   e.preventDefault();
-  //   setSelectedStyle(style);
-  //   UpdateImageGallery(selectedStyle);
-  //   // updateStyleTitle(selectedStyle);
-  //   // overlay checkmark on clicked child thumbnail
-  //   styleTitle = selectedStyle.name;
-  // }
+function Thumbnail({i, style, value, props}) {
+  const { styles, selectedStyle, setSelectedStyle, productID, productInfo } = useGlobalContext();
 
   return(
-    <block>
+    <ThumbnailOverview>
       <span>
-        <div {setSelectedStyle.style_id !=== e.target.value.style_id) && setSelectedStyle(target.value.style_id) role="presentation">
+        <div onClick={() => setSelectedStyle(style)} role="presentation">
           <img
-            <button></button>
-
-
             src={style.photos[0].thumbnail_url}
             alt=""
             style={{
@@ -69,42 +48,34 @@ function Thumbnail(props) {
               height: '100%',
             }}
           ></img>
-          {selected
+          {/* {selected
           ? (
           <overlay>
             <base>
               <IoCheckmarkCircleOutline/>
+              {selectedStyle}
             </base>
-            {selectedStyle}
           </overlay>
-
-          )}
-
+          )
+         : <></>
+         } */}
       </div>
     </span>
-  </block>
-
+  </ThumbnailOverview>
   );
-
 }
 
-export function { Thumbnail, StyleSelector};
-
-
-
-// const Thumbnails = styled.div`
-//   display: flex;
-//   border: 1px
-//   padding: 1rem 1rem;
-// `;
+export default StyleSelector;
 
 const Thumbnails = styled.div`
   display: flex;
-  overflow: auto
+  border: 1px;
+  padding: 1rem 1rem;
+  overflow: auto;
   justify-content: space-around;
 `;
 
-const ThumbnailRow = syled.span`
+const ThumbnailRow = styled.span`
   max-height: 20px
   max-width: 80%;
   align: center;
@@ -117,7 +88,7 @@ const ThumbnailContainer = styled.div`
   justify-content: space-evenly
 `;
 
-const Thumbnail = styled.span`
+const ThumbnailOverview = styled.div`
   margin: 1 em;
   padding: 3% 1%;
   text-align: center;
@@ -126,6 +97,8 @@ const Thumbnail = styled.span`
   stretch
   clip:
 `;
+
+//was a block above
 
 const BlueCheckmark = styled.div`
   position: absolute;
@@ -153,3 +126,4 @@ const BlueCheckmark = styled.div`
   // flex-direction: row;
   // color: yellow;
   // font-size: bold;
+

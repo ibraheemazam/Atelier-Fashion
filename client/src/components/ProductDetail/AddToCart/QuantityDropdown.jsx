@@ -24,4 +24,4 @@ function QuantityDropdown({ index, stock, size, quantity }) {
 //   quantity: PropTypes.number.isRequired,
 // };
 
-export default QuantityDropdown;
+//export default QuantityDropdown;

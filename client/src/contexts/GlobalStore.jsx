@@ -13,7 +13,7 @@ export function GlobalContextProvider({ children }) {
     children: PropTypes.node.isRequired,
   };
 
-  const [productID, setProductID] = useState(40346);
+  const [productID, setProductID] = useState(40344);
   const [productInfo, setProductInfo] = useState({});
   const [styles, setStyles] = useState([]);
   const [selectedStyle, setSelectedStyle] = useState({});
@@ -80,7 +80,7 @@ export function GlobalContextProvider({ children }) {
       setStyles(stylesResult.data.results);
     })
       .catch((err) => console.error('error getting product styles', err));
-  }, [productID, styles, selectedStyle]);
+  }, [productID]);
 
   const dependencies = [
     productID,
