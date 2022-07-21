@@ -56,6 +56,7 @@ function OutfitList() {
 const Outline = styled.div`
   display: flex;
   flex-direction: row;
+  background-color: ${(props) => props.theme.backgroundColor};
 `;
 
 const StyleList = styled.div`
@@ -93,6 +94,7 @@ const LeftButton = styled.button`
   &:hover {
     opacity: 0.60;
   }
+  color: ${(props) => props.theme.fontColor};
 `;
 
 const RightButton = styled.button`
@@ -106,6 +108,7 @@ const RightButton = styled.button`
   &:hover {
     opacity: 0.60;
   }
+  color: ${(props) => props.theme.fontColor};
 `;
 
 const EmptyOutfit = styled.div`

@@ -93,6 +93,7 @@ function CardsList() {
 const Container = styled.div`
   display: flex;
   flex-direction: row;
+  background-color: ${(props) => props.theme.backgroundColor};
 `;
 
 const StyleCardList = styled.div`
@@ -134,21 +135,23 @@ const LeftButton = styled.button`
   background-color: transparent;
   border: none;
   &:hover {
-    opacity: 0.60;
+    opacity: 0.80;
   }
+  color: ${(props) => props.theme.fontColor};
 `;
 
 const RightButton = styled.button`
-display: flex;
-align-self: center;
-position: absolute;
-font-width: bold;
-font-size: 60px;
-background-color: transparent;
-border: none;
-&:hover {
-  opacity: 0.60;
-}
+  display: flex;
+  align-self: center;
+  position: absolute;
+  font-width: bold;
+  font-size: 60px;
+  background-color: transparent;
+  border: none;
+  &:hover {
+    opacity: 0.80;
+  }
+  color: ${(props) => props.theme.fontColor};
 `;
 
 const Empty = styled.div`

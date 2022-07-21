@@ -1,3 +1,4 @@
+/* eslint-disable no-unneeded-ternary */
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -9,6 +10,7 @@ function Outfit({ outfit, index }) {
   } = useGlobalContext();
   const outfitImage = outfit.image.data.results[0].photos[0].thumbnail_url;
   const outfitDetails = outfit.details.data;
+  const defaultImage = 'https://www.escapeauthority.com/wp-content/uploads/2116/11/No-image-found.jpg';
 
   function removeOutfit() {
     // Note: Need to use below syntax for component to re-render properly
@@ -19,8 +21,8 @@ function Outfit({ outfit, index }) {
   return (
     <Outline>
       <ImageOutline>
-        <IMG src={outfitImage} />
-        <Button onClick={() => removeOutfit()}>X</Button>
+        <IMG src={outfitImage ? outfitImage : defaultImage} />
+        <Button onClick={() => removeOutfit()}>&#10006;</Button>
       </ImageOutline>
       <Info>{outfitDetails.name}</Info>
       <Info>{outfitDetails.category}</Info>
