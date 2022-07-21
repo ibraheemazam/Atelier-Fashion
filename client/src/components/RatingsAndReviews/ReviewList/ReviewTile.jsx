@@ -35,16 +35,23 @@ function ReviewTile({ review }) {
       </StarsDateName>
       <Summary>{review.summary}</Summary>
       {/* need to add word break truncation to summary */}
-      <div>
+      <Body>
         {review.body}
         {/* need to add conditional formatting for past 250 words */}
-      </div>
+      </Body>
       <br />
       {review.recommend
       && <div> &#10003; I recommend this product</div>}
       <br />
-      {
-        review.response
+
+      <PhotosDiv>
+        {review.photos.map((photo) => (
+          <RevImg key={photo.url} alt="" src={photo.url} />
+        ))}
+      </PhotosDiv>
+      <br />
+
+      {review.response
         && (
         <div>
           <Response>
@@ -54,8 +61,8 @@ function ReviewTile({ review }) {
           </Response>
           <br />
         </div>
-        )
-      }
+        )}
+
       <HelpfulReport review={review} />
       <br />
     </Container>
@@ -78,6 +85,7 @@ export default ReviewTile;
 
 const Container = styled.div`
   border-bottom: 1px solid;
+  overflow-wrap: anywhere;
 `;
 
 const StarsDateName = styled.div`
@@ -97,9 +105,24 @@ const Response = styled.div`
   background: lightgrey;
 `;
 
+const PhotosDiv = styled.div`
+  display: flex;
+
+`;
+
+const RevImg = styled.img`
+  height: 100px;
+  width: 100px;
+  padding: .5em;
+`;
+
 const Summary = styled.h3`
   display: flex;
-  background: ;
+`;
+
+const Body = styled.h3`
+  display: flex;
+;
 `;
 
 // const RevDiv = styled.div`

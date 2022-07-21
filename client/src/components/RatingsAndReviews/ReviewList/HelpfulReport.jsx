@@ -5,11 +5,9 @@ import axios from 'axios';
 
 function HelpfulReport({ review }) {
   const [helpfulness, setHelpfulness] = useState(review.helpfulness);
-  // is it good to do this? Would it be better to pass down the getReviews func from
-  // RatingsAndReviews? That would send a get request after put is sent. Rn there are
-  // two sources of truth
   const helpfulClicked = useRef(false);
   const reportClicked = useRef(false);
+  const [report, setReport] = useState('Report');
 
   const putRequester = function putRequester(reviewID, helpOrReport) {
     return (axios.put(`/reviews/${reviewID}/${helpOrReport}`)
@@ -45,6 +43,7 @@ function HelpfulReport({ review }) {
         .catch((err) => {
           console.log(err);
         });
+      setReport('Reported');
     }
   };
 
@@ -58,7 +57,7 @@ function HelpfulReport({ review }) {
       </YesButton>
       <YesButton>|</YesButton>
       <YesButton onClick={() => handleReport()}>
-        <u>Report</u>
+        <u>{report}</u>
         {/* need to add functionality that changes this to reported once clicked */}
       </YesButton>
     </HelpfulnessDiv>
@@ -79,7 +78,7 @@ export default HelpfulReport;
 const HelpfulnessDiv = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 295px;
+  width: 40%;
 `;
 
 const YesButton = styled.div`
