@@ -195,6 +195,7 @@ const FormEntry = styled.input`
   :-ms-input-placeholder {
     color: ${(props) => props.theme.fontColor};
   }
+  border: 1px solid;
 `;
 
 const InputQuestion = styled.textarea`
@@ -211,6 +212,7 @@ const InputQuestion = styled.textarea`
   :-ms-input-placeholder {
     color: ${(props) => props.theme.fontColor};
   }
+  border: 1px solid;
 `;
 
 const Footer = styled.div`
@@ -226,7 +228,7 @@ const FooterButton = styled.button`
   margin: 10px;
   border: none;
   color: ${(props) => props.theme.fontColor};
-  background-color: ${(props) => props.theme.tertiaryColor};
+  background-color: ${(props) => props.theme.backgroundColor};
   border-radius: 10px;
   font-size: 20px;
   cursor: pointer;

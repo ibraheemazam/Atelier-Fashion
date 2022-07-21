@@ -27,7 +27,7 @@ function QuestionAndAnswers() {
             <>
               <QuestionEntry
                 question={question}
-                key={question.question_id}
+                key={`${question.question_id}`}
               />
               <hr style={{ width: '90%' }} />
             </>

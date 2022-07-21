@@ -41,6 +41,7 @@ const ButtonContainer = styled.div`
   align-items: center;
   margin-left: 20px;
   margin-right: 20px;
+  margin-top: 10px;
   border-radius: 10px;
 `;
 
