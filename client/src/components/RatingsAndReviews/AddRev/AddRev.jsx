@@ -110,7 +110,7 @@ function AddRev({ revMeta, productID, productInfo }) {
 
             <RevSummaryDiv>
               <div>Review summary</div>
-              <textarea
+              <TextAreaDiv
                 placeholder="Example: Best purchase ever!"
                 maxLength="60"
                 rows="1"
@@ -121,7 +121,7 @@ function AddRev({ revMeta, productID, productInfo }) {
 
             <RevBodyDiv>
               <div>Review body*</div>
-              <textarea
+              <TextAreaDiv
                 placeholder="Why did you like the product or not?"
                 minLength="50"
                 maxLength="1000"
@@ -136,7 +136,7 @@ function AddRev({ revMeta, productID, productInfo }) {
             <br />
 
             What is your nickname?*
-            <textarea
+            <TextAreaDiv
               maxLength="60"
               placeholder="Example: jackson11!"
               rows="1"
@@ -146,7 +146,7 @@ function AddRev({ revMeta, productID, productInfo }) {
             <br />
 
             Your email*
-            <textarea
+            <TextAreaDiv
               maxLength="60"
               placeholder="Example: jackson11@email.com"
               rows="1"
@@ -182,6 +182,9 @@ const AddButton = styled.button`
   font-size: .9em;
   font-weight: bold;
   background-color: ${(props) => props.theme.secondaryColor};
+  color: ${(props) => props.theme.fontColor};
+  border-radius: 8px;
+  cursor: pointer;
 `;
 
 const AddRevBackground = styled.div`
@@ -234,6 +237,12 @@ const FormContainer = styled.form`
 
 const RecommendProdLabel = styled.label`
 
+`;
+
+const TextAreaDiv = styled.textarea`
+  resize: none;
+  font-family: Arial;
+  color: ${(props) => props.theme.fontColor};
 `;
 
 const RevSummaryDiv = styled.div`
