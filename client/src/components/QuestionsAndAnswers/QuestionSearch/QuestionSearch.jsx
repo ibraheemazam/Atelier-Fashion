@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { FaSearch } from 'react-icons/fa';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
 function QuestionSearch() {
@@ -28,9 +27,6 @@ function QuestionSearch() {
         type="text"
         placeholder="HAVE A QUESTION? SEARCH FOR ANSWERS..."
       />
-      <Button type="submit">
-        <FaSearch />
-      </Button>
     </QuestionSearchBar>
   );
 }
@@ -47,11 +43,10 @@ const QuestionSearchBar = styled.div`
 `;
 
 const Input = styled.input`
-  width: 80%;
-  height: 44px;
+  width: 100%;
+  height: 50px;
   border-color: ${(props) => props.theme.fontColor};
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
+  border-radius: 10px;
   background-color: ${(props) => props.theme.tertiaryColor};
   color: ${(props) => props.theme.fontColor};
   ::placeholder,
@@ -61,18 +56,6 @@ const Input = styled.input`
   :-ms-input-placeholder {
      color: ${(props) => props.theme.fontColor};
   }
-`;
-
-const Button = styled.button`
-  width: 14%;
-  height: 50px;
-  border-color: ${(props) => props.theme.fontColor};
-  color: ${(props) => props.theme.fontColor};
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-  margin-left: -1%;
-  background-color: ${(props) => props.theme.secondaryColor};
-  cursor: pointer;
 `;
 
 export default QuestionSearch;

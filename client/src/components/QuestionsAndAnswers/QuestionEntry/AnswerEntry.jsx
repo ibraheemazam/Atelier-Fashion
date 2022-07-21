@@ -18,27 +18,27 @@ function AnswerEntry({ answer }) {
   };
 
   const [helpfulness, setHelpfulness] = useState(answer.helpfulness);
+  const [clickedReport, setClickedReport] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [source, setSource] = useState();
-  const [clickedReport, setClickedReport] = useState(false);
 
   const clickedHelpful = useRef(false);
 
   function helpfulAnswer() {
-    if (clickedHelpful.current) return;
-    axios
-      .put('/answers/helpful', { answer_id: answer.id })
-      .then(() => {
-        setHelpfulness((prevHelpfulness) => prevHelpfulness + 1);
-        clickedHelpful.current = true;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (!clickedHelpful.current) {
+      axios
+        .put('/answers/helpful', { answer_id: answer.id })
+        .then(() => {
+          setHelpfulness(helpfulness + 1);
+          clickedHelpful.current = true;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }
 
   function reportAnswer() {
-    if (clickedReport) return;
     axios
       .put('/answers/report', { answer_id: answer.id })
       .then(() => {
@@ -78,13 +78,24 @@ function AnswerEntry({ answer }) {
           {` on ${format(parseISO(answer.date), 'MMM dd, yyyy')}`}
         </div>
         <div>
-          Helpful?
-          <Clickable onClick={() => helpfulAnswer()}>Yes</Clickable>
-          {`(${helpfulness})`}
+          Helpful?{' '}
+          {clickedHelpful.current ? (
+            <b>Yes</b>
+          ) : (
+            <Clickable onClick={() => helpfulAnswer()}>
+              {' '}
+              Yes
+            </Clickable>
+          )}
+          {clickedHelpful.current ? (
+            <b>({helpfulness})</b>
+          ) : (
+            <span>({helpfulness})</span>
+          )}
         </div>
         <div>
           {clickedReport ? (
-            <b>Reported</b>
+            <Reported>Reported</Reported>
           ) : (
             <Clickable onClick={() => reportAnswer()}>
               Report
@@ -104,7 +115,7 @@ function AnswerEntry({ answer }) {
 
 const Answer = styled.div`
   grid-column: 2 / 3;
-  padding-left: 1%;
+  padding-bottom: 1%;
 `;
 
 const AnswerPhotos = styled.span`
@@ -133,6 +144,14 @@ const AnswerBody = styled.div`
 const Clickable = styled.u`
   cursor: pointer;
   text-decoration: underline;
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+`;
+
+const Reported = styled.span`
+  grid-column: 3;
+  font-weight: bold;
 `;
 
 export default AnswerEntry;
