@@ -200,7 +200,7 @@ const AddRevBackground = styled.div`
 
 const AddRevDiv = styled.div`
   width: 60vw;
-  max-height: 90vh;
+  max-height: 80vh;
   padding: 25px;
   border-radius: 10px;
   display: flex;
@@ -209,6 +209,7 @@ const AddRevDiv = styled.div`
   background-color: ${(props) => props.theme.secondaryColor};
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   filter: drop-shadow(2px 4px 6px black);
+  overflow: auto;
 `;
 
 const CloseDiv = styled.div`
