@@ -1,49 +1,78 @@
+/* eslint-disable no-unneeded-ternary */
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
-function Outfit(outfitObj) {
-  console.log('Outfit Obj:', outfitObj);
-  // console.log('index:', data.index);
+function Outfit({ outfit, index }) {
   const {
     outfits, setOutfits,
   } = useGlobalContext();
-  let outfitImage = outfitObj.outfit.image.data.results[0].photos[0].thumbnail_url;
-  let outfitDetails = outfitObj.outfit.details.data;
+  const outfitImage = outfit.image.data.results[0].photos[0].thumbnail_url;
+  const outfitDetails = outfit.details.data;
+  const defaultImage = 'https://www.escapeauthority.com/wp-content/uploads/2116/11/No-image-found.jpg';
 
   function removeOutfit() {
     // Note: Need to use below syntax for component to re-render properly
-    let tempArray = [...outfits];
-    tempArray.splice(outfitObj.index, 1);
-    // console.log('OutfitArray:', tempArray);
+    const tempArray = [...outfits];
+    tempArray.splice(index, 1);
     setOutfits(tempArray);
   }
   return (
     <Outline>
-      <div>
-        <IMG src={outfitImage} />
-        <Button onClick={() => removeOutfit()}>X</Button>
-      </div>
+      <ImageOutline>
+        <IMG src={outfitImage ? outfitImage : defaultImage} />
+        <Button onClick={() => removeOutfit()}>&#10006;</Button>
+      </ImageOutline>
       <Info>{outfitDetails.name}</Info>
       <Info>{outfitDetails.category}</Info>
-      <Info>${outfitDetails.default_price}</Info>
+      <Info>
+        $
+        {outfitDetails.default_price}
+      </Info>
     </Outline>
   );
 }
 
+Outfit.propTypes = {
+  outfit: PropTypes.shape({
+    image: PropTypes.shape({
+      data: PropTypes.shape({
+        results: PropTypes.arrayOf(PropTypes.shape({
+          photos: PropTypes.arrayOf(PropTypes.shape({
+            thumbnail_url: PropTypes.string,
+          })),
+        })),
+      }),
+    }),
+    details: PropTypes.shape({
+      data: PropTypes.shape({
+        name: PropTypes.string,
+        category: PropTypes.string,
+        default_price: PropTypes.string,
+      }),
+
+    }),
+  }).isRequired,
+  index: PropTypes.number.isRequired,
+};
+
 const Outline = styled.div`
-  display: grid;
-  border: 6px solid #f1f1f1;
+  display: flex;
+  flex-direction: column;
   &:hover {
     opacity: 0.80;
   }
   margin-top: auto;
+  border: 15px solid transparent;
+`;
+
+const ImageOutline = styled.div`
+  position: relative;
 `;
 
 const Info = styled.div`
   display: inline-block;
-  background: #f1f1f1;
-  border: 5px;
   margin-left: auto;
   margin-right: auto;
 `;
@@ -61,9 +90,8 @@ const IMG = styled.img`
 const Button = styled.button`
   display: block;
   position: absolute;
-  position: relative;
-  top: -86%;
-  right: -74%;
+  top: 0px;
+  right: 0px;
   color: red;
   background-color: transparent;
   border: none;

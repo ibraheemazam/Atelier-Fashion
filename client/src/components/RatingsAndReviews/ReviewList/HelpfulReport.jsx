@@ -1,15 +1,13 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import axios from 'axios';
 
 function HelpfulReport({ review }) {
   const [helpfulness, setHelpfulness] = useState(review.helpfulness);
-  // is it good to do this? Would it be better to pass down the getReviews func from
-  // RatingsAndReviews? That would send a get request after put is sent. Rn there are
-  // two sources of truth
-  const helpfulClicked = useRef(false);
-  const reportClicked = useRef(false);
+  const [helpfulClicked, setHelpfulClicked] = useState(false);
+  const [reportClicked, setReportClicked] = useState(false);
+  const [report, setReport] = useState('Report');
 
   const putRequester = function putRequester(reviewID, helpOrReport) {
     return (axios.put(`/reviews/${reviewID}/${helpOrReport}`)
@@ -23,11 +21,11 @@ function HelpfulReport({ review }) {
 
   const handleHelpfulClick = function handleHelpfulClick() {
     const reviewID = review.review_id;
-    if (!helpfulClicked.current) {
+    if (!helpfulClicked) {
       putRequester(reviewID, 'helpful')
         .then(() => {
           setHelpfulness(helpfulness + 1);
-          helpfulClicked.current = true;
+          setHelpfulClicked(true);
         })
         .catch((err) => {
           console.log(err);
@@ -37,30 +35,31 @@ function HelpfulReport({ review }) {
 
   const handleReport = function handleReport() {
     const reviewID = review.review_id;
-    if (!reportClicked.current) {
+    if (!reportClicked) {
       putRequester(reviewID, 'report')
         .then(() => {
-          reportClicked.current = true;
+          setReportClicked(true);
         })
         .catch((err) => {
           console.log(err);
         });
+      setReport('Reported');
     }
   };
 
   return (
     <HelpfulnessDiv>
-      <YesButton>Was this review helpful?</YesButton>
-      <YesButton onClick={() => handleHelpfulClick()}>
+      <div>Was this review helpful?</div>
+      <YesButton helpfulClicked={helpfulClicked} onClick={() => handleHelpfulClick()}>
         <u>Yes</u>
         &nbsp;
         {`(${helpfulness})`}
       </YesButton>
-      <YesButton>|</YesButton>
-      <YesButton onClick={() => handleReport()}>
-        <u>Report</u>
+      <div>|</div>
+      <ReportButton reportClicked={reportClicked} onClick={() => handleReport()}>
+        <u>{report}</u>
         {/* need to add functionality that changes this to reported once clicked */}
-      </YesButton>
+      </ReportButton>
     </HelpfulnessDiv>
   );
 }
@@ -79,10 +78,16 @@ export default HelpfulReport;
 const HelpfulnessDiv = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 295px;
+  width: 40%;
+  overflow-wrap: break-word;
 `;
 
 const YesButton = styled.div`
   display: flex;
-  cursor: pointer;
+  cursor: ${(props) => (!props.helpfulClicked ? 'pointer' : 'default')};
+`;
+
+const ReportButton = styled.div`
+  display: flex;
+  cursor: ${(props) => (!props.reportClicked ? 'pointer' : 'default')};
 `;

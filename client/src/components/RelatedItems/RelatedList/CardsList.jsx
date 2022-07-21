@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
@@ -6,12 +7,11 @@ import Card from './Card';
 
 function CardsList() {
   const {
-    productID, cardIndex, setCardIndex, productList, setProductList, currOutfit, setCurrOutfit,
+    productID, cardIndex, setCardIndex, productList, setProductList, setCurrOutfit,
   } = useGlobalContext();
-  // console.log('productInfo:', productInfo);
   useEffect(() => {
     setProductList([]);
-    axios.get('/related', { params: { productID: productID } })
+    axios.get('/related', { params: { productID } })
       .then((results) => {
         // Get all related product IDs
         (results.data).map((id) => {
@@ -20,7 +20,6 @@ function CardsList() {
           const stars = axios.get('/relatedStars', { params: { reviewID: id } });
           return Promise.all([details, image, stars])
             .then((object) => {
-              // console.log(object);
               const tempObj = {
                 details: object[0],
                 image: object[1],
@@ -35,8 +34,8 @@ function CardsList() {
       })
       .catch((error) => console.log('Error here:', error));
     // Get data for current product ID for user to add outfit
-    const details = axios.get('/relatedItem', { params: { productID: productID } });
-    const image = axios.get('/relatedImage', { params: { productID: productID } });
+    const details = axios.get('/relatedItem', { params: { productID } });
+    const image = axios.get('/relatedImage', { params: { productID } });
     const stars = axios.get('/relatedStars', { params: { reviewID: productID } });
     Promise.all([details, image, stars])
       .then((object) => {
@@ -51,33 +50,35 @@ function CardsList() {
         console.log(err);
       });
   }, [productID]);
-  // console.log('related:', relatedID);
-  console.log('Current Outfit:', currOutfit);
   function clickRight() {
     if (cardIndex + 4 < productList.length) {
       setCardIndex(cardIndex + 1);
-      // console.log('CardIndex Right:', cardIndex);
     }
   }
   function clickLeft() {
     if (cardIndex > 0) {
       setCardIndex(cardIndex - 1);
-      // console.log('CardIndex Left:', cardIndex);
     }
   }
-  // const list = [...productList].slice(cardIndex, cardIndex + 4);
-  // console.log('List:', list);
-  // console.log('List:', productList);
+  function fillEmpty() {
+    const emptyCells = [];
+    for (let i = 0; i < (4 - productList.length); i += 1) {
+      emptyCells.push(<Empty key={i} />);
+    }
+    return emptyCells;
+  }
   return (
     <Container>
       <LeftBox>
-        {cardIndex === 0
+        {cardIndex === 0 || productList.length < 4
           ? <LeftButton /> : (
             <LeftButton onClick={() => clickLeft()}> &lt; </LeftButton>
           )}
       </LeftBox>
       <StyleCardList>
         {productList.slice(cardIndex, cardIndex + 4).map((data, i) => <Card data={data} key={i} />)}
+        {(productList.length < 4 && productList.length > 0) && fillEmpty()}
+        {(productList.length === 0) && <Text>No related items to show</Text>}
       </StyleCardList>
       <RightBox>
         {(cardIndex === productList.length - 4 || productList.length < 4)
@@ -92,16 +93,22 @@ function CardsList() {
 const Container = styled.div`
   display: flex;
   flex-direction: row;
-  background-color: #f1f1f1;
+  background-color: ${(props) => props.theme.backgroundColor};
 `;
 
 const StyleCardList = styled.div`
   display: flex;
   float: left;
+  positive: relative;
   flex-direction: row;
   margin-left: auto;
   margin-right: auto;
   align-content: space-evenly;
+`;
+
+const Text = styled.div`
+  font-size: 35px;
+  font-width: bold;
 `;
 
 const LeftBox = styled.div`
@@ -128,21 +135,29 @@ const LeftButton = styled.button`
   background-color: transparent;
   border: none;
   &:hover {
-    opacity: 0.60;
+    opacity: 0.80;
   }
+  color: ${(props) => props.theme.fontColor};
 `;
 
 const RightButton = styled.button`
-display: flex;
-align-self: center;
-position: absolute;
-font-width: bold;
-font-size: 60px;
-background-color: transparent;
-border: none;
-&:hover {
-  opacity: 0.60;
-}
+  display: flex;
+  align-self: center;
+  position: absolute;
+  font-width: bold;
+  font-size: 60px;
+  background-color: transparent;
+  border: none;
+  &:hover {
+    opacity: 0.80;
+  }
+  color: ${(props) => props.theme.fontColor};
+`;
+
+const Empty = styled.div`
+  width: 225px;
+  height: 225px;
+  border: 15px solid transparent;
 `;
 
 export default CardsList;
