@@ -6,8 +6,7 @@ import { useGlobalContext } from '../../../contexts/GlobalStore';
 import StarRating from './StarRating';
 import Characteristics from './Characteristics';
 
-function AddRev({ revMeta, productID }) {
-  const { productInfo } = useGlobalContext();
+function AddRev({ revMeta, productID, productInfo }) {
   const [addClicked, setAddClicked] = useState(false);
   const [starRating, setStarRating] = useState({
     meaning: '',
@@ -74,7 +73,7 @@ function AddRev({ revMeta, productID }) {
       <AddRevBackground id="AddRevBackground" onClick={(event) => handleBackgroundClick(event)}>
         <AddRevDiv>
           <CloseDiv onClick={() => setAddClicked(false)}>
-            X
+            &#10006;
           </CloseDiv>
           <AddRevHeader>
             <h2>Write a Review</h2>
@@ -183,6 +182,7 @@ const AddButton = styled.button`
   padding: 1em;
   font-size: .9em;
   font-weight: bold;
+  background-color: ${(props) => props.theme.secondaryColor};
 `;
 
 const AddRevBackground = styled.div`
@@ -205,14 +205,16 @@ const AddRevDiv = styled.div`
   border: 1px solid;
   overflow: scroll;
   border-radius: 10px;
-  background-color: white;
+  background-color: ${(props) => props.theme.backgroundColor};
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  filter: drop-shadow(2px 4px 6px black);
+  position: sticky;
 `;
 
 const CloseDiv = styled.div`
   display: flex;
   justify-content: flex-end;
-  font-size: 1.8em;
+  font-size: 1.5em;
   cursor: pointer;
 `;
 
@@ -262,3 +264,5 @@ const ButtonDiv = styled.button`
   font-weight: bold;
   border-radius: 10px;
 `;
+
+// &#9733;

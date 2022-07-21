@@ -32,15 +32,15 @@ function StarRating({ starRating, setStarRating }) {
       <div>{starRating.meaning}</div>
       <div onChange={(event) => handleClickStar(event.target.value)}>
 
-        <input required type="radio" name="starRating" value={1} />
+        <StarInput required type="radio" name="starRating" value={1} />
         1
-        <input type="radio" name="starRating" value={2} />
+        <StarInput type="radio" name="starRating" value={2} />
         2
-        <input type="radio" name="starRating" value={3} />
+        <StarInput type="radio" name="starRating" value={3} />
         3
-        <input type="radio" name="starRating" value={4} />
+        <StarInput type="radio" name="starRating" value={4} />
         4
-        <input type="radio" name="starRating" value={5} />
+        <StarInput type="radio" name="starRating" value={5} />
         5
       </div>
     </div>
@@ -60,4 +60,8 @@ const AddButton = styled.button`
   padding: 1em;
   font-size: .9em;
   font-weight: bold;
+`;
+
+const StarInput = styled.input`
+
 `;

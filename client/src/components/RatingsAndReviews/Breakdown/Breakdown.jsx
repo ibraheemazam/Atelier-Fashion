@@ -4,7 +4,7 @@ import Summary from './Summary';
 import RatingBreakdown from './RatingBreakdown';
 import LengthBreakdown from './LengthBreakdown';
 
-function Breakdown({ productID, revMeta, filterReviews }) {
+function Breakdown({ productID, productInfo, revMeta, filterReviews }) {
   if (!revMeta.product_id) {
     return (
       <div />
@@ -21,7 +21,10 @@ function Breakdown({ productID, revMeta, filterReviews }) {
         productID={productID}
       />
       <br />
-      <LengthBreakdown revMeta={revMeta} />
+      <LengthBreakdown
+        revMeta={revMeta}
+        productInfo={productInfo}
+      />
     </div>
   );
 }

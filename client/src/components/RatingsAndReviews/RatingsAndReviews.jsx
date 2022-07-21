@@ -13,14 +13,13 @@ import Breakdown from './Breakdown/Breakdown';
 
 function RatingsAndReviews() {
   const {
-    productID, reviews, setReviews, revMeta, setRevMeta,
+    productID, productInfo, reviews, setReviews, revMeta, setRevMeta,
   } = useGlobalContext();
   const [sortOrder, setSortOrder] = useState('relevant');
   const [revCount, setRevCount] = useState(2);
   const [filteredRevs, setFilteredRevs] = useState(reviews);
 
   const getReviews = function getReviews() {
-    console.log('get reviews is run with the following revCount:\n');
     axios.get('/reviews', {
       params: {
         product_id: productID,
@@ -46,7 +45,7 @@ function RatingsAndReviews() {
       },
     })
       .then((result) => {
-        console.log(result.data);
+        console.log('review meta data returned:\n', result.data);
         setRevMeta(result.data);
       })
       .catch((err) => {
@@ -83,6 +82,7 @@ function RatingsAndReviews() {
       <BreakdownContainer>
         <Breakdown
           productID={productID}
+          productInfo={productInfo}
           revMeta={revMeta}
           filterReviews={(test) => filterReviews(test)}
         />
@@ -114,7 +114,7 @@ function RatingsAndReviews() {
               />
             )
           }
-          <AddRev revMeta={revMeta} productID={productID} />
+          <AddRev revMeta={revMeta} productID={productID} productInfo={productInfo} />
         </MoreAddContainer>
       </ReviewListContainer>
     </Container>

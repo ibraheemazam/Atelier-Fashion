@@ -7,6 +7,8 @@ function HelpfulReport({ review }) {
   const [helpfulness, setHelpfulness] = useState(review.helpfulness);
   const helpfulClicked = useRef(false);
   const reportClicked = useRef(false);
+  const [report, setReport] = useState('Report');
+
 
   const putRequester = function putRequester(reviewID, helpOrReport) {
     return (axios.put(`/reviews/${reviewID}/${helpOrReport}`)
@@ -42,6 +44,7 @@ function HelpfulReport({ review }) {
         .catch((err) => {
           console.log(err);
         });
+      setReport('Reported');
     }
   };
 
@@ -55,7 +58,7 @@ function HelpfulReport({ review }) {
       </YesButton>
       <YesButton>|</YesButton>
       <YesButton onClick={() => handleReport()}>
-        <u>Report</u>
+        <u>{report}</u>
         {/* need to add functionality that changes this to reported once clicked */}
       </YesButton>
     </HelpfulnessDiv>

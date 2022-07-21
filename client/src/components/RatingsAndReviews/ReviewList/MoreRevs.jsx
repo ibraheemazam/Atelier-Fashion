@@ -39,4 +39,5 @@ const MoreButton = styled.button`
   padding: 1em;
   font-size: .9em;
   font-weight: bold;
+  background-color: ${(props) => props.theme.secondaryColor};
 `;
