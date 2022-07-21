@@ -85,6 +85,7 @@ const IMG = styled.img`
   width: 225px;
   height: 225px;
   object-fit: fill;
+  border-radius: 10px;
 `;
 
 const Button = styled.button`

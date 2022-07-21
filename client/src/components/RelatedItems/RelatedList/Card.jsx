@@ -59,10 +59,6 @@ Card.propTypes = {
   show: PropTypes.string.isRequired,
 };
 
-// const Outline = styled.div`
-
-// `;
-
 const CardStyle = styled.div`
   display: flex;
   flex-direction: column;
