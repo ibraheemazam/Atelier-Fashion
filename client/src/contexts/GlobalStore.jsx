@@ -13,7 +13,7 @@ export function GlobalContextProvider({ children }) {
     children: PropTypes.node.isRequired,
   };
 
-  const [productID, setProductID] = useState(40348);
+  const [productID, setProductID] = useState(40344);
   const [productInfo, setProductInfo] = useState({});
   const [styles, setStyles] = useState([]);
   const [selectedStyle, setSelectedStyle] = useState({});
@@ -68,6 +68,18 @@ export function GlobalContextProvider({ children }) {
     getProductInfo();
     setNumQuestions(2);
     scrollToTop();
+  }, [productID]);
+
+  useEffect(() => {
+    axios.get('/styles', {
+      params: {
+        product_id: productID,
+      },
+    }).then((stylesResult) => {
+      setSelectedStyle(stylesResult.data.results[0]);
+      setStyles(stylesResult.data.results);
+    })
+      .catch((err) => console.error('error getting product styles', err));
   }, [productID]);
 
   const dependencies = [

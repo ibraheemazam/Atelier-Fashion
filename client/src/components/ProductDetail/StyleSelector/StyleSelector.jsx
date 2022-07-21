@@ -1,102 +1,13 @@
 import React, { useEffect, useState } from 'react';
+//import { View, Text } from 'react-native';
+//import { Icon } from '@rneui/themed';
 import styled from 'styled-components';
-import axios from 'axios';
+//import { IoCheckmarkCircleOutline } from 'react-icon';
 
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
-function StyleSelector() {
-  const {
-    styles, selectedStyle, setSelectedStyle,
-  } = useGlobalContext();
-
-  // useEffect(() => {
-  //   axios
-  //     .get('/styles', { params: { product_id: productID } })
-  //     .then((stylesResult) => {
-  //       setSelectedStyle(stylesResult.data.results[0]);
-  //       setStyles(stylesResult.data.results);
-  //     })
-  //     // I'm catching two errors in one here, not great
-  //     .catch((err) => console.log('error getting product styles', err));
-  // }, [productID, setProductID, setStyles]);
-
-  // const [thumbnails, setThumbnails] = useState([]);
-  // console.log('thumbnails before useEffect: ', thumbnails);
-
-  // function getThumbnails() {
-  //   // new Promise
-  //   console.log('styles at the begiining of getThumbnails: ', styles);
-  //   const tempThumbnails = [];
-  //   styles.forEach((style) => {
-  //     let thumbnail = style.photos[0];
-  //     tempThumbnails.push(thumbnail);
-  //   });
-  //   return tempThumbnails;
-  // }
-
-  // for each style in the results away wanto to go to its photos property and grab the first element and thumbnail property of it// new promise to map thumbnails
-  // then(([allStyles]) => ( allStyles.map((style) => (
-  //   style.photos[0].thumbnail_url
-  // )
-  // [{ photos [ { thumbnail_url } ] }]
-
-  // console.log('productStyles from styleselector: ', styles);
-  // let styleTitle;
-  // let imageRows;
-
-  // function handleSelectStyle(e) {
-  //   e.preventDefault();
-  //   setSelectedStyle(style);
-  //   UpdateImageGallery(selectedStyle);
-  //   // updateStyleTitle(selectedStyle);
-  //   // overlay checkmark on clicked child thumbnail
-  //   styleTitle = selectedStyle.name;
-  // }
-
-  // function mapThumbnails(styles) {
-  //   imageRows = [];
-  //   let i = 0;
-  //   const copyStyles = [...styles];
-  //   console.log(copyStyles);
-  //   while (i < copyStyles.length - 4) {
-  //     let count = 0;
-  //     const imageRow = [];
-  //     while (count < 4) {
-  //       imageRow.push(copyStyles.shift());
-  //       count += 1;
-  //     }
-  //     imageRows.push(imageRow);
-  //     i += 4;
-  //   }
-  //   if (copyStyles.length > 0) {
-  //     imageRows.push(copyStyles);
-  //   }
-  // }
-  // console.log(imageRows);
-
-  function onClickHandler(e, value, index) {
-    e.preventDefault();
-    if (selectedStyle.style_id !== value.style_id) {
-      setSelectedStyle(() => value);
-
-      // styles.forEach((style) => {
-      //   let dfault = style['default?']
-      // UpdateImageGallery(selectedStyle);
-//     updateStyleTitle(selectedStyle);
-//     // overlay checkmark on clicked child thumbnail
-      // }
-      //   style['default?']
-      // <checkbox onClick={handleSelectStyle} />
-//     </span>
-    }
-  }
-
-  // overlay
-  // could make background of outer div the thumbnail
-  // and then make an inner div that is some percentage of the outer div that renders conditionally
-  // on whether it's open property is set to true or toggles its visbile: hidden attribute based on
-  // whether it's open property is set to true (so re-rendering less?)
-  //  and make it somewhat transparent
+function StyleSelector(props) {
+  const { styles, selectedStyle, setSelectedStyle, productID, productInfo } = useGlobalContext();
 
   return (
     <div>
@@ -105,20 +16,9 @@ function StyleSelector() {
         {selectedStyle.name}
       </h4>
       <div>
-        <Thumbnails>
-          {styles.map((style, index) => (
-            <Thumbnail key={style.style_id}>
-              <span index={index} onClick={(e) => onClickHandler(e, style, index)} role="presentation">
-                <img
-                  src={style.photos[0].thumbnail_url}
-                  alt=""
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                  }}
-                />
-              </span>
-            </Thumbnail>
+        <Thumbnails props={props}>
+          {styles.map((style, i) => (
+            <Thumbnail key={style.style_id} i={i} value={style} style={style} props={props}/>
           ))}
         </Thumbnails>
       </div>
@@ -126,21 +26,104 @@ function StyleSelector() {
   );
 }
 
-export default StyleSelector;
+ // overlay
+  // could make background of outer div the thumbnail
+  // and then make an inner div that is some percentage of the outer div that renders conditionally
+  // on whether it's open property is set to true or toggles its visbile: hidden attribute based on
+  // whether it's open property is set to true (so re-rendering less?)
+  //  and make it somewhat transparent
 
-// const Thumbnails = styled.div`
-//   display: flex;
-//   border: 1px
-//   padding: 1rem 1rem;
-// `;
+function Thumbnail({i, style, value, props}) {
+  const { styles, selectedStyle, setSelectedStyle, productID, productInfo } = useGlobalContext();
+
+  return(
+    <ThumbnailOverview>
+      <span>
+        <div onClick={() => setSelectedStyle(style)} role="presentation">
+          <img
+            src={style.photos[0].thumbnail_url}
+            alt=""
+            style={{
+              width: '100%',
+              height: '100%',
+            }}
+          ></img>
+          {/* {selected
+          ? (
+          <overlay>
+            <base>
+              <IoCheckmarkCircleOutline/>
+              {selectedStyle}
+            </base>
+          </overlay>
+          )
+         : <></>
+         } */}
+      </div>
+    </span>
+  </ThumbnailOverview>
+  );
+}
+
+export default StyleSelector;
 
 const Thumbnails = styled.div`
   display: flex;
+  border: 1px;
+  padding: 1rem 1rem;
+  overflow: auto;
+  justify-content: space-around;
 `;
 
-const Thumbnail = styled.span`
-  margin: 2%;
+const ThumbnailRow = styled.span`
+  max-height: 20px
+  max-width: 80%;
+  align: center;
+  justify-content: space-around;`
+;
+
+const ThumbnailContainer = styled.div`
+  padding: 1em;
+  background: ;
+  justify-content: space-evenly
+`;
+
+const ThumbnailOverview = styled.div`
+  margin: 1 em;
   padding: 3% 1%;
   text-align: center;
   width: 20%
+  // border radius
+  stretch
+  clip:
 `;
+
+//was a block above
+
+const BlueCheckmark = styled.div`
+  position: absolute;
+  top: 0pm;
+  right: 0px;
+  display: felx;
+  //clear, thivk padding
+  //solid blue borde
+  .// border radius
+  // whole thing slighly transparent
+  `;
+
+
+  // mostly transplarent grey div 100% 100% and contained within
+
+
+// from andy's stars module, might help me position my thumbnails
+// const FilledStar = styled.div`
+  // position: absolute;
+  // top: 0px;
+  // left: 0px;
+  // display: flex;
+  // width: ${(props) => props.size}%;
+  // overflow:hidden;
+  // flex-direction: row;
+  // color: yellow;
+  // font-size: bold;
+
