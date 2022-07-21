@@ -1,12 +1,12 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import axios from 'axios';
 
 function HelpfulReport({ review }) {
   const [helpfulness, setHelpfulness] = useState(review.helpfulness);
-  const helpfulClicked = useRef(false);
-  const reportClicked = useRef(false);
+  const [helpfulClicked, setHelpfulClicked] = useState(false);
+  const [reportClicked, setReportClicked] = useState(false);
   const [report, setReport] = useState('Report');
 
   const putRequester = function putRequester(reviewID, helpOrReport) {
@@ -21,11 +21,11 @@ function HelpfulReport({ review }) {
 
   const handleHelpfulClick = function handleHelpfulClick() {
     const reviewID = review.review_id;
-    if (!helpfulClicked.current) {
+    if (!helpfulClicked) {
       putRequester(reviewID, 'helpful')
         .then(() => {
           setHelpfulness(helpfulness + 1);
-          helpfulClicked.current = true;
+          setHelpfulClicked(true);
         })
         .catch((err) => {
           console.log(err);
@@ -35,10 +35,10 @@ function HelpfulReport({ review }) {
 
   const handleReport = function handleReport() {
     const reviewID = review.review_id;
-    if (!reportClicked.current) {
+    if (!reportClicked) {
       putRequester(reviewID, 'report')
         .then(() => {
-          reportClicked.current = true;
+          setReportClicked(true);
         })
         .catch((err) => {
           console.log(err);
@@ -49,17 +49,17 @@ function HelpfulReport({ review }) {
 
   return (
     <HelpfulnessDiv>
-      <YesButton>Was this review helpful?</YesButton>
-      <YesButton onClick={() => handleHelpfulClick()}>
+      <div>Was this review helpful?</div>
+      <YesButton helpfulClicked={helpfulClicked} onClick={() => handleHelpfulClick()}>
         <u>Yes</u>
         &nbsp;
         {`(${helpfulness})`}
       </YesButton>
-      <YesButton>|</YesButton>
-      <YesButton onClick={() => handleReport()}>
+      <div>|</div>
+      <ReportButton reportClicked={reportClicked} onClick={() => handleReport()}>
         <u>{report}</u>
         {/* need to add functionality that changes this to reported once clicked */}
-      </YesButton>
+      </ReportButton>
     </HelpfulnessDiv>
   );
 }
@@ -79,9 +79,15 @@ const HelpfulnessDiv = styled.div`
   display: flex;
   justify-content: space-between;
   width: 40%;
+  overflow-wrap: break-word;
 `;
 
 const YesButton = styled.div`
   display: flex;
-  cursor: pointer;
+  cursor: ${(props) => (!props.helpfulClicked ? 'pointer' : 'default')};
+`;
+
+const ReportButton = styled.div`
+  display: flex;
+  cursor: ${(props) => (!props.reportClicked ? 'pointer' : 'default')};
 `;

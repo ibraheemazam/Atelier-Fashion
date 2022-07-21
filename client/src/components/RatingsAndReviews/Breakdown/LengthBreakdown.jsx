@@ -89,7 +89,7 @@ const Row1 = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
 `;
 
 const Row2 = styled.div`
@@ -99,8 +99,8 @@ const Row2 = styled.div`
 `;
 
 const HorizontalProgFill = styled.div`
-  background: #666;
-  height: 14px;
+  background: lightgrey;
+  height: 10px;
   margin: 2px;
   color: #fff;
   text-align: center;
@@ -111,8 +111,8 @@ const HorizontalProgFill = styled.div`
 `;
 
 const Bar = styled.div`
-  background: #666;
-  height: 14px;
+  background: lightgrey;
+  height: 10px;
   margin: 2px;
   width: ${(props) => props.width - 2}%
 `;
@@ -124,7 +124,7 @@ const DescDiv = styled.div`
 `;
 
 const DotDiv = styled.div`
-  color: white;
+  color: #666;
   position: absolute;
   font-size: 13px;
   left: ${(props) => props.width}%;

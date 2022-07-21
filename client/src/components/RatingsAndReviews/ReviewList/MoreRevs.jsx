@@ -20,7 +20,7 @@ function MoreRevs({ productID, setRevCount, revListLength }) {
       {!noMoreReviews.current
         && (
           <MoreButton type="button" onClick={() => handleMoreReviews()}>
-            MORE REVIEWS
+            More Reviews
           </MoreButton>
         )}
     </div>
@@ -40,4 +40,7 @@ const MoreButton = styled.button`
   font-size: .9em;
   font-weight: bold;
   background-color: ${(props) => props.theme.secondaryColor};
+  color: ${(props) => props.theme.fontColor};
+  border-radius: 8px;
+  cursor: pointer;
 `;
