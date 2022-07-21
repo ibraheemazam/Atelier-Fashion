@@ -94,24 +94,6 @@ function QuestionEntry({ question }) {
     }
   }
 
-  function moreAnswers() {
-    if (allAnswers.length <= 2) {
-      return null;
-    }
-    if (topAnswers.length < allAnswers.length) {
-      return (
-        <MoreAnswers onClick={() => changeNumAnswers(2)}>
-          <span>See More Answers</span>
-        </MoreAnswers>
-      );
-    }
-    return (
-      <MoreAnswers onClick={() => setNumAnswers(2)}>
-        <span>Collapse Answers</span>
-      </MoreAnswers>
-    );
-  }
-
   function answersList() {
     if (topAnswers.length === 0) {
       return (
@@ -133,6 +115,26 @@ function QuestionEntry({ question }) {
     );
   }
 
+  function moreAnswers() {
+    if (allAnswers.length <= 2) {
+      return null;
+    }
+    if (topAnswers.length < allAnswers.length) {
+      return (
+        <MoreAnswers onClick={() => changeNumAnswers(2)}>
+          <i className="fa-solid fa-chevron-down" />
+          <span>See More Answers</span>
+        </MoreAnswers>
+      );
+    }
+    return (
+      <MoreAnswers onClick={() => changeNumAnswers(-100)}>
+        <i className="fa-solid fa-chevron-up" />
+        <span>Collapse Answers</span>
+      </MoreAnswers>
+    );
+  }
+
   return (
     <Entry>
       <Question id="question_header">Question.</Question>
@@ -141,8 +143,29 @@ function QuestionEntry({ question }) {
       </QuestionBody>
       <HelpfulReport>
         Helpful?
-        <Clickable onClick={() => helpfulQuestion()}>Yes</Clickable>
-        {`(${helpfulness})`}
+        {' '}
+        {clickedHelpful.current ? (
+          <b>Yes</b>
+        ) : (
+          <Clickable onClick={() => helpfulQuestion()}>Yes</Clickable>
+        )}
+        {clickedHelpful.current ? (
+          <b>
+            {' '}
+            (
+            {helpfulness}
+            )
+            {' '}
+          </b>
+        ) : (
+          <span>
+            {' '}
+            (
+            {helpfulness}
+            )
+            {' '}
+          </span>
+        )}
         {clickedReport ? (
           <Reported>Reported</Reported>
         ) : (
@@ -170,13 +193,12 @@ function QuestionEntry({ question }) {
 }
 
 const Entry = styled.div`
-  border-color: black;
-  border-bottom: 1px solid;
   display: grid;
   grid-template-columns: 8% 57% 25% 10%;
   width: 100%;
   justify-content: center;
-  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid;
 `;
 
 const Question = styled.div`
@@ -224,14 +246,14 @@ const Answer = styled.div`
   font-weight: bold;
 `;
 
+const Clickable = styled.u`
+  cursor: pointer;
+`;
+
 const MoreAnswers = styled.div`
   display: flex;
   grid-column: 2;
   font-weight: bold;
-  cursor: pointer;
-`;
-
-const Clickable = styled.u`
   cursor: pointer;
 `;
 

@@ -45,7 +45,7 @@ const Container = styled.div`
 
 const QuestionListContainer = styled.div`
   background-color: ${(props) => props.theme.backgroundColor};
-  max-height: 80vh;
+  max-height: 75vh;
   overflow: auto;
   margin-left: 20px;
   margin-right: 20px;
