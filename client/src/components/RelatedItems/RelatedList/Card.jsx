@@ -20,28 +20,24 @@ function Card({ data, show }) {
     setCardIndex(0);
   }
   return (
-    <div>
-      { info.details
+    <Animation className={show}>
+      { info.details && show === 'show'
         ? (
-          <CardStyle className={show}>
-            {show === 'show' && (
-            <CardStyle onClick={() => changeItem()}>
-              <CardImage imageInfo={info.image.data} details={info.details} />
-              <Text>
-                <Cards>{info.details.data.name}</Cards>
-                <Cards>{info.details.data.category}</Cards>
-                <Cards>
-                  $
-                  {info.details.data.default_price}
-                </Cards>
-              </Text>
-              <CardStars reviewID={info.stars.data} />
-            </CardStyle>
-            )}
+          <CardStyle onClick={() => changeItem()}>
+            <CardImage imageInfo={info.image.data} details={info.details} />
+            <Text>
+              <Cards>{info.details.data.name}</Cards>
+              <Cards>{info.details.data.category}</Cards>
+              <Cards>
+                $
+                {info.details.data.default_price}
+              </Cards>
+            </Text>
+            <CardStars reviewID={info.stars.data} />
           </CardStyle>
         )
         : <div /> }
-    </div>
+    </Animation>
   );
 }
 
@@ -50,9 +46,9 @@ Card.propTypes = {
     details: PropTypes.shape({
       data: PropTypes.shape({
         id: PropTypes.number,
-        // name: PropTypes.string,
-        // category: PropTypes.string,
-        // default_price: PropTypes.string,
+        name: PropTypes.string,
+        category: PropTypes.string,
+        default_price: PropTypes.string,
       }),
     }),
   }).isRequired,
@@ -62,15 +58,15 @@ Card.propTypes = {
 const CardStyle = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+const Animation = styled.div`
   border: 7px solid transparent;
   &.show {
-    opacity: 1;
-    transition-duration: 1s;
-    transform: scale(1.08);
+    transition: all 0.5s ease-in-out;
   }
   &.noshow {
-    opacity: 0;
-    transition-duration: 1s ease;
+    transition: all 0.5s ease-in-out;
   }
 `;
 
@@ -80,11 +76,12 @@ const Cards = styled.div`
 `;
 
 const Text = styled.div`
-display: flex;
-flex-direction: column;
+  display: flex;
+  flex-direction: column;
   &:hover {
     text-decoration: underline;
   }
+  cursor: pointer;
 `;
 
 export default Card;

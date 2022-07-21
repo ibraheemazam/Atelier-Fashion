@@ -36,6 +36,7 @@ const Button = styled.button`
   font-size: 60px;
   font-width: bold;
   border-radius: 10px;
+  cursor: pointer;
 `;
 
 const Text = styled.div`

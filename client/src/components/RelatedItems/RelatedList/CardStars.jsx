@@ -38,7 +38,7 @@ const Stars = styled.div`
   margin-left: auto;
   margin-right: auto;
   font-size: 25px;
-  color: gray;
+  color: ${(props) => props.theme.fontColor};
 `;
 
 const BaseStar = styled.span`
