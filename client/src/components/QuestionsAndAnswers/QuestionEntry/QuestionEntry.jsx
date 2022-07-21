@@ -102,10 +102,12 @@ function QuestionEntry({ question }) {
         </AnswerNone>
       );
     }
-    const list = topAnswers.map((answer) => (
+    const list = topAnswers.map((answer, idx) => (
       <>
         <AnswerEntry answer={answer} key={answer.id} />
-        <hr style={{ width: '90%' }} />
+        {idx !== topAnswers.length - 1 ? (
+          <hr style={{ width: '90%' }} />) : (
+          null) }
       </>
     ));
     return (
