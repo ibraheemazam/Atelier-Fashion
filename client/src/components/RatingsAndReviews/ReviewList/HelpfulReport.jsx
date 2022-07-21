@@ -9,7 +9,6 @@ function HelpfulReport({ review }) {
   const reportClicked = useRef(false);
   const [report, setReport] = useState('Report');
 
-
   const putRequester = function putRequester(reviewID, helpOrReport) {
     return (axios.put(`/reviews/${reviewID}/${helpOrReport}`)
       .then((result) => {
@@ -79,7 +78,7 @@ export default HelpfulReport;
 const HelpfulnessDiv = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 295px;
+  width: 40%;
 `;
 
 const YesButton = styled.div`

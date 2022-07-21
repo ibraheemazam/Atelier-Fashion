@@ -199,8 +199,8 @@ const AddRevDiv = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1em;
-  height: 45%;
-  width: 60%;
+  height: 45vh;
+  width: 60vw;
   border: 1px solid;
   overflow: scroll;
   border-radius: 10px;
