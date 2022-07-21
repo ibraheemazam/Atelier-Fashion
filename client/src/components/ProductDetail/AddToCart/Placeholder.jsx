@@ -7,9 +7,9 @@ import _ from 'lodash';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
 function AddToCart() {
-  const { productID, selectedStyle, productInfo, styles } = useGlobalContext();
+  const { productID, selectedStyle } = useGlobalContext();
 
-  //const [allSkus, setAllSkus] = useState([]);
+  const [allSkus, setAllSkus] = useState([]);
   // const [stock, setStock] = useState([]);
   // const [sku, setSku] = useState('');
   // const [size, setSize] = useState(null);
@@ -17,80 +17,80 @@ function AddToCart() {
   // const [quantity, setQuantity] = useState(null);
   // const [availableQuantity, setAvailableQuantity] = useState(null);
 
-  // useEffect(() => {
-  //   // console.log('render');
-  //   if (selectedStyle.skus) {
-  //     const { skus } = selectedStyle;
-  //     const skusKeys = Object.keys(skus);
-  //     skusKeys.sort((a, b) => a - b);
-  //     setAllSkus(() => skusKeys);
-  //   }
+  useEffect(() => {
+    // console.log('render');
+    if (selectedStyle.skus) {
+      const { skus } = selectedStyle;
+      const skusKeys = Object.keys(skus);
+      skusKeys.sort((a, b) => a - b);
+      setAllSkus(() => skusKeys);
+    }
 
-  //   console.log('allSkus at line 104: ', allSkus);
-  // }, [], [selectedStyle]);
-
-
-  // const initialState = {
-  //   size: '',
-  //   //stock: () => selectedStyle.skus,
-  //   // //  'sku': { sku } = selectedStyle.skus {() => selectedStyle.skus{sku() => selectedStyle.skus,  // do I need to destructure this to assign all values? I think so
-  //   // stockCount: (() => getStockCount(initialState.stock)),
-  //   // selectedSku: null,
-  //   // selectedSize: {
-  //   //   size: '',
-  //   //   count: null,
-  //   // },
-  //   quantity: null,
-  //   // selectSizeDisplay: 'Select Size',
-  //   // selectQuantityDisplay: '-',
-  //   // sizeSelected: false,
-  //   // disableQuantity: true,
-  //   // selectedQuantity: null,
-  //   disable: true,
-  //   soldOut: false,
-  //   // cart: {
-  //   //   product: productID,
-  //   //   style: selectedStyle.style_id,
-  //   //   size: '',
-  //   //   quantity: null,
-  //   // },
-  //   // disableSizes: false,
-  //   // soldOut: false,
-  // };
+    console.log('allSkus at line 104: ', allSkus);
+  }, [], [selectedStyle]);
 
 
-  // const reducer = function(state, action) {
-  //   switch (action.type) {
-  //     case 'changeSize':
-  //       return {
-  //         ...state,
-  //         disabled: false,
-  //         size: action.payload.value,
-  //         // selectSizeDisplay: payload.size,
-  //         // quantitydisplay: state.,
-  //         quantity: 1,
-  //         sizeSelected: true,
-  //         // quantitydropdowndisabled: false,
-  //         // stock: payload,
-  //         // selectedSku: key,
-  //         // quantity: payload.quantity,
-  //       };
-  //     case 'selectQuantity':
-  //       return {
-  //         ...state,
-  //         quantity: action.payload.value,
-  //         //selectQuantityDisplay: payload.quantity,
-  //       };
-  //     // case 'addToCart':
-  //     //   return {
-  //     //     ...state,
-  //     //   };
-  //     default:
-  //       return state;
-  //   }
-  // };
+  const initialState = {
+    size: '',
+    //stock: () => selectedStyle.skus,
+    // //  'sku': { sku } = selectedStyle.skus {() => selectedStyle.skus{sku() => selectedStyle.skus,  // do I need to destructure this to assign all values? I think so
+    // stockCount: (() => getStockCount(initialState.stock)),
+    // selectedSku: null,
+    // selectedSize: {
+    //   size: '',
+    //   count: null,
+    // },
+    quantity: null,
+    // selectSizeDisplay: 'Select Size',
+    // selectQuantityDisplay: '-',
+    // sizeSelected: false,
+    // disableQuantity: true,
+    // selectedQuantity: null,
+    disable: true,
+    soldOut: false,
+    // cart: {
+    //   product: productID,
+    //   style: selectedStyle.style_id,
+    //   size: '',
+    //   quantity: null,
+    // },
+    // disableSizes: false,
+    // soldOut: false,
+  };
 
-  // const [state, dispatch] = useReducer(reducer, initialState);
+
+  const reducer = function(state, action) {
+    switch (action.type) {
+      case 'changeSize':
+        return {
+          ...state,
+          disabled: false,
+          size: action.payload.value,
+          // selectSizeDisplay: payload.size,
+          // quantitydisplay: state.,
+          quantity: 1,
+          sizeSelected: true,
+          // quantitydropdowndisabled: false,
+          // stock: payload,
+          // selectedSku: key,
+          // quantity: payload.quantity,
+        };
+      case 'selectQuantity':
+        return {
+          ...state,
+          quantity: action.payload.value,
+          //selectQuantityDisplay: payload.quantity,
+        };
+      // case 'addToCart':
+      //   return {
+      //     ...state,
+      //   };
+      default:
+        return state;
+    }
+  };
+
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   // const [stock, setStock] = useState({});
   // const [currentSkus, setCurrentSkus] = useState({});
@@ -107,7 +107,7 @@ function AddToCart() {
   //   });
   // }
 
-  console.log('selectedStyle from add to cart before render: ', selectedStyle);
+
 
 
   // setStock(() => initialStock);
@@ -205,18 +205,18 @@ function AddToCart() {
 
 
     // renderQuantityDropdown(currentSku);
-    // useReducer({type: changeSize, payload: e});
+    useReducer({type: changeSize, payload: e});
   }
 
   function handleChangeQuantity(event) {
     event.preventDefault();
     // add value to cart state  -- can do this when add to cart clicked
 
-    // setQuantity((prevQuantity) => prevQuantity - event.target.value);
+    setQuantity((prevQuantity) => prevQuantity - event.target.value);
   }
 
   function handleClickAddToCart() {
-    // setQuantity((prevQuantity) => prevQuantity - event.target.value);
+    setQuantity((prevQuantity) => prevQuantity - event.target.value);
 
     const sellAmount = quantity;
 
@@ -258,13 +258,11 @@ function AddToCart() {
             //   ? 'disabled'
             //   : ''
             // }
-              //onChange={(e) => dispatch({type: changeSize, payload: e})}
+              onChange={(e) => dispatch({type: changeSize, payload: e})}
               >
                 <option value={null}>Select Size</option>
-              {selectedStyle.skus &&
-                (Object.values(selectedStyle.skus)).map((sku, index) => (
-                sku.quantity > 0 && <option key={index}>{sku.size}</option>
-
+              {allSkus.map((sku) => (
+                <option>{selectedStyle.skus[sku]}</option>
                 // <option
                 //   key={sku}
                 //   size={selectedStyle[sku].size}
@@ -282,7 +280,7 @@ function AddToCart() {
           </div>
         </SelectSizeContainer>
         <SelectQuantityContainer>
-          {/* <select
+          <select
         //     {isSizeSelected
         //       ? ''
         //       : 'disabled'
@@ -299,7 +297,7 @@ function AddToCart() {
             [...Array(15)].keys().map((e, i) => <option key={i}>{e}</option>)
           )
         }
-          </select> */}
+          </select>
 
           {/* {!sizeSelected
         ?

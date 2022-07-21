@@ -1,59 +1,88 @@
 import React, { useState, useEffect } from 'react';
 // import ProductDetail from '../ProductDetail';
-
+import PropTypes from 'prop-types';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
-function SelectSize() {
-//   // need to pass in a value for productID somehow (either global state or client url)
+function reducer
+
+function SelectSize({ sku, stock }) {
   const {
     productInfo, setProductInfo, selectedStyle,
   } = useGlobalContext();
 
   const [selectedSize, setSelectedSize] = useState('Select Size');
+  const [selectedQuantity, setSelectedQuantity] = useState('-');
+
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  return(
+
+    <>
+      <option key={sku} onSelect={(e, key) => dispatch({type: 'selectSize', sku: key, quantity; quantity})}>{stock.size}</option>
+    </>
+  )
+
+  const
   // const [skus, setSkus] = useState([]);
 
+  const initialState = {style: () => selectedStyle.style_id, stockObj = () => selectedStyle.skus, stockSum = (stockObj) => ( return function(obj) {const count = 0; for (var key in obj) { count =+ obj[key].quantity; } return count)}(stockObj));
+    selectSizeDisplay: 'Select Size', quantityDisplay: '-', sizeSelected: false, quantityDropdown: disabled, selectedSku: null, selectedQuantity: null, cart: {style: selectedStyle.style_id, sku: null, quantity: null styleDropdownCollapsed: true; quantityDropdownCollapsed: true}}
 
-  function sellSize(e, value) {
+  function reducer(state, action) {
+    switch (action.type) {
+      case "selectSize":
+        return { ...prevState, selectSizeDisplay: payload.size, quantityDisplay: 1, sizeSelected: true, quantityDropdown: enabled, selectedSku: payload,}
+        return state.map((stock) => {
+          if (stock.sku === action.sku) {
+            if (stock.quantity === 1) {
+              return { ...stock, quantity}
+            }
+            return { ...stock, quantity: (prevQuantity => prevQuantity - 1 };
+          } else {
+            return stock;
+          }
+          return {...}
+        }
+    }
+  }
+
+  const function sellSize(e, value) {
     e.preventDefault();
   }
-
-  function getAvailableSizes({ skus }) {
     // could just map all the skus objects and return an option element if quantity > 0
-    const allSkus = Object.values(skus);
-    console.log('allSkus from getAvailableSize: ', allSkus);
-    let sizeAvailable = false;
-    return allSkus.map((sku, index) => (
-      sku.quantity > 0
-      && <option key={sku.size} onSelect={(e) => sellSize(e, index)}>{sku.size}</option>
-    ))
+
+    // skus.map((value, key) => (
+    //   <option key={key}>{key.</option>
+    // ))
 
 
-    // const sizes = [];
-    // for (const key in skus) {
-    //   const { quantity, size } = skus[key];
-    //   const availability = {};
-    //   availability[size] = quantity;
-    //   availability[sku] = skus[key];
-    //   sizes.push(availability);
-    // }
+     //  <option key={sku} size={skus[sku].size} quantity={skus[sku].quantity}>{skus[sku].size}</option>
+
+    // console.log('allSkus from getAvailableSize: ', allSkus);
+    // let sizeAvailable = false;
+    // return allSkus.map((sku, index) => (
+    //   sku.quantity > 0
+    //   && <option onSelect={(e) => sellSize(e, index)}>{sku.size}</option>
+    // ));
+
+
   }
+  const initialStock = [];
+  console.log(initialStock);
 
-
-  // useEffect(() => {
-  //   console.log('skus from useEffect', selectedStyle.skus);
-  //   if (selectedStyle.skus) {
-
-  //   }
-  //    && getAvailableSizes(selectedStyle);
-  //   setSkus(() => selectedStyle.skus);
-  // }, [selectedStyle]);
-
-
-
-
-   // possibly part of get available sized
-
-//     sizes.sort((a, b) => (Number(a.sku) - Number(b.sku)));
+  useEffect(() => {
+    if (selectedStyle.skus) {
+      const skus = selectedStyle.skus;
+      const allSkus = Object.keys(skus);
+      const sortedSkus = allSkus.sort((a, b) => a - b);
+      sortedSkus.forEach((sku) => {
+        skus[sku]['sku'] = sku;
+        initialStock.push(skus[sku]);
+      });
+    }
+     // && getAvailableSizes(selectedStyle);
+    // setSkus(() => selectedStyle.skus);
+  }, [selectedStyle]);
 
 //     let noSizesAvailable = true;
 
@@ -90,28 +119,23 @@ function SelectSize() {
   );
 }
 
-export default SelectSize;
 
-// {
-//   "product_id": "1",
-//   "results": [
-//   {
-//           "style_id": 1,
-//           "name": "Forest Green & Black",
-//           "original_price": "140",
-//           "sale_price": "0",
-//           "default?": true,
-//           "photos": [
-//       {
-//                   "thumbnail_url": "urlplaceholder/style_1_photo_number_thumbnail.jpg",
-//                   "url": "urlplaceholder/style_1_photo_number.jpg"
-//               },
-//       {
-//                   "thumbnail_url": "urlplaceholder/style_1_photo_number_thumbnail.jpg",
-//                   "url": "urlplaceholder/style_1_photo_number.jpg"
-//               }
-//       // ...
-//           ],
+
+
+
+  return(
+    {availableSizes.map((availableSize) => (
+      <option key={availableSize.sku} size={availableSize.size} quantity={availableSize.quantity} onClick={() => dispatch({type: 'selectSize'})}>{availableSize.size}</option>
+    ))}
+
+
+
+  )
+
+}
+
+// export default SelectSize;
+
 //       "skus": {
 //                 "37": {
 //                       "quantity": 8,
@@ -126,36 +150,4 @@ export default SelectSize;
 //                       "size": "M"
 //                 },
 //           //...
-//             }
-//   },
-// {
-//       "style_id": 2,
-//       "name": "Desert Brown & Tan",
-//       "original_price": "140",
-//       "sale_price": "0",
-//       "default?": false,
-//       "photos": [
-//       {
-//                   "thumbnail_url": "urlplaceholder/style_2_photo_number_thumbnail.jpg",
-//                   "url": "urlplaceholder/style_2_photo_number.jpg"
-//       }
-//     // ...
-//           ],
-//       "skus": {
-//                 "37": {
-//                       "quantity": 8,
-//                       "size": "XS"
-//                 },
-//                 "38": {
-//                       "quantity": 16,
-//                       "size": "S"
-//                 },
-//                 "39": {
-//                       "quantity": 17,
-//                       "size": "M"
-//                 },
-//           //...
-//             }
-//   },
-// // ...
-// }
+//

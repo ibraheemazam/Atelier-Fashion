@@ -70,6 +70,18 @@ export function GlobalContextProvider({ children }) {
     scrollToTop();
   }, [productID]);
 
+  useEffect(() => {
+    axios.get('/styles', {
+      params: {
+        product_id: productID,
+      },
+    }).then((stylesResult) => {
+      setSelectedStyle(stylesResult.data.results[0]);
+      setStyles(stylesResult.data.results);
+    })
+      .catch((err) => console.error('error getting product styles', err));
+  }, [productID]);
+
   const dependencies = [
     productID,
     productInfo,

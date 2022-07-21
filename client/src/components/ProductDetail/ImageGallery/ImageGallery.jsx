@@ -9,7 +9,7 @@ import StyleSelector from '../StyleSelector/StyleSelector';
 // eslint-disable-next-line react/prop-types
 function ImageGallery() {
   const {
-    productID, setProductID, selectedStyle, productInfo,
+    productID, setProductID, selectedStyle, productInfo, setProductInfo, styles, setStyles, setSelectedStyle,
   } = useGlobalContext();
 
   const [imageUrl, setImageUrl] = useState('');
@@ -37,7 +37,7 @@ function ImageGallery() {
     setPhotos(() => selectedStyle.photos);
     getPhotos();
     getUrl();
-  }, [setImageUrl, selectedStyle, setMain, setPhotos, photos, main, place, setPhotosLength]);
+  }, [selectedStyle, photos, main, place]);
 
   // useEffect(() => {
   //   setMain(() => photos[0]);
@@ -76,10 +76,6 @@ function ImageGallery() {
   //   }
 
   //  {allThumbnails.map((thumbnail) => <img src={thumbnail} />)}
-  console.log(photos);
-  console.log(main);
-  console.log(imageUrl);
-  console.log('place:', place);
 
   function changeMain(e, value) {
     e.preventDefault();
@@ -98,54 +94,60 @@ function ImageGallery() {
 
   return (
     <Gallery>
-      <Main
-        style={{
-          backgroundImage: `url('${imageUrl}')`,
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: 'contain',
-        }}
-        alt={`${productInfo.name} in ${selectedStyle.name} style`}
-      >
-        <Side>
-          {photos
-          && photos.map((photo, index) => (
-            <div
-              key={photo.url}
-              index={index}
-              style={{
-                marginLeft: '2%',
-              }}
-            >
+      {imageUrl
+        ? (
+          <Main
+            style={{
+              backgroundImage: `url('${imageUrl}')`,
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'contain',
+            }}
+            alt={`${productInfo.name} in ${selectedStyle.name} style`}
+          >
+            <Side>
+              {photos
+            && photos.map((photo, index) => (
               <div
-                onClick={(e) => changeMain(e, index)}
-                role="presentation"
+                key={photo.url}
+                index={index}
                 style={{
-                  maxWidth: '100%',
-                  height: 'auto',
+                  marginLeft: '2%',
                 }}
               >
-                <img
-                  src={photo.thumbnail_url}
-                  alt=""
+                <div
+                  onClick={(e) => changeMain(e, index)}
+                  role="presentation"
                   style={{
-                    width: '100%',
-                    height: '100%',
-                    border: '.5px black solid',
+                    maxWidth: '100%',
+                    height: 'auto',
                   }}
-                />
+                >
+                  <img
+                    src={photo.thumbnail_url}
+                    alt=""
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      border: '.5px black solid',
+                    }}
+                  />
+                </div>
               </div>
-            </div>
-          ))}
-        </Side>
-        <Back>
-          {place > 0
-          && <button type="button" onClick={handleClickBack}>back</button>}
-        </Back>
-        <Forward>
-          {place < photosLength - 1
-          && <button type="button" onClick={handleClickForward}>Forward</button>}
-        </Forward>
-      </Main>
+            ))}
+            </Side>
+            <Back>
+              {place > 0
+            && <button type="button" onClick={handleClickBack}>back</button>}
+            </Back>
+            <Forward>
+              {place < photosLength - 1
+            && <button type="button" onClick={handleClickForward}>Forward</button>}
+            </Forward>
+          </Main>
+        )
+        : (
+          <div>No Image Available</div>
+        )}
     </Gallery>
   );
 }
@@ -169,8 +171,11 @@ const Main = styled.div`
 const Side = styled.div`
   width: 10%;
   display: inline-block;
+  justify-content: left;
   text-align: left;
-  padding-right: 1%
+  padding-right: 2%;
+  content-distribution: space-between, stretch, clippped;
+  positioning: relative;
 `;
 
 const Back = styled.span`
@@ -182,3 +187,20 @@ const Forward = styled.span`
   vertical-align: top;
   horizontal-align: middle;
 `;
+
+{/* <content-distribution> =
+  space-between  |
+  space-around   |
+  space-evenly   |
+  stretch     stretch */}
+
+// scroll into view
+
+// function scrollTo(event) {
+//   var scrollTarget = event.target.getAttribute('target');
+//   var target = document.getElementById(scrollTarget);
+//   target.scrollIntoView({
+//     block: 'center',
+//     behavior: 'smooth'
+//   });
+// }
