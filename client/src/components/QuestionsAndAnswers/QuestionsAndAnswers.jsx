@@ -6,12 +6,20 @@ import QuestionSearch from './QuestionSearch/QuestionSearch';
 import ExtraButtons from './Extras/ExtraButtons';
 
 function QuestionAndAnswers() {
-  const { numQuestions, filteredQuestions } = useGlobalContext();
+  const { numQuestions, filteredQuestions, setNumQuestions } = useGlobalContext();
+
+  function handleScroll(e) {
+    // within 0.9 of the bottom
+    const bottom = 0.9 * (e.target.scrollHeight - e.target.scrollTop) <= e.target.clientHeight;
+    if (bottom) {
+      setNumQuestions((prev) => prev + 2);
+    }
+  }
 
   return (
     <Container id="question-and-answers">
       <QuestionSearch />
-      <QuestionListContainer id="scrollable-container">
+      <QuestionListContainer id="scrollable-container" onScroll={(e) => handleScroll(e)}>
         {numQuestions === 0 ? (
           <div>Be the first to ask a question!</div>
         ) : (
@@ -37,7 +45,7 @@ const Container = styled.div`
 
 const QuestionListContainer = styled.div`
   background-color: ${(props) => props.theme.backgroundColor};
-  max-height: 60vh;
+  max-height: 80vh;
   overflow: auto;
   margin-left: 20px;
   margin-right: 20px;
