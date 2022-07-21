@@ -139,7 +139,7 @@ const ReviewListContainer = styled.div`
 const ReviewTilesContainer = styled.div`
   padding: 1em;
   background: ;
-  max-height: 25em;
+  max-height: 31em;
   overflow: auto;
 `;
 
