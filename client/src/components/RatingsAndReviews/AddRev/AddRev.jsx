@@ -202,14 +202,13 @@ const AddRevDiv = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1em;
-  height: 45vh;
+  height: 75vh;
   width: 60vw;
   border: 1px solid;
   overflow: scroll;
   border-radius: 10px;
   background-color: ${(props) => props.theme.secondaryColor};
   position: relative;
-  top: -20%;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   filter: drop-shadow(2px 4px 6px black);
 `;
