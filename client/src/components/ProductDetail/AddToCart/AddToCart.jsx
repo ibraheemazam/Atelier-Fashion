@@ -261,7 +261,12 @@ function AddToCart() {
               //onChange={(e) => dispatch({type: changeSize, payload: e})}
               >
                 <option value={null}>Select Size</option>
-              {selectedStyle.skus &&
+              {selectedStyle.skus
+              // && (
+              //   Object.entries(selectedStyle.skus).map((sku) =>
+              //   sku)
+              // )
+
                 (Object.values(selectedStyle.skus)).map((sku, index) => (
                 sku.quantity > 0 && <option key={index}>{sku.size}</option>
 
