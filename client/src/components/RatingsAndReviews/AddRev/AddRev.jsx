@@ -207,6 +207,8 @@ const AddRevDiv = styled.div`
   background-color: ${(props) => props.theme.secondaryColor};
   position: relative;
   top: -20%;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  filter: drop-shadow(2px 4px 6px black);
 `;
 
 const CloseDiv = styled.div`
@@ -265,5 +267,4 @@ const ButtonDiv = styled.button`
 `;
 
 // &#9733;
-// box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-// filter: drop-shadow(2px 4px 6px black);
+
