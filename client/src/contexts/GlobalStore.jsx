@@ -80,7 +80,7 @@ export function GlobalContextProvider({ children }) {
       setStyles(stylesResult.data.results);
     })
       .catch((err) => console.error('error getting product styles', err));
-  }, [productID, styles]);
+  }, [productID, styles, selectedStyle]);
 
   const dependencies = [
     productID,

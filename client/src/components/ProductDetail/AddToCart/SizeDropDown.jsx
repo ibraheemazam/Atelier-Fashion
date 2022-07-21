@@ -3,11 +3,19 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
-function SizeDropdown({index, stock, size, quantity}) {
+function SizeDropdown({size, quantity}) {
+  const { productID, selectedStyle } = useGlobalContext();
+
   return (
-    <option value={stock.size} index={index} size={size} quantity={quantity}></option>
-  );
-}
+    <option value={size} size={size} quantity={quantity}
+    {
+      quantity === 0
+    &&  'disabled'
+
+    }
+  {size}</option>
+);
+
 
 // SizeDropdown.propTypes = {
 //   // key: PropTypes.number.isRequired,

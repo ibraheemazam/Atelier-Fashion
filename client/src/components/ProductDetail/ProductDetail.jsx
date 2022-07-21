@@ -1,46 +1,15 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 
 import ProductOverview from './ProductOverview/ProductOverview';
 import StyleSelector from './StyleSelector/StyleSelector';
 import ImageGallery from './ImageGallery/ImageGallery';
 import AddToCart from './AddToCart/AddToCart';
-import { useGlobalContext } from '../../contexts/GlobalStore';
 
-function ProductDetail({ href }) {
-  const {
-    productID, productInfo,
-  } = useGlobalContext();
-  // Works when ready to hook up API with URL
-  // setProductID(window.location.pathname || 40348); // think should be in useEffect?
-  // useEffect(() => {
-    // function getProductInfo() {
-    //   axios
-    //     .get('/products', { params: { ID: productID } })
-    //     .then((productResult) => { setProductInfo(productResult.data); })
-    //     .catch((err) => { console.log('error getting product information', err); });
-    // }
-    // function getStyles() {
-    //   axios
-    //     .get('/styles', { params: { product_id: productID } })
-    //     .then((stylesResult) => {
-    //       setSelectedStyle(stylesResult.data.results[0]);
-    //       setStyles(stylesResult.data.results);
-    //     })
-    //     // I'm catching two errors in one here, not great
-    //     .catch((err) => console.log('error getting product styles', err));
-    // }
-    // // getProductInfo();
-    // getStyles();
-    //   .catch(console.log('error getting product info'), console.error);
-  // }, [productID]);
-  // add setProductID above when implemented
+// Works when ready to hook up API with URL
+// setProductID(window.location.pathname || 40348);
 
-  // function setStyle(selection) {
-  //   setSelectedStyle(selection);
-  // }
-
+function ProductDetail() {
   return (
     <div id="product-details">
       <div>
@@ -49,9 +18,9 @@ function ProductDetail({ href }) {
             <ImageGallery />
           </Column1>
           <Column2>
-            <ProductOverview productInfo={productInfo} href={href} />
+            {/* <ProductOverview href={id} /> */}
             <StyleSelector />
-            <AddToCart />
+            {/* <AddToCart /> */}
           </Column2>
         </ColumnParent>
       </div>

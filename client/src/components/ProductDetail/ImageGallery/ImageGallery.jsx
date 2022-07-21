@@ -171,8 +171,12 @@ const Main = styled.div`
 const Side = styled.div`
   width: 10%;
   display: inline-block;
+  justify-content: left;
   text-align: left;
-  padding-right: 1%
+  padding-right: 2%;
+  content-distribution: space-between, stretch;
+  //clippped
+  positioning: relative
 `;
 
 const Back = styled.span`
@@ -185,6 +189,11 @@ const Forward = styled.span`
   horizontal-align: middle;
 `;
 
+{/* <content-distribution> =
+  space-between  |
+  space-around   |
+  space-evenly   |
+  stretch     stretch */}
 
 // scroll into view
 

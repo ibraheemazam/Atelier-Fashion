@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
-// import axios from 'axios';
 
 // import StyleSelector from '../StyleSelector/StyleSelector';
 import RatingsAndReviews from '../../RatingsAndReviews/RatingsAndReviews';
+import Breakdown from '../../RatingsAndReviews/Breakdown';
+import CardStars from '../../RelatedItems/RelatedList/CardStars';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
-
-// const initialState = { count: 0, sum: 0 };
 
 function ProductOverview({ productInfo, href }) {
   const {
@@ -106,7 +105,7 @@ function ProductOverview({ productInfo, href }) {
   );
 }
 
-export default ProductOverview;
+export function ProductOverview;
 
 const ShareSocial = styled.div`
   height: 50%;

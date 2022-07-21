@@ -2,8 +2,8 @@ import React, { useState, useReducer, createElement, useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import SizeDropdown from './SizeDropdown';
-import QuantityDropdown from './QuantityDropdown';
+//import SizeDropdown from './SizeDropdown';
+//import QuantityDropdown from './QuantityDropdown';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
 function AddToCart() {
