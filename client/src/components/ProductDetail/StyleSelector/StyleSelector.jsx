@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 //import { View, Text } from 'react-native';
 //import { Icon } from '@rneui/themed';
 import styled from 'styled-components';
-//import { IoCheckmarkCircleOutline } from 'react-icon';
+//import { IoCheckmarkCircleOutline } from 'react-icons';
 
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
@@ -16,15 +16,16 @@ function StyleSelector(props) {
         {selectedStyle.name}
       </h4>
       <div>
-        <Thumbnails props={props}>
+        <ThumbnailsContainer props={props}>
           {styles.map((style, i) => (
             <Thumbnail key={style.style_id} i={i} value={style} style={style} props={props}/>
           ))}
-        </Thumbnails>
+        </ThumbnailsContainer>
       </div>
     </div>
   );
 }
+
 
  // overlay
   // could make background of outer div the thumbnail
@@ -67,6 +68,27 @@ function Thumbnail({i, style, value, props}) {
 
 export default StyleSelector;
 
+const ThumbnailsContainer = styled.div`
+  display: flex;
+  border: 1px;
+  padding: 1rem 1rem;
+  justify-content: space-around;
+`;
+
+
+const ThumbnailOverview = styled.div`
+  display: flex;
+  max-height: 20px
+  max-height: 20px
+  margin: 1 em;
+  justify-content: space-around;
+  overflow: auto;
+  text-align: center;
+  // border radius
+  stretch
+  clip:
+`;
+
 const Thumbnails = styled.div`
   display: flex;
   border: 1px;
@@ -79,8 +101,9 @@ const ThumbnailRow = styled.span`
   max-height: 20px
   max-width: 80%;
   align: center;
-  justify-content: space-around;`
-;
+  justify-content: space-around;
+  flex-wrap: wrap
+`;
 
 const ThumbnailContainer = styled.div`
   padding: 1em;
@@ -88,23 +111,16 @@ const ThumbnailContainer = styled.div`
   justify-content: space-evenly
 `;
 
-const ThumbnailOverview = styled.div`
-  margin: 1 em;
-  padding: 3% 1%;
-  text-align: center;
-  width: 20%
-  // border radius
-  stretch
-  clip:
-`;
 
+//padding: 3% 1%;
+//width: 20%
 //was a block above
 
 const BlueCheckmark = styled.div`
   position: absolute;
   top: 0pm;
   right: 0px;
-  display: felx;
+  display: flex;
   //clear, thivk padding
   //solid blue borde
   .// border radius

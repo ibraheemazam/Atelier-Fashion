@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import { MdArrowForwardIos, MdArrowBackIos } from 'react-icons/md'
 
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
@@ -137,11 +138,15 @@ function ImageGallery() {
             </Side>
             <Back>
               {place > 0
-            && <button type="button" onClick={handleClickBack}>back</button>}
+            && <Button type="button" onClick={handleClickBack}>
+                 <MdArrowBackIos />
+               </Button>}
             </Back>
             <Forward>
               {place < photosLength - 1
-            && <button type="button" onClick={handleClickForward}>Forward</button>}
+            && <Button type="button" onClick={handleClickForward}>
+                <MdArrowForwardIos />
+              </Button>}
             </Forward>
           </Main>
         )
@@ -166,6 +171,8 @@ const Gallery = styled.div`
 const Main = styled.div`
   width: 100%;
   height: 100%;
+  overflow: hidden;
+  justify-content: center;
 `;
 
 const Side = styled.div`
@@ -178,14 +185,24 @@ const Side = styled.div`
   positioning: relative;
 `;
 
-const Back = styled.span`
-  vertical-align: top;
-  margin-right: 55%;
+const Button = styled.button`
+  font-size: 36px;
+  background-color: rgba(0, 0, 0, 0)
 `;
 
-const Forward = styled.span`
+const Back = styled.div`
+  vertical-align: top;
+  margin-right: 55%;
+  display: inline-block;
+  margin-inline: auto;
+  margin-
+`;
+
+const Forward = styled.div`
   vertical-align: top;
   horizontal-align: middle;
+  margin-left: 1%
+  display: in-line;
 `;
 
 {/* <content-distribution> =
