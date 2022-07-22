@@ -76,7 +76,7 @@ function CardsList() {
           )}
       </LeftBox>
       <StyleCardList>
-        {productList.slice(cardIndex, cardIndex + 4).map((data, i) => <Card data={data} key={i} />)}
+        {productList.map((data, i) => <Card show={(i >= cardIndex) && (i < cardIndex + 4) ? 'show' : 'noshow'} data={data} key={i} />)}
         {(productList.length < 4 && productList.length > 0) && fillEmpty()}
         {(productList.length === 0) && <Text>No related items to show</Text>}
       </StyleCardList>
@@ -138,6 +138,7 @@ const LeftButton = styled.button`
     opacity: 0.80;
   }
   color: ${(props) => props.theme.fontColor};
+  cursor: pointer;
 `;
 
 const RightButton = styled.button`
@@ -152,6 +153,7 @@ const RightButton = styled.button`
     opacity: 0.80;
   }
   color: ${(props) => props.theme.fontColor};
+  cursor: pointer;
 `;
 
 const Empty = styled.div`

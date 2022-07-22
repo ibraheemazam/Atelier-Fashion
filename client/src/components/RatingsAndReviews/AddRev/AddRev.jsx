@@ -188,29 +188,28 @@ const AddButton = styled.button`
 `;
 
 const AddRevBackground = styled.div`
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vw;
-  width: 100vw;
-  background: #1fe0;
-  position: fixed;
-  top: 0; left: 0;
+  left: 0%;
+  top: 0%;
 `;
 
 const AddRevDiv = styled.div`
+  width: 60vw;
+  max-height: 80vh;
+  padding: 25px;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
-  padding: 1em;
-  height: 75vh;
-  width: 60vw;
   border: 1px solid;
-  overflow: scroll;
-  border-radius: 10px;
   background-color: ${(props) => props.theme.secondaryColor};
-  position: relative;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   filter: drop-shadow(2px 4px 6px black);
+  overflow: auto;
 `;
 
 const CloseDiv = styled.div`
