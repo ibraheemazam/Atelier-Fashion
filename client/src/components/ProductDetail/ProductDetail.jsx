@@ -16,9 +16,9 @@ function ProductDetail() {
   return (
     <div
       style={{
-        'margin-top': '1%',
-        'margin-right': '5%',
-        'margin-left': '5%',
+        'marginTop': '4%',
+        'marginRight': '2%',
+        'marginLeft': '2%',
       }}
       id="product-details"
     >
@@ -42,17 +42,12 @@ export default ProductDetail;
 
 const ColumnParent = styled.div`
   display: flex;
-  width: 50%
-  border: 1px
-  padding: .5% 0;
 `;
 
 const Column1 = styled.div`
   display: flex;
   margin: 0%;
-  padding: .5% .5%
-  text-align: center;
-  width: 40%;
+  width: 50%;
   flex: 1;
   justify-content: center;
 `;
@@ -60,7 +55,6 @@ const Column1 = styled.div`
 const Column2 = styled.div`
   padding: 2% 2%;
   text-align: left;
-  width: 40%;
+  width: 50%;
   flex: 1;
-  margin-left: 20px;
 `;

@@ -32,11 +32,11 @@ function ProductOverview(props) {
         {reviews.length > 0
           ? (
             <div>
-              <span className="stars">
+              {/* <span className="stars">
                 Seeing Stars
-              </span>
+              </span> */}
               <span className="readReviews">
-                <a>{`Read all ${reviews.length} reviews`}</a>
+                <a>{`Read all ${reviews.length}+ reviews`}</a>
               </span>
             </div>
           )
@@ -48,7 +48,7 @@ function ProductOverview(props) {
             </div>
           )}
         </ReviewContainer>
-      <h5>{productInfo.category}</h5>
+      <CategoryContainer>{productInfo.category}</CategoryContainer>
       <PriceContainer>
         {selectedStyle.sale_price
         ? (
@@ -93,6 +93,11 @@ function ProductOverview(props) {
 const ReviewContainer = styled.div`
   height: 5%;
   width: auto;
+`;
+
+const CategoryContainer = styled.div`
+  margin-top: 1em;
+  margin-bottom: 1em;
 `;
 
 const PriceContainer = styled.span`

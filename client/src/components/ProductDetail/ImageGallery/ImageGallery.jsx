@@ -99,8 +99,11 @@ function ImageGallery() {
         ? (
           <Main
             style={{
+              // backgroundImage: `url('${imageUrl}')` no-repeat center center fixed,
+              // backgroundRepeat: 'no-repeat',
               backgroundImage: `url('${imageUrl}')`,
               backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center center',
               backgroundSize: 'contain',
             }}
             alt={`${productInfo.name} in ${selectedStyle.name} style`}
@@ -160,19 +163,22 @@ function ImageGallery() {
 export default ImageGallery;
 
 const Gallery = styled.div`
-  width: 90%;
-  height: 90%;
+  width: 100%;
+  height: auto;
   display: flex;
   content-distribution: space-around;
 `;
 
 const Main = styled.div`
-  margin-top: 10%
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+  display: flex;
+  align-items: center;ß
+  margin-top: 10%;
+  width: auto;
+  height: auto;
+  // overflow: hidden;
   justify-content: center;
   content-distribution: space-around;
+  flex: f1;
 `;
 
 const Side = styled.div`
@@ -184,7 +190,8 @@ const Side = styled.div`
   padding-right: 2%;
   content-distribution: space-between, stretch, clippped;
   positioning: relative;
-  margin-top: 5%
+  margin-top: 5%;
+  align-items: center;
 `;
 
 const Button = styled.button`
