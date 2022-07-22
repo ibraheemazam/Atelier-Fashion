@@ -65,7 +65,7 @@ const Button = styled.button`
   position: absolute;
   top: 0px;
   right: 0px;
-  color: yellow;
+  color: gold;
   background-color: transparent;
   border: none;
   font-size: 25px;
