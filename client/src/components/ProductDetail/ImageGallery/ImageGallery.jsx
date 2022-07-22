@@ -160,22 +160,23 @@ function ImageGallery() {
 export default ImageGallery;
 
 const Gallery = styled.div`
-  width: 100%;
-  height: 100%;
-  padding-bottom: 56.25%
-  padding-left: 10%
-  padding-right: 10%
-  position: relative;
+  width: 90%;
+  height: 90%;
+  display: flex;
+  content-distribution: space-around;
 `;
 
 const Main = styled.div`
+  margin-top: 10%
   width: 100%;
   height: 100%;
   overflow: hidden;
   justify-content: center;
+  content-distribution: space-around;
 `;
 
 const Side = styled.div`
+  margin-left: 1%;
   width: 10%;
   display: inline-block;
   justify-content: left;
@@ -183,6 +184,7 @@ const Side = styled.div`
   padding-right: 2%;
   content-distribution: space-between, stretch, clippped;
   positioning: relative;
+  margin-top: 5%
 `;
 
 const Button = styled.button`
@@ -190,20 +192,21 @@ const Button = styled.button`
   background-color: rgba(0, 0, 0, 0)
 `;
 
-const Back = styled.div`
-  vertical-align: top;
-  margin-right: 55%;
+const Back = styled.span`
+  margin-right: 50%
   display: inline-block;
   margin-inline: auto;
   margin-
 `;
 
-const Forward = styled.div`
-  vertical-align: top;
-  horizontal-align: middle;
-  margin-left: 1%
-  display: in-line;
+const Forward = styled.span`
+  display: inline-block;
+  margin-inline-start: 60%
+  margin-inline-left: 1%
+
 `;
+
+//margin-inline-start: 85%;
 
 {/* <content-distribution> =
   space-between  |

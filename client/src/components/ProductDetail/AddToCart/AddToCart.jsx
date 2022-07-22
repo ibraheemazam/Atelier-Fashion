@@ -250,10 +250,9 @@ function AddToCart() {
 
   return (
     <Cart>
-      <span>
+      <SQContainer>
         <SelectSizeContainer>
-          <div>
-            <select
+            <SelectSize
             // { (initialState.soldOut)
             //   ? 'disabled'
             //   : ''
@@ -287,10 +286,13 @@ function AddToCart() {
 
 
 
-            </select>
-          </div>
+            </SelectSize>
         </SelectSizeContainer>
         <SelectQuantityContainer>
+          <SelectQ >---
+            <option defaultValue={1}>-</option>
+          </SelectQ>
+
           {/* <select
         //     {isSizeSelected
         //       ? ''
@@ -334,13 +336,13 @@ function AddToCart() {
                 // stockCount={state.stockCount}
               // quantityDropdownDisabled={initialState.quantityDropdownDisabled} */}
         </SelectQuantityContainer>
-      </span>
-      <span>
+      </SQContainer>
+      <BagContainer>
         <AddtoBag>
-          <button type="submit">Add to Cart</button>
+          <CartB type="submit">Add to Cart</CartB>
         </AddtoBag>
         <AddStars />
-      </span>
+      </BagContainer>
     </Cart>
   );
 }
@@ -361,8 +363,28 @@ function AddToCart() {
 // };
 
 const Cart = styled.div`
+  display: block;
 `;
+
+const SQContainer = styled.div`
+  flex-direction: row;
+  align-content: space-between;
+  display: inline-flex;
+  margin-bottom: 2%;
+`;
+
 const SelectSizeContainer = styled.div`
+  height: auto;
+  width: auto;
+`;
+
+const SelectSize = styled.select`
+  font-size: 1em;
+  padding-bottom: 0.4em;
+  padding-top: 0.4em;
+  padding-left: 1em;
+  padding-right: 1em;
+  margin-right: 1em;
 `;
 
 // const SizeCoverDD = styled.option`
@@ -370,15 +392,40 @@ const SelectSizeContainer = styled.div`
 // `;
 
 const SelectQuantityContainer = styled.div`
+  height: auto;
+  width: auto;
+  margin-left: 45ß%
+  margin-right: 2%
 `;
 
-// const QuantityCoverDD = styled.option`
-// `;
+const SelectQ = styled.select`
+  font-size: 1em;
+  padding-bottom: 0.4em;
+  padding-top: 0.4em;
+  padding-left: 1.1em;
+  padding-right: 1.1em;
+`;
+
+const BagContainer = styled.div`
+`;
+
 
 const AddtoBag = styled.div`
+  margin-top: 1px;
+  height: auto
+  display: grid;
+  width: 35%
+`;
+
+const CartB = styled.button`
+  font-size: 1em;
+  width: 13.3em;
+  height: 2.4em;
+
 `;
 
 const AddStars = styled.div`
+
 `;
 
 export default AddToCart;

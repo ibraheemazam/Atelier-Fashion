@@ -47,6 +47,7 @@ const Column1 = styled.div`
   text-align: center;
   width: 40%;
   flex: 1;
+  justify-content: center;
 `;
 
 const Column2 = styled.div`
