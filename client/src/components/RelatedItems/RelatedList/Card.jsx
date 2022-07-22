@@ -5,7 +5,7 @@ import { useGlobalContext } from '../../../contexts/GlobalStore';
 import CardImage from './CardImage';
 import CardStars from './CardStars';
 
-function Card({ data, show }) {
+function Card({ data }) {
   const {
     setProductID, setCardIndex,
   } = useGlobalContext();
@@ -20,8 +20,8 @@ function Card({ data, show }) {
     setCardIndex(0);
   }
   return (
-    <Animation className={show}>
-      { info.details && show === 'show'
+    <div>
+      { info.details
         ? (
           <CardStyle onClick={() => changeItem()}>
             <CardImage imageInfo={info.image.data} details={info.details} />
@@ -37,7 +37,7 @@ function Card({ data, show }) {
           </CardStyle>
         )
         : <div /> }
-    </Animation>
+    </div>
   );
 }
 
@@ -52,22 +52,12 @@ Card.propTypes = {
       }),
     }),
   }).isRequired,
-  show: PropTypes.string.isRequired,
 };
 
 const CardStyle = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-const Animation = styled.div`
-  border: 25px solid transparent;
-  &.show {
-    transition: all 0.5s ease-in-out;
-  }
-  &.noshow {
-    transition: all 0.5s ease-in-out;
-  }
+  border: 15px solid transparent;
 `;
 
 const Cards = styled.div`
