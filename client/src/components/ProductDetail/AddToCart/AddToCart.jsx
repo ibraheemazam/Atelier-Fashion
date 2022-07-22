@@ -107,7 +107,7 @@ function AddToCart() {
   //   });
   // }
 
-  console.log('selectedStyle from add to cart before render: ', selectedStyle);
+  // console.log('selectedStyle from add to cart before render: ', selectedStyle);
 
 
   // setStock(() => initialStock);
@@ -264,9 +264,9 @@ function AddToCart() {
               {selectedStyle.skus
               && (
                 Object.entries(selectedStyle.skus).map(([sku, {quantity, size}]) => {
-                console.log('sku from mapped sku objects: ', sku);
+               // console.log('sku from mapped sku objects: ', sku);
                 //  , 'stock object from mapped stock objecs: ', stock)
-                console.log('quantity from mapped sku objects: ', quantity, 'size from mapped sku objects: ', size);
+                //console.log('quantity from mapped sku objects: ', quantity, 'size from mapped sku objects: ', size);
                   return (quantity > 0 && <option key={sku}>{size}</option>)
                 }
 
