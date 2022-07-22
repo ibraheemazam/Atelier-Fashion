@@ -29,7 +29,7 @@ function QuestionAndAnswers() {
                 question={question}
                 key={`${question.question_id}`}
               />
-              <hr style={{ width: '90%' }} />
+              <hr/>
             </>
           ))
         )}
@@ -44,6 +44,8 @@ export default QuestionAndAnswers;
 const Container = styled.div`
   justify-content: center;
   margin-top: 20px;
+  margin-left: 5%;
+  margin-right: 5%;
 `;
 
 const QuestionListContainer = styled.div`

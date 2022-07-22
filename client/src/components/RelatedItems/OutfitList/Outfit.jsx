@@ -2,6 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
 function Outfit({ outfit, index }) {
@@ -22,7 +23,7 @@ function Outfit({ outfit, index }) {
     <Outline>
       <ImageOutline>
         <Image src={outfitImage ? outfitImage : defaultImage} />
-        <Button onClick={() => removeOutfit()}>&#10006;</Button>
+        <Button onClick={() => removeOutfit()}><AiOutlineCloseCircle /></Button>
       </ImageOutline>
       <Info>{outfitDetails.name}</Info>
       <Info>{outfitDetails.category}</Info>
@@ -94,7 +95,7 @@ const Button = styled.button`
   position: absolute;
   top: 0px;
   right: 0px;
-  color: red;
+  color: black;
   background-color: transparent;
   border: none;
   font-size: 30px;

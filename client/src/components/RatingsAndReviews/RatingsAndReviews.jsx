@@ -126,7 +126,8 @@ export default RatingsAndReviews;
 
 const Container = styled.div`
   display: flex;
-  padding: 1em;
+  padding-left: 5%;
+  padding-right: 5%;
   background: ;
 `;
 

@@ -61,7 +61,7 @@ const CardStyle = styled.div`
 `;
 
 const Animation = styled.div`
-  border: 7px solid transparent;
+  border: 25px solid transparent;
   &.show {
     transition: all 0.5s ease-in-out;
   }

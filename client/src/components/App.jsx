@@ -17,6 +17,7 @@ function App() {
     navColor: '#becbd2',
     navBarFont: '#000000',
     fontColor: '#000000',
+    starBackground: 'lightgrey',
   };
 
   const themeDark = {
@@ -26,6 +27,7 @@ function App() {
     navColor: '#3a4b53',
     navBarFont: '#fff',
     fontColor: 'white',
+    starBackground: '#3a4b53',
   };
 
   const toggleTheme = () => {
