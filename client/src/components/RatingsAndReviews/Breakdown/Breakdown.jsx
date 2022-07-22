@@ -13,7 +13,7 @@ function Breakdown({ productID, productInfo, revMeta, filterReviews }) {
 
   return (
     <div>
-      RATINGS &#38; REVIEWS
+      Ratings & Reviews
       <Summary revMeta={revMeta} />
       <RatingBreakdown
         revMeta={revMeta}

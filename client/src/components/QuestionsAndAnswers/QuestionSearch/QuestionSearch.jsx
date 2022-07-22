@@ -32,9 +32,8 @@ function QuestionSearch() {
 }
 
 const QuestionSearchBar = styled.div`
-  justify-content: center;
+  justify-content: left;
   align-items: center;
-  text-align: center;
   padding: 10px;
   margin-left: 20px;
   margin-right: 20px;
@@ -43,7 +42,7 @@ const QuestionSearchBar = styled.div`
 
 const Input = styled.input`
   width: 100%;
-  height: 50px;
+  height: 30px;
   border-color: ${(props) => props.theme.fontColor};
   border-radius: 10px;
   background-color: ${(props) => props.theme.tertiaryColor};
@@ -55,6 +54,8 @@ const Input = styled.input`
   :-ms-input-placeholder {
      color: ${(props) => props.theme.fontColor};
   }
+  width: 56%;
+  margin-left: 8%;
 `;
 
 export default QuestionSearch;

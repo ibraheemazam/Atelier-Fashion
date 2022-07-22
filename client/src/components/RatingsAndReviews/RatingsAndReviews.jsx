@@ -129,6 +129,7 @@ const Container = styled.div`
   padding-left: 5%;
   padding-right: 5%;
   background: ;
+  margin-top: 20px;
 `;
 
 const ReviewListContainer = styled.div`
