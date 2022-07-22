@@ -11,10 +11,10 @@ function StyleSelector(props) {
 
   return (
     <div>
-      <h4>
+      <StyleName>
         <b>{'Style > '}</b>
         {selectedStyle.name}
-      </h4>
+      </StyleName>
       <div>
         <ThumbnailsContainer props={props}>
           {styles.map((style, i) => (
@@ -25,6 +25,12 @@ function StyleSelector(props) {
     </div>
   );
 }
+
+const StyleName = styled.h4`
+  margin-inline-start: 1em;
+  margin-block-end: 0px;
+`;
+
 
 
  // overlay
@@ -77,7 +83,7 @@ const ThumbnailsContainer = styled.div`
 
 
 const ThumbnailOverview = styled.div`
-  display: flex;
+  flex: 1 20px
   max-height: 20px
   max-height: 20px
   margin: 1 em;

@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { IoLogoFacebook, IoLogoTwitter, IoLogoPinterest } from 'react-icons/Io';
+
+
+
+
 
 // import StyleSelector from '../StyleSelector/StyleSelector';
 import RatingsAndReviews from '../../RatingsAndReviews/RatingsAndReviews';
@@ -27,11 +32,11 @@ function ProductOverview(props) {
         {reviews.length > 0
           ? (
             <div>
-              <span className="stars">
+              {/* <span className="stars">
                 Seeing Stars
-              </span>
+              </span> */}
               <span className="readReviews">
-                <a>{`Read all ${reviews.length} reviews`}</a>
+                <a>{`Read all ${reviews.length}+ reviews`}</a>
               </span>
             </div>
           )
@@ -43,7 +48,7 @@ function ProductOverview(props) {
             </div>
           )}
         </ReviewContainer>
-      <h5>{productInfo.category}</h5>
+      <CategoryContainer>{productInfo.category}</CategoryContainer>
       <PriceContainer>
         {selectedStyle.sale_price
         ? (
@@ -65,9 +70,19 @@ function ProductOverview(props) {
       </DescriptionContainer>
         <SocialMediaContainer>
           <ShareSocial>
-            <button type="button">Share on Facebook!</button>
-            <button type="button">Share on Twitter!</button>
-            <button type="button">Share on Pintrest!</button>
+            {/* <button type="button"> */}
+            <Facebook>
+              <IoLogoFacebook />
+            </Facebook>
+            <Twitter>
+              <IoLogoTwitter />
+            </Twitter>
+            <Pinterest>
+              <IoLogoPinterest />
+            </Pinterest>
+            {/* </button> */}
+            {/* <button type="button">Share on Twitter!</button> */}
+            {/* <button type="button">Share on Pintrest!</button> */}
           </ShareSocial>
         </SocialMediaContainer>
       </div>
@@ -80,7 +95,12 @@ const ReviewContainer = styled.div`
   width: auto;
 `;
 
-const PriceContainer = styled.div`
+const CategoryContainer = styled.div`
+  margin-top: 1em;
+  margin-bottom: 1em;
+`;
+
+const PriceContainer = styled.span`
 `;
 
 const DescriptionContainer = styled.div`
@@ -88,13 +108,48 @@ const DescriptionContainer = styled.div`
 `;
 
 const SocialMediaContainer = styled.div`
+  height: auto;
+  width: auto;
 `;
+
+// const FaFacebookSquare = styled.button`
+//   height: 1rem;
+// `;
+
+const Facebook = styled.div`
+  flex: f1;
+  font-size: 24px;
+`;
+
+const Twitter = styled.div`
+  flex: f1;
+  font-size: 24px;
+
+`;
+
+const Pinterest = styled.div`
+  flex: f1;
+  font-size: 24px;
+`;
+
+// const IoLogoFacebook = styled.div`
+//   font-size; 36px;
+// `;
+
+// const IoLogoTwitter = styled.div`
+// font-size; 36px;
+// `;
+
+// const IoLogoPinterest = styled.div`
+//   font-size: 36px;
+// `;
 
 
 const ShareSocial = styled.div`
-  height: 50%;
-  width: auto;
+  height: 1.5rem;
+  width: 4.5rem;
   border: .1rem solid black;
+  display: flex;
 `;
 
 

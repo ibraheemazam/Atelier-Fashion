@@ -99,8 +99,11 @@ function ImageGallery() {
         ? (
           <Main
             style={{
+              // backgroundImage: `url('${imageUrl}')` no-repeat center center fixed,
+              // backgroundRepeat: 'no-repeat',
               backgroundImage: `url('${imageUrl}')`,
               backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center center',
               backgroundSize: 'contain',
             }}
             alt={`${productInfo.name} in ${selectedStyle.name} style`}
@@ -161,21 +164,25 @@ export default ImageGallery;
 
 const Gallery = styled.div`
   width: 100%;
-  height: 100%;
-  padding-bottom: 56.25%
-  padding-left: 10%
-  padding-right: 10%
-  position: relative;
+  height: auto;
+  display: flex;
+  content-distribution: space-around;
 `;
 
 const Main = styled.div`
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+  display: flex;
+  align-items: center;ß
+  margin-top: 10%;
+  width: auto;
+  height: auto;
+  // overflow: hidden;
   justify-content: center;
+  content-distribution: space-around;
+  flex: f1;
 `;
 
 const Side = styled.div`
+  margin-left: 1%;
   width: 10%;
   display: inline-block;
   justify-content: left;
@@ -183,6 +190,8 @@ const Side = styled.div`
   padding-right: 2%;
   content-distribution: space-between, stretch, clippped;
   positioning: relative;
+  margin-top: 5%;
+  align-items: center;
 `;
 
 const Button = styled.button`
@@ -190,20 +199,21 @@ const Button = styled.button`
   background-color: rgba(0, 0, 0, 0)
 `;
 
-const Back = styled.div`
-  vertical-align: top;
-  margin-right: 55%;
+const Back = styled.span`
+  margin-right: 50%
   display: inline-block;
   margin-inline: auto;
   margin-
 `;
 
-const Forward = styled.div`
-  vertical-align: top;
-  horizontal-align: middle;
-  margin-left: 1%
-  display: in-line;
+const Forward = styled.span`
+  display: inline-block;
+  margin-inline-start: 60%
+  margin-inline-left: 1%
+
 `;
+
+//margin-inline-start: 85%;
 
 {/* <content-distribution> =
   space-between  |
