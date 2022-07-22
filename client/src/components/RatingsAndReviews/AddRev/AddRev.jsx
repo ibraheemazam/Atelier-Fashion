@@ -185,6 +185,9 @@ const AddButton = styled.button`
   color: ${(props) => props.theme.fontColor};
   border-radius: 8px;
   cursor: pointer;
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
 `;
 
 const AddRevBackground = styled.div`
@@ -271,7 +274,8 @@ const ButtonDiv = styled.button`
   font-size: .9em;
   font-weight: bold;
   border-radius: 10px;
+  cursor: pointer;
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
 `;
-
-// &#9733;
-

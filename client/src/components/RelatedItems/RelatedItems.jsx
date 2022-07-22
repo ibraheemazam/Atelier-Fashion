@@ -31,7 +31,6 @@ const Text = styled.div`
   margin-left: 20px;
   margin-right: 20px;
   border-radius: 10px;
-  background-color: ${(props) => props.theme.tertiaryColor};
 `;
 
 export default RelatedItems;
