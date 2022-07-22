@@ -18,7 +18,10 @@ function AddOutfit() {
   }
   return (
     <Outline>
-      <Button onClick={() => add()}> + </Button>
+      <Button onClick={() => add()}>
+        +
+        <Text>Add Outfit</Text>
+      </Button>
     </Outline>
   );
 }
@@ -31,6 +34,13 @@ const Button = styled.button`
   width: 225px;
   height: 225px;
   font-size: 60px;
+  font-width: bold;
+  border-radius: 10px;
+  cursor: pointer;
+`;
+
+const Text = styled.div`
+  font-size: 20px;
   font-width: bold;
 `;
 

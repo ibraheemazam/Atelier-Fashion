@@ -76,13 +76,13 @@ const Modal = styled.div`
   position: absolute;
   justify-content: center;
   width: 400px;
-  height: 100px;
-  top: 25%;
-  right: -30%;
+  height: 150px;
+  top: 20%;
+  right: -35%;
   border: 2px solid black;
   background-color: gray;
   overflow: auto;
-  z-index: 2;
+  z-index: 9;
 `;
 
 const Product = styled.div`
