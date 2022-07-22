@@ -110,7 +110,7 @@ const StarBar = styled.div`
 `;
 
 const StarBarBackground = styled.div`
-  background: lightgrey;
+  background: ${(props) => props.theme.starBackground};
   height: 100%;
   width: 70%;
 `;

@@ -297,6 +297,7 @@ const FooterButton = styled.button`
   color: ${(props) => props.theme.fontColor};
   background-color: ${(props) => props.theme.backgroundColor};
   border-radius: 10px;
+  border: 1px solid;
   font-size: 20px;
   cursor: pointer;
   &:hover {

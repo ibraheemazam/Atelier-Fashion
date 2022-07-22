@@ -14,7 +14,14 @@ import { useGlobalContext } from '../../contexts/GlobalStore';
 function ProductDetail() {
   const { productID, productInfo, setProductID, setProductInfo, styles, selectedStyle, setSelectedStyle } = useGlobalContext();
   return (
-    <div id="product-details">
+    <div
+      style={{
+        'margin-top': '1%',
+        'margin-right': '5%',
+        'margin-left': '5%',
+      }}
+      id="product-details"
+    >
       <div>
         <ColumnParent>
           <Column1>

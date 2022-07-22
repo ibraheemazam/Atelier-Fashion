@@ -21,7 +21,7 @@ function LengthBreakdown({ revMeta, productInfo }) {
           </div>
           <BarsContainter>
             <Row1>
-              <DotDiv width={parseInt(charEntry[1].value, 10) * 3.9}>
+              <DotDiv width={parseInt(charEntry[1].value, 10) * 4.9}>
                 &#9660;
               </DotDiv>
               <Bar width={100 - (parseInt(charEntry[1].value, 10) / 5) * 100} />
@@ -78,7 +78,6 @@ LengthBreakdown.propTypes = {
 };
 
 export default LengthBreakdown;
-
 
 const BarsContainter = styled.div`
   display: flex;

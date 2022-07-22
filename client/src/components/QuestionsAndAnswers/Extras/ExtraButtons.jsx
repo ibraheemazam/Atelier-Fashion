@@ -24,7 +24,7 @@ function ExtraButtons() {
       </Button>
       {numQuestions < questions.length ? (
         <Button type="submit" onClick={() => increaseQuestions()}>
-          More Answered Questions
+          More Questions
         </Button>
       ) : null}
       {showModal ? (
@@ -41,7 +41,7 @@ const ButtonContainer = styled.div`
   align-items: center;
   margin-left: 20px;
   margin-right: 20px;
-  margin-top: 10px;
+  margin-top: 5px;
   border-radius: 10px;
 `;
 

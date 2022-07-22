@@ -51,13 +51,13 @@ function HelpfulReport({ review }) {
     <HelpfulnessDiv>
       <div>Was this review helpful?</div>
       <YesButton helpfulClicked={helpfulClicked} onClick={() => handleHelpfulClick()}>
-        <u>Yes</u>
+        <div>Yes</div>
         &nbsp;
         {`(${helpfulness})`}
       </YesButton>
       <div>|</div>
       <ReportButton reportClicked={reportClicked} onClick={() => handleReport()}>
-        <u>{report}</u>
+        <div>{report}</div>
         {/* need to add functionality that changes this to reported once clicked */}
       </ReportButton>
     </HelpfulnessDiv>
@@ -85,9 +85,13 @@ const HelpfulnessDiv = styled.div`
 const YesButton = styled.div`
   display: flex;
   cursor: ${(props) => (!props.helpfulClicked ? 'pointer' : 'default')};
+  font-weight: ${(props) => (!props.helpfulClicked ? 'normal' : 'bold')};
+  text-decoration: ${(props) => (!props.helpfulClicked ? 'underline' : 'normal')};
 `;
 
 const ReportButton = styled.div`
   display: flex;
   cursor: ${(props) => (!props.reportClicked ? 'pointer' : 'default')};
+  font-weight: ${(props) => (!props.reportClicked ? 'normal' : 'bold')};
+  text-decoration: ${(props) => (!props.reportClicked ? 'underline' : 'normal')};
 `;
