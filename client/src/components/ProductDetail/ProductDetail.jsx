@@ -37,20 +37,20 @@ const ColumnParent = styled.div`
   display: flex;
   width: 50%
   border: 1px
-  padding: 1rem 1rem;
+  padding: .5% 0;
 `;
 
 const Column1 = styled.div`
   display: flex;
   margin: 0%;
-  padding: 2% 2%;
+  padding: .5% .5%
   text-align: center;
   width: 40%;
   flex: 1;
 `;
 
 const Column2 = styled.div`
-  padding: 2px;
+  padding: 2% 2%;
   text-align: left;
   width: 40%;
   flex: 1;
