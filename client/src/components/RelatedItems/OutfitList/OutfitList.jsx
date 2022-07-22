@@ -39,7 +39,7 @@ function OutfitList() {
           )}
       </LeftBox>
       <StyleList>
-        {(outfits.slice(outfitIndex, outfitIndex + 4)).map((outfit, index) => <Outfit outfit={outfit} key={index} index={index} />)}
+        {(outfits.slice(outfitIndex, outfitIndex + 4)).map((outfit, i) => <Outfit outfit={outfit} key={i} index={i} />)}
         {(outfits.length <= 3 || (outfits.length >= 4 && outfits.length - outfitIndex === 3))
          && <AddOutfit /> }
         {(outfits.length <= 3) && fillEmpty()}
@@ -95,6 +95,7 @@ const LeftButton = styled.button`
     opacity: 0.60;
   }
   color: ${(props) => props.theme.fontColor};
+  cursor: pointer;
 `;
 
 const RightButton = styled.button`
@@ -109,6 +110,7 @@ const RightButton = styled.button`
     opacity: 0.60;
   }
   color: ${(props) => props.theme.fontColor};
+  cursor: pointer;
 `;
 
 const EmptyOutfit = styled.div`

@@ -5,7 +5,7 @@ import { useGlobalContext } from '../../../contexts/GlobalStore';
 import CardImage from './CardImage';
 import CardStars from './CardStars';
 
-function Card({ data }) {
+function Card({ data, show }) {
   const {
     setProductID, setCardIndex,
   } = useGlobalContext();
@@ -20,8 +20,8 @@ function Card({ data }) {
     setCardIndex(0);
   }
   return (
-    <div>
-      { info.details
+    <Animation className={show}>
+      { info.details && show === 'show'
         ? (
           <CardStyle onClick={() => changeItem()}>
             <CardImage imageInfo={info.image.data} details={info.details} />
@@ -37,7 +37,7 @@ function Card({ data }) {
           </CardStyle>
         )
         : <div /> }
-    </div>
+    </Animation>
   );
 }
 
@@ -46,19 +46,28 @@ Card.propTypes = {
     details: PropTypes.shape({
       data: PropTypes.shape({
         id: PropTypes.number,
-        // name: PropTypes.string,
-        // category: PropTypes.string,
-        // default_price: PropTypes.string,
+        name: PropTypes.string,
+        category: PropTypes.string,
+        default_price: PropTypes.string,
       }),
     }),
   }).isRequired,
+  show: PropTypes.string.isRequired,
 };
 
 const CardStyle = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: auto;
-  border: 15px solid transparent;
+`;
+
+const Animation = styled.div`
+  border: 7px solid transparent;
+  &.show {
+    transition: all 0.5s ease-in-out;
+  }
+  &.noshow {
+    transition: all 0.5s ease-in-out;
+  }
 `;
 
 const Cards = styled.div`
@@ -67,11 +76,12 @@ const Cards = styled.div`
 `;
 
 const Text = styled.div`
-display: flex;
-flex-direction: column;
+  display: flex;
+  flex-direction: column;
   &:hover {
     text-decoration: underline;
   }
+  cursor: pointer;
 `;
 
 export default Card;
