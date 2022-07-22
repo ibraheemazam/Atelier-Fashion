@@ -6,17 +6,23 @@ import OutfitList from './OutfitList/OutfitList';
 function RelatedItems() {
   return (
     <div id="related-items">
-      <Text>
-        Related Items
-      </Text>
-      <CardsList />
-      <Text>
-        Outfit List
-      </Text>
-      <OutfitList />
+      <Container>
+        <Text>
+          Related Items
+        </Text>
+        <CardsList />
+        <Text>
+          Outfit List
+        </Text>
+        <OutfitList />
+      </Container>
     </div>
   );
 }
+
+const Container = styled.div`
+  padding-top: 20px;
+`;
 
 const Text = styled.div`
   font-size: large;

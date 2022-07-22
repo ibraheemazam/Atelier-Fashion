@@ -95,6 +95,7 @@ const LeftButton = styled.button`
     opacity: 0.60;
   }
   color: ${(props) => props.theme.fontColor};
+  cursor: pointer;
 `;
 
 const RightButton = styled.button`
@@ -109,6 +110,7 @@ const RightButton = styled.button`
     opacity: 0.60;
   }
   color: ${(props) => props.theme.fontColor};
+  cursor: pointer;
 `;
 
 const EmptyOutfit = styled.div`
