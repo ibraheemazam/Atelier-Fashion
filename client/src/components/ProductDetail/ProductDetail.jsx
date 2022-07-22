@@ -41,8 +41,9 @@ const ColumnParent = styled.div`
 `;
 
 const Column1 = styled.div`
-  margin: 3%;
-  padding: 20% 2%;
+  display: flex;
+  margin: 0%;
+  padding: 2% 2%;
   text-align: center;
   width: 40%;
   flex: 1;
