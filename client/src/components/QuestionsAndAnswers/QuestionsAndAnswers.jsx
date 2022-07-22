@@ -43,7 +43,7 @@ export default QuestionAndAnswers;
 
 const Container = styled.div`
   justify-content: center;
-  margin-top: 100px;
+  margin-top: 20px;
 `;
 
 const QuestionListContainer = styled.div`
