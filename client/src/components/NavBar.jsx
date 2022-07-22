@@ -67,7 +67,7 @@ const Background = styled.div`
   grid-template-columns: 14% 18% 18% 18% 18% 14%;
   justify-content: center;
   height: auto;
-  margin-bottom: 100px;
+  margin-bottom: 10px;
 `;
 
 const GridItem = styled.div`
@@ -75,7 +75,6 @@ const GridItem = styled.div`
   align-items: center;
   justify-content: space-evenly;
   cursor: pointer;
-  border-right: 1px solid;
   &:hover {
     font-weight: bold;
   }
