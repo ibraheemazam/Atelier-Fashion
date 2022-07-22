@@ -39,9 +39,9 @@ const ButtonContainer = styled.div`
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
-  background-color: ${(props) => props.theme.secondaryColor};
   margin-left: 20px;
   margin-right: 20px;
+  margin-top: 10px;
   border-radius: 10px;
 `;
 
@@ -50,10 +50,11 @@ const Button = styled.button`
   width: 250px;
   border-radius: 10px;
   cursor: pointer;
+  font-weight: bold;
   &:hover {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   }
-  background-color: ${(props) => props.theme.tertiaryColor};
+  background-color: ${(props) => props.theme.secondaryColor};
   color: ${(props) => props.theme.fontColor};
 `;
 

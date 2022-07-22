@@ -102,8 +102,13 @@ function QuestionEntry({ question }) {
         </AnswerNone>
       );
     }
-    const list = topAnswers.map((answer) => (
-      <AnswerEntry answer={answer} key={answer.id} />
+    const list = topAnswers.map((answer, idx) => (
+      <>
+        <AnswerEntry answer={answer} key={answer.id} />
+        {idx !== topAnswers.length - 1 ? (
+          <hr style={{ width: '90%' }} />) : (
+          null) }
+      </>
     ));
     return (
       <AnswersListContainer
@@ -198,7 +203,6 @@ const Entry = styled.div`
   width: 100%;
   justify-content: center;
   padding-bottom: 10px;
-  border-bottom: 1px solid;
 `;
 
 const Question = styled.div`
@@ -233,7 +237,6 @@ const AnswersListContainer = styled.div`
   overflow-x: auto;
   overflow-y: auto;
   text-align: justify;
-  border-radius: 10px;
   grid-column: 2;
 `;
 
