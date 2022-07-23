@@ -20,10 +20,6 @@ function ProductOverview(props) {
     productID, productInfo, reviews, selectedStyle, setSelectedStyle, styles, setStyles,
   } = useGlobalContext();
 
-  // correct review count
-  //stars
-  // average review score
-  // need to make href work. use id on component, may need to pass that id as props tho so does not get lost in child components
 
   return (
     <div>
@@ -32,9 +28,6 @@ function ProductOverview(props) {
         {reviews.length > 0
           ? (
             <div>
-              {/* <span className="stars">
-                Seeing Stars
-              </span> */}
               <span className="readReviews">
                 <a>{`Read all ${reviews.length}+ reviews`}</a>
               </span>
@@ -70,7 +63,6 @@ function ProductOverview(props) {
       </DescriptionContainer>
         <SocialMediaContainer>
           <ShareSocial>
-            {/* <button type="button"> */}
             <Facebook>
               <IoLogoFacebook />
             </Facebook>
@@ -80,9 +72,6 @@ function ProductOverview(props) {
             <Pinterest>
               <IoLogoPinterest />
             </Pinterest>
-            {/* </button> */}
-            {/* <button type="button">Share on Twitter!</button> */}
-            {/* <button type="button">Share on Pintrest!</button> */}
           </ShareSocial>
         </SocialMediaContainer>
       </div>
@@ -112,10 +101,6 @@ const SocialMediaContainer = styled.div`
   width: auto;
 `;
 
-// const FaFacebookSquare = styled.button`
-//   height: 1rem;
-// `;
-
 const Facebook = styled.div`
   flex: f1;
   font-size: 24px;
@@ -131,18 +116,6 @@ const Pinterest = styled.div`
   flex: f1;
   font-size: 24px;
 `;
-
-// const IoLogoFacebook = styled.div`
-//   font-size; 36px;
-// `;
-
-// const IoLogoTwitter = styled.div`
-// font-size; 36px;
-// `;
-
-// const IoLogoPinterest = styled.div`
-//   font-size: 36px;
-// `;
 
 
 const ShareSocial = styled.div`

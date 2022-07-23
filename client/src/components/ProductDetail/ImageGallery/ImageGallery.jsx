@@ -40,43 +40,6 @@ function ImageGallery() {
     getUrl();
   }, [selectedStyle, photos, main, place]);
 
-  // useEffect(() => {
-  //   setMain(() => photos[0]);
-  // }, [photos, setMain]);
-
-  //   const [styleImages, setStyleImages] = useState([]);
-
-  // useEffect(() => {
-  //   // setProductID(windows.location.pathname);
-  //     axios
-  //       .get('/styles', { params: { product_id: productID } })
-  //       .then((stylesResult) => setStyleImages(stylesResult.results.forEach()))
-  //       // .then((photos) => )
-  //       .catch((err) => { console.log('error getting styles images', err); });
-  //   }
-  //   getStyles()
-  //     .catch((err) => { console.log('error getting styles images', err); });
-  // }, [setProductID, productID]);
-
-  //   // console.log(styles);
-  //   // const stylePhotos = productStyles.results.photos;
-
-  //   // function handleThumbnailClick(e) {
-  //   //   e.preventDefault();
-  //   //   setSelectedStyle(style);
-  //   // };
-  //   let allThumbnails;
-  //   let images;
-  //   let fullImages;
-
-  //   function UpdateImageGallery(e, selectedStyle) {
-  //     e.preventDefault();
-  //     images = selectedStyle.photos.thumbnails;
-  //     fullImages = selectedStyle.photos.url;
-  //     allThumbnails = images.map((image) => image.thumbnail);
-  //   }
-
-  //  {allThumbnails.map((thumbnail) => <img src={thumbnail} />)}
 
   function changeMain(e, value) {
     e.preventDefault();
