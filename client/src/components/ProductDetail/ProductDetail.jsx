@@ -47,14 +47,15 @@ const ColumnParent = styled.div`
 const Column1 = styled.div`
   display: flex;
   margin: 0%;
-  width: 50%;
-  flex: 1;
-  justify-content: center;
+  width: 70%;
+  flex: 1.5;
+  justify-content: space-between;
+  flex-direction: column;
 `;
 
 const Column2 = styled.div`
   padding: 2% 2%;
   text-align: left;
-  width: 50%;
+  width: 30%;
   flex: 1;
 `;
