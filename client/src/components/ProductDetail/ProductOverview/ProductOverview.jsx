@@ -57,10 +57,6 @@ function ProductOverview(props) {
         )}
       </PriceContainer>
       <h2>{productInfo.name}</h2>
-      <DescriptionContainer>
-        <h4>{productInfo.slogan}</h4>
-        <p>{productInfo.description}</p>
-      </DescriptionContainer>
         <SocialMediaContainer>
           <ShareSocial>
             <Facebook>
@@ -92,9 +88,6 @@ const CategoryContainer = styled.div`
 const PriceContainer = styled.span`
 `;
 
-const DescriptionContainer = styled.div`
-  display: block
-`;
 
 const SocialMediaContainer = styled.div`
   height: auto;

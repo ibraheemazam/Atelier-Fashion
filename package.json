@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "npx nodemon --watch server server/index.js",
-    "client": "npx webpack --watch",
+    "server-dev": "npx nodemon --watch server server/index.js",
+    "client-dev": "npx webpack --watch",
+    "build": "npx webpack",
+    "server": "npx node server/index.js",
     "test": "jest",
     "coverage": "jest --coverage"
   },

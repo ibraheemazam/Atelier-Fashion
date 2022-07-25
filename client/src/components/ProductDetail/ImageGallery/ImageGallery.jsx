@@ -22,12 +22,8 @@ function ImageGallery() {
   useEffect(() => {
     function getPhotos() {
       if (photos) {
-        // if (index) {
-        // setMain(() => photos[index]);
-        // } else {
         setMain(() => photos[place]);
         setPhotosLength(() => photos.length);
-        // }
       }
     }
     function getUrl() {
@@ -57,69 +53,75 @@ function ImageGallery() {
   }
 
   return (
-    <Gallery>
-      {imageUrl
-        ? (
-          <Main
-            style={{
-              // backgroundImage: `url('${imageUrl}')` no-repeat center center fixed,
-              // backgroundRepeat: 'no-repeat',
-              backgroundImage: `url('${imageUrl}')`,
-              backgroundRepeat: 'no-repeat',
-              backgroundPosition: 'center center',
-              backgroundSize: 'contain',
-            }}
-            alt={`${productInfo.name} in ${selectedStyle.name} style`}
-          >
-            <Side>
-              {photos
-            && photos.map((photo, index) => (
-              <div
-                key={photo.url}
-                index={index}
-                style={{
-                  marginLeft: '2%',
-                }}
-              >
+    <>
+      <Gallery>
+        {imageUrl
+          ? (
+            <Main>
+               <Side>
+                {photos
+              && photos.map((photo, index) => (
                 <div
-                  onClick={(e) => changeMain(e, index)}
-                  role="presentation"
+                  key={photo.url}
+                  index={index}
                   style={{
-                    maxWidth: '100%',
-                    height: 'auto',
+                    marginLeft: '2%',
                   }}
                 >
-                  <img
-                    src={photo.thumbnail_url}
-                    alt=""
+                  <div
+                    onClick={(e) => changeMain(e, index)}
+                    role="presentation"
                     style={{
-                      width: '100%',
-                      height: '100%',
-                      border: '.5px black solid',
+                      maxWidth: '100%',
+                      height: 'auto',
                     }}
-                  />
+                  >
+                    <img
+                      src={photo.thumbnail_url}
+                      alt=""
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        border: '.5px black solid',
+                      }}
+                    />
+                  </div>
                 </div>
-              </div>
-            ))}
-            </Side>
-            <Back>
-              {place > 0
-            && <Button type="button" onClick={handleClickBack}>
-                 <MdArrowBackIos />
-               </Button>}
-            </Back>
-            <Forward>
-              {place < photosLength - 1
-            && <Button type="button" onClick={handleClickForward}>
-                <MdArrowForwardIos />
-              </Button>}
-            </Forward>
-          </Main>
-        )
-        : (
-          <div>No Image Available</div>
-        )}
-    </Gallery>
+              ))}
+              </Side>
+              <Back>
+                {place > 0
+                ? <Button type="button" onClick={handleClickBack}>
+                    <MdArrowBackIos />
+                  </Button>
+                : <PlaceholderButton type="button" visibility="hidden" disabled>
+                    <MdArrowBackIos style={{color: 'rgba(0, 0, 0, 0)',}} />
+                  </PlaceholderButton>}
+              </Back>
+              <Photo
+                src={imageUrl}
+                alt={`${productInfo.name} in ${selectedStyle.name} style`}
+              />
+              <Forward>
+                {place < photosLength - 1
+              ? <Button type="button" onClick={handleClickForward}>
+                  <MdArrowForwardIos />
+                </Button>
+              : <PlaceholderButton type="button" visibility="hidden" disabled>
+                  <MdArrowForwardIos style={{color: 'rgba(0, 0, 0, 0)',}}/>
+                </PlaceholderButton>}
+              </Forward>
+            </Main>
+          )
+          : (
+            <div>No Image Available</div>
+          )}
+      </Gallery>
+      <ProductDescription>
+       <h4>{productInfo.slogan}</h4>
+        <p>{productInfo.description}</p>
+      </ProductDescription>
+    </>
   );
 }
 
@@ -127,7 +129,7 @@ export default ImageGallery;
 
 const Gallery = styled.div`
   width: 100%;
-  height: auto;
+  height: 100%;
   display: flex;
   content-distribution: space-around;
 `;
@@ -144,6 +146,14 @@ const Main = styled.div`
   flex: f1;
 `;
 
+const Photo = styled.img`
+  object-fit: scale-down;
+  max-width: 100%;
+  max-height: 100%;
+  overflow: hidden;
+`;
+
+
 const Side = styled.div`
   margin-left: 1%;
   width: 10%;
@@ -158,12 +168,21 @@ const Side = styled.div`
 `;
 
 const Button = styled.button`
-  font-size: 36px;
-  background-color: rgba(0, 0, 0, 0)
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+`;
+
+const PlaceholderButton = styled.button`
+  background-color: transparent;
+  border: none;
+  color: none;
+`;
+
+const PlaceholderButton2 = styled.button`
 `;
 
 const Back = styled.span`
-  margin-right: 50%
+  margin-inline-start: 50%
   display: inline-block;
   margin-inline: auto;
   margin-
@@ -171,26 +190,12 @@ const Back = styled.span`
 
 const Forward = styled.span`
   display: inline-block;
-  margin-inline-start: 60%
+  margin-inline-end: 1%
   margin-inline-left: 1%
 
 `;
 
-//margin-inline-start: 85%;
+const ProductDescription = styled.div`
+`;
 
-{/* <content-distribution> =
-  space-between  |
-  space-around   |
-  space-evenly   |
-  stretch     stretch */}
 
-// scroll into view
-
-// function scrollTo(event) {
-//   var scrollTarget = event.target.getAttribute('target');
-//   var target = document.getElementById(scrollTarget);
-//   target.scrollIntoView({
-//     block: 'center',
-//     behavior: 'smooth'
-//   });
-// }
