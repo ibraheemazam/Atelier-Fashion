@@ -1,19 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import styled from 'styled-components';
 import { IoLogoFacebook, IoLogoTwitter, IoLogoPinterest } from 'react-icons/Io';
-
-
-
-
-
-// import StyleSelector from '../StyleSelector/StyleSelector';
 import RatingsAndReviews from '../../RatingsAndReviews/RatingsAndReviews';
-//import Breakdown from '../../RatingsAndReviews/Breakdown';
-//import CardStars from '../../RelatedItems/RelatedList/CardStars';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
-
-var k = 0;
 
 function ProductOverview(props) {
   const {

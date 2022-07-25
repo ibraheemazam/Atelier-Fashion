@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 import { MdArrowForwardIos, MdArrowBackIos } from 'react-icons/md'
 
 import { useGlobalContext } from '../../../contexts/GlobalStore';
@@ -140,7 +139,6 @@ const Main = styled.div`
   margin-top: 10%;
   width: auto;
   height: auto;
-  // overflow: hidden;
   justify-content: center;
   content-distribution: space-around;
   flex: f1;
@@ -161,7 +159,6 @@ const Side = styled.div`
   justify-content: left;
   text-align: left;
   padding-right: 2%;
-  content-distribution: space-between, stretch, clippped;
   positioning: relative;
   margin-top: 5%;
   align-items: center;
@@ -176,9 +173,6 @@ const PlaceholderButton = styled.button`
   background-color: transparent;
   border: none;
   color: none;
-`;
-
-const PlaceholderButton2 = styled.button`
 `;
 
 const Back = styled.span`

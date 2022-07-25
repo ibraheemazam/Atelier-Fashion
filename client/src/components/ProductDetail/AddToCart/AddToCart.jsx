@@ -1,30 +1,55 @@
-import React, { useState, useReducer, createElement, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import _ from 'lodash';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
 function AddToCart() {
   const { productID, selectedStyle, productInfo, styles } = useGlobalContext();
+  const [selectedSize, setSelectedSize] = useState('Select Size');
+  const [isSizeSelected, setIsSizeSelected] = useState(false);
+  const [availableQuantity, setAvailableQuantity] = useState(0);
+  const [selectedQuantity, setSelectedQuantity] = useState(1);
+
+  function handleChangeSize(e) {
+    e.preventDefault();
+    setSelectedSize(selectedStyle.skus[e.target.value].size);
+    setIsSizeSelected(true);
+    setAvailableQuantity(selectedStyle.skus[e.target.value].quantity);
+  }
+
+  function handleChangeQuantity(e) {
+    e.preventDefault();
+    setSelectedQuantity(e.target.value);
+  }
 
   return (
     <Cart>
       <SQContainer>
         <SelectSizeContainer>
-            <SelectSize>
-                <option value={null}>Select Size</option>
+            <SelectSize value={selectedSize} onChange={(e) => handleChangeSize(e)}>
+                <option>{selectedSize}</option>
               {selectedStyle.skus
               && (
-                Object.entries(selectedStyle.skus).map(([sku, {quantity, size}]) => {
-                  return (quantity > 0 && <option key={sku}>{size}</option>)
+                Object.entries(selectedStyle.skus).map(([sku, {size, quantity}]) => {
+                  return (quantity > 0 && <option key={sku} quantity={quantity} value={sku}>{size}</option>)
                 }
               ))}
             </SelectSize>
         </SelectSizeContainer>
         <SelectQuantityContainer>
-          <SelectQ >---
-            <option defaultValue={1}>-</option>
-          </SelectQ>
+          {isSizeSelected
+          ? <SelectQ value={selectedQuantity} onChange={(e) => handleChangeQuantity(e)}>
+              <option>-</option>
+              {availableQuantity >= 15
+              ? [...Array(16).keys()].slice(1).map((num) =>
+                  <option value={num}>{num}</option>)
+              : [...Array(availableQuantity + 1).keys()].slice(1).map((num) =>
+                  <option value={num + 1}>{num + 1}</option>)
+              }
+            </SelectQ>
+          : <SelectQ disabled={!isSizeSelected} value={selectedQuantity} onChange={(e) => handleChangeQuantity(e)}>
+              <option>-</option>
+            </SelectQ>
+          }
         </SelectQuantityContainer>
       </SQContainer>
       <BagContainer>

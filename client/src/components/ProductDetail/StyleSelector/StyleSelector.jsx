@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-//import { IoCheckmarkCircleOutline } from 'react-icons';
 import { useGlobalContext } from '../../../contexts/GlobalStore';
 
 function StyleSelector(props) {
@@ -81,15 +80,5 @@ const ThumbnailClass = styled.img`
 `;
 
 
-const BlueCheckmark = styled.div`
-  position: absolute;
-  top: 0pm;
-  right: 0px;
-  display: flex;
-  //clear, thivk padding
-  //solid blue borde
-  .// border radius
-  // whole thing slighly transparent
-  `;
 
 
