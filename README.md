@@ -46,10 +46,17 @@ $ npm run server
 ## Overview
 This project has 4 main sections for a product each with various functionalities.
 1. Product Overview
-  <br>The Product Overview section displays product information, available styles, and an image gallery for the product. Users may select a particular style by clicking on its thumbnail, and view additional images of this style by clicking through the image carousel to the left of the expanded image. updating the expanded image gallery and product informationthe selected style shown in an expanded image on the left. To click through different images of the selected style, one can click on the thumbnails to the left of the expanded image or use the forward and back arrows to either side of the expanded image.
+  ![Screen Shot 2022-07-23 at 3 48 01 PM](https://user-images.githubusercontent.com/20650665/207993230-649b0cb7-bfed-45a7-ae4a-56ea2cf4d112.png)
+  <br>The Product Overview section displays product information, available styles, and an image gallery for the product. Users may select a particular style by clicking on its thumbnail, and view additional images of this style by clicking through the image carousel to the left of the expanded image.
+  
 2. Related Products
+![Screen Shot 2022-07-23 at 3 48 41 PM](https://user-images.githubusercontent.com/20650665/207993311-ad4d0550-598d-402a-9c29-78b62ab68d68.png)
   <br>The Related Products section displays a list of products related to the current item at the top. Users can navigate through the list and click on a product to be redirected to that product's page. Users can utilize the outfit list by adding/removing products they might be interested in.
+
 3. Questions & Answers
-  <br>The Questions & Answers section contains a search bar, questions and answers, as well as many more features. Users are also able to add their own question they have about a product. Each question can be marked as helpful or reported, and can also be answered. The search bar will allow the user to filter out questions for any specific term they want to look for.
-4. [Ratings & Reviews](https://github.com/HR-Zelda/retail-app/blob/main/Project%20Screenshots/Screen%20Shot%202022-07-23%20at%203.42.24%20PM.png)
-  <br>The ratings and reviews section shows all reviews for the current product being displayed, as well as a breakdown of the ratings and product characteristics.. The list of reviews can be sorted by relevance, helpfulness, or date. The user can also filter reviews by their star ratings. A user may add their own review to the list. Reviews can also be marked as helpful or reported.
+![Screen Shot 2022-07-23 at 3 51 58 PM](https://user-images.githubusercontent.com/20650665/207993406-5c12d799-158a-45e7-9bf3-ecc769fc0e48.png)
+  <br>The Questions & Answers section allows users to search for, ask, and answer questions related to a product. Each question can be marked as helpful or reported. The search bar will allow the user to filter questions by any specific term they are looking for.
+
+4. Ratings & Reviews
+![Screen Shot 2022-07-23 at 3 42 24 PM (1)](https://user-images.githubusercontent.com/20650665/207993515-339f3346-7e5f-4e90-96a7-53a9e582fcaf.png)
+  <br>The ratings and reviews section shows all reviews for the current product being displayed, as well as a breakdown of the ratings and product characteristics. The list of reviews can be sorted by relevance, helpfulness, or date. The user can also filter reviews by their star ratings. A user may add their own review to the list. Reviews can also be marked as helpful or reported.
